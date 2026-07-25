@@ -86,7 +86,7 @@
     },
     {
       "source": "/type/download",
-      "destination": "https://github.com/kvohs/type/releases/latest/download/type-universal.dmg",
+      "destination": "https://github.com/watchcapstudio/type/releases/latest/download/type-universal.dmg",
       "permanent": false
     },
     {
