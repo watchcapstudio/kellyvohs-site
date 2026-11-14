@@ -22,17 +22,26 @@ const TITLE = 'Books';
 const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
 const URL = 'https://kellyvohs.com/books';
 
-const card = (b) =>
-  '      <section class="b" data-tags="' + esc(b.tags.join('|')) + '"' +
+const card = (b) => {
+  const tags = b.tags.filter((t) => t !== SHELF);
+  const [lead, second] = b.highlights;
+  return '      <section class="f" data-tags="' + esc(b.tags.join('|')) + '"' +
     (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') + '>\n' +
-  '        <h3 class="b__title">' + esc(b.title) + '</h3>\n' +
-  '        <div class="b__author">' + esc(b.author) + '</div>\n' +
-  '        <div class="b__tags">' + b.tags.filter((t) => t !== SHELF).map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>\n' +
-  '        <p class="b__sum">' + esc(b.summary) + '</p>\n' +
-  b.highlights.slice(0, 2).map((h) => '        <blockquote class="q">' + esc(h) + '</blockquote>\n').join('') +
-  '      </section>\n';
+    '        <div class="f__no"></div>\n' +
+    '        <div class="f__body">\n' +
+    (lead ? '          <p class="f__q">' + esc(lead) + '</p>\n' : '') +
+    '          <div class="f__meta' + (lead ? '' : ' f__meta--bare') + '">' +
+      '<span class="f__title">' + esc(b.title) + '</span>' +
+      '<span class="f__by">' + esc(b.author) + '</span>' +
+      (tags.length ? '<span class="f__tags">' + tags.map(esc).join(' · ') + '</span>' : '') +
+    '</div>\n' +
+    '          <p class="f__sum">' + esc(b.summary) + '</p>\n' +
+    (second ? '          <p class="f__q2">' + esc(second) + '</p>\n' : '') +
+    '        </div>\n' +
+    '      </section>\n';
+};
 
-const rows = books.map((b, i) => card(b).replace('<section class="b" ', '<section class="b" data-rank="' + i + '" ')).join('');
+const rows = books.map((b, i) => card(b).replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ')).join('');
 
 const chips = '<div class="chips"><button class="chip chip--on" type="button" data-f="all">All</button>' +
   TAGS.map((t) => '<button class="chip' + (t === SHELF ? ' chip--shelf' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
@@ -74,18 +83,30 @@ const html = `<!DOCTYPE html>
   .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
   .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 
-  .b { padding: 44px 0; border-bottom: 1px solid var(--hairline); }
-  .b:last-child { border-bottom: 0; }
-  .b__title { font-size: 19px; line-height: 1.35; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; margin: 0; }
-  .b__author { color: var(--muted); font-size: 14px; margin-top: 4px; }
-  .b__tags:empty { display: none; }
-  .b__tags { margin-top: 10px; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-  .b__tags span + span::before { content: "·"; margin: 0 0.6em; color: var(--muted); }
-  .b__sum { margin-top: 18px; font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.72); }
-  .q { margin: 18px 0 0; padding: 2px 0 2px 18px; border-left: 2px solid var(--accent); font-size: 15px; line-height: 1.8; }
+  .books .sheet { max-width: 900px; padding-left: 120px; padding-right: 120px; }
+
+  .f { display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; padding: 56px 0; border-bottom: 1px solid var(--hairline); }
+  .f:last-child { border-bottom: 0; }
+  .f__no { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; padding-top: 10px; }
+  .f__no::before { content: counter(book, decimal-leading-zero); }
+  .list { counter-reset: book; }
+  .f:not([hidden]) { counter-increment: book; }
+  .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 0; text-shadow: 0.6px 0 0 currentColor; }
+  .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
+  .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--fg); }
+  .f__meta--bare { margin-top: 0; padding-top: 0; border-top: 0; }
+  .f__meta--bare .f__title { font-size: 19px; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; }
+  .f__title { font-size: 15px; font-weight: 700; }
+  .f__by { color: var(--muted); font-size: 13px; }
+  .f__tags { margin-left: auto; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+  .f__sum { margin: 14px 0 0; font-size: 14px; line-height: 1.85; color: rgba(10, 10, 10, 0.68); }
+  .f__q2 { margin: 16px 0 0; padding-left: 18px; border-left: 2px solid var(--accent); font-size: 14px; line-height: 1.8; }
 
   @media (max-width: 760px) {
-    .b { padding: 36px 0; }
+    .books .sheet { padding-left: 22px; padding-right: 22px; }
+    .f { grid-template-columns: 1fr; gap: 6px; padding: 44px 0; }
+    .f__q::before { margin-left: 0; }
+    .f__tags { margin-left: 0; width: 100%; margin-top: 6px; }
   }
 </style>
 </head>
@@ -126,7 +147,7 @@ ${rows}    </div>
       chips.forEach(function (x) { x.classList.toggle('chip--on', x === c); });
       var f = c.getAttribute('data-f');
       var list = document.querySelector('.list');
-      var items = Array.prototype.slice.call(list.querySelectorAll('.b'));
+      var items = Array.prototype.slice.call(list.querySelectorAll('.f'));
       items.forEach(function (b) {
         b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
