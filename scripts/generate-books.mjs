@@ -24,7 +24,7 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const TITLE = 'Reading';
-const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
+const DESC = 'Some of my favorites, and the books I’ve highlighted the most.';
 const URL = 'https://kellyvohs.com/reading';
 
 const card = (b, rank) =>
@@ -75,7 +75,8 @@ const html = `<!DOCTYPE html>
 <link rel="stylesheet" href="../styles/archive.css?v=15" />
 <style>
   .books .sheet { max-width: 760px; padding: 96px 110px 160px; }
-  .intro { margin-top: 18px; font-size: 15px; line-height: 1.9; color: var(--muted); }
+  .intro { margin: 14px 0 0; font-size: 15px; line-height: 1.9; color: var(--muted); }
+  .filters { margin-top: 48px; }
 
   /* the index: typed checkboxes */
   .filters { margin: 40px 0 80px; font-size: 15px; line-height: 2.1; }
@@ -155,6 +156,7 @@ ${bar('reading')}
 
   <article class="sheet">
     <h1 class="typedtitle">Reading</h1>
+    <p class="intro">Some of my favorites, and the books I've highlighted the most.</p>
 
     <div class="filters">
     ${filters}
