@@ -11,8 +11,10 @@ import { bar, FOOT } from './chrome.mjs';
 // Kept in file order: most-highlighted first.
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
 const SHELF = 'Leadership Shelf';
+const FIRST = 'Read these first';
+const SPECIAL = [FIRST, SHELF];
 // Chips: the Leadership Shelf first, then topics by how many books carry them.
-const TAGS = [SHELF, ...[...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== SHELF)
+const TAGS = [...SPECIAL, ...[...new Set(books.flatMap((b) => b.tags))].filter((t) => !SPECIAL.includes(t))
   .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length)];
 
 const esc = (s) => String(s)
@@ -23,10 +25,11 @@ const DESC = 'The books I’ve highlighted the most, and a few of the lines I ke
 const URL = 'https://kellyvohs.com/books';
 
 const card = (b) => {
-  const tags = b.tags.filter((t) => t !== SHELF);
+  const tags = b.tags.filter((t) => !SPECIAL.includes(t));
   const [lead, second] = b.highlights;
   return '      <section class="f" data-tags="' + esc(b.tags.join('|')) + '"' +
-    (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') + '>\n' +
+    (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') +
+    (b.firstOrder != null ? ' data-first="' + b.firstOrder + '"' : '') + '>\n' +
     '        <div class="f__body">\n' +
     '          <div class="f__meta">' +
       '<span class="f__title">' + esc(b.title) + '</span>' +
@@ -40,19 +43,19 @@ const card = (b) => {
     '      </section>\n';
 };
 
-// The page opens on the Leadership Shelf: shelf books first in Kelly's order,
-// everything else hidden until a chip is tapped. data-rank restores count order.
+// The page opens on "Read these first": those five in Kelly's order, everything
+// else hidden until a chip is tapped. data-rank restores count order.
 const ranked = books.map((b, i) => ({ b, i }));
 const opening = [...ranked].sort((x, y) => {
-  const sx = x.b.shelfOrder ?? 1e9, sy = y.b.shelfOrder ?? 1e9;
+  const sx = x.b.firstOrder ?? 1e9, sy = y.b.firstOrder ?? 1e9;
   return sx - sy || x.i - y.i;
 });
 const rows = opening.map(({ b, i }) => card(b)
-  .replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ' + (b.shelfOrder == null ? 'hidden ' : ''))
+  .replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ' + (b.firstOrder == null ? 'hidden ' : ''))
 ).join('');
 
 const chips = '<div class="chips"><button class="chip" type="button" data-f="all">All</button>' +
-  TAGS.map((t) => '<button class="chip' + (t === SHELF ? ' chip--shelf chip--on' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
+  TAGS.map((t) => '<button class="chip' + (SPECIAL.includes(t) ? ' chip--shelf' : '') + (t === FIRST ? ' chip--on' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
   '</div>';
 
 const html = `<!DOCTYPE html>
@@ -154,12 +157,10 @@ ${rows}    </div>
       items.forEach(function (b) {
         b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
-      /* the Shelf reads in Kelly's order; everything else by highlight count */
-      var key = f === 'Leadership Shelf' ? 'shelf' : 'rank';
+      /* the two picked lists read in Kelly's order; everything else by highlight count */
+      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'Read these first' ? 'data-first' : 'data-rank';
       items.sort(function (a, b) {
-        var ka = key === 'shelf' ? +a.getAttribute('data-shelf') : +a.getAttribute('data-rank');
-        var kb = key === 'shelf' ? +b.getAttribute('data-shelf') : +b.getAttribute('data-rank');
-        return ka - kb;
+        return (+a.getAttribute(attr) || 0) - (+b.getAttribute(attr) || 0);
       }).forEach(function (b) { list.appendChild(b); });
     });
   });
