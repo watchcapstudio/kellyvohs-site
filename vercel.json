@@ -34,6 +34,10 @@
       "destination": "/pages/made.html"
     },
     {
+      "source": "/books",
+      "destination": "/pages/books.html"
+    },
+    {
       "source": "/howiai",
       "destination": "/pages/howiai.html"
     },
