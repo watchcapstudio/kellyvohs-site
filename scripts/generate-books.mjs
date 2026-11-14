@@ -1,4 +1,4 @@
-/* generate-books.mjs — writes pages/books.html (served at /books) from
+/* generate-books.mjs — writes pages/books.html (served at /reading) from
    data/books.json. Typed, one face, one size: title in caps, author, a short
    summary, then up to three quotes indented. Books separated by * * *.
 
@@ -25,7 +25,7 @@ const esc = (s) => String(s)
 
 const TITLE = 'Reading';
 const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
-const URL = 'https://kellyvohs.com/books';
+const URL = 'https://kellyvohs.com/reading';
 
 const card = (b, rank) =>
   '      <section class="tb" data-tags="' + esc(b.tags.join('|')) + '" data-rank="' + rank + '"' +
@@ -146,7 +146,7 @@ const html = `<!DOCTYPE html>
 
 <div class="carriage" id="carriage"></div>
 
-${bar('books')}
+${bar('reading')}
 
 <div class="pillwrap" id="pillwrap"><a href="#" class="pillnow" id="pillnow" hidden></a><a href="#" class="pill" id="pill">Subjects</a></div>
 <div class="sheetx" id="sheetx"><div class="sheetx__paper" id="sheetpaper"></div></div>
