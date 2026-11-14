@@ -96,6 +96,7 @@ const html = `<!DOCTYPE html>
 
   .f { display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; padding: 56px 0; border-bottom: 1px solid var(--hairline); }
   .f:last-child { border-bottom: 0; }
+  .f[hidden] { display: none; }
   .f__no { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; padding-top: 10px; }
   .f__no::before { content: counter(book, decimal-leading-zero); }
   .list { counter-reset: book; }
