@@ -27,7 +27,6 @@ const card = (b) => {
   const [lead, second] = b.highlights;
   return '      <section class="f" data-tags="' + esc(b.tags.join('|')) + '"' +
     (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') + '>\n' +
-    '        <div class="f__no"></div>\n' +
     '        <div class="f__body">\n' +
     '          <div class="f__meta">' +
       '<span class="f__title">' + esc(b.title) + '</span>' +
@@ -92,15 +91,11 @@ const html = `<!DOCTYPE html>
   .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
   .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 
-  .books .sheet { max-width: 900px; padding-left: 120px; padding-right: 120px; }
+  .books .sheet { max-width: 840px; padding-left: 120px; padding-right: 120px; }
 
-  .f { display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; padding: 56px 0; border-bottom: 1px solid var(--hairline); }
+  .f { padding: 56px 0; border-bottom: 1px solid var(--hairline); }
   .f:last-child { border-bottom: 0; }
   .f[hidden] { display: none; }
-  .f__no { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; padding-top: 10px; }
-  .f__no::before { content: counter(book, decimal-leading-zero); }
-  .list { counter-reset: book; }
-  .f:not([hidden]) { counter-increment: book; }
   .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 22px 0 0; text-shadow: 0.6px 0 0 currentColor; }
   .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
   .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--fg); }
@@ -112,7 +107,7 @@ const html = `<!DOCTYPE html>
 
   @media (max-width: 760px) {
     .books .sheet { padding-left: 22px; padding-right: 22px; }
-    .f { grid-template-columns: 1fr; gap: 6px; padding: 44px 0; }
+    .f { padding: 44px 0; }
     .f__q::before { margin-left: 0; }
     .f__tags { margin-left: 0; width: 100%; margin-top: 6px; }
   }

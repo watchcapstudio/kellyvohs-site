@@ -34,15 +34,11 @@
   .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
   .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 
-  .books .sheet { max-width: 900px; padding-left: 120px; padding-right: 120px; }
+  .books .sheet { max-width: 840px; padding-left: 120px; padding-right: 120px; }
 
-  .f { display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; padding: 56px 0; border-bottom: 1px solid var(--hairline); }
+  .f { padding: 56px 0; border-bottom: 1px solid var(--hairline); }
   .f:last-child { border-bottom: 0; }
   .f[hidden] { display: none; }
-  .f__no { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; padding-top: 10px; }
-  .f__no::before { content: counter(book, decimal-leading-zero); }
-  .list { counter-reset: book; }
-  .f:not([hidden]) { counter-increment: book; }
   .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 22px 0 0; text-shadow: 0.6px 0 0 currentColor; }
   .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
   .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--fg); }
@@ -54,7 +50,7 @@
 
   @media (max-width: 760px) {
     .books .sheet { padding-left: 22px; padding-right: 22px; }
-    .f { grid-template-columns: 1fr; gap: 6px; padding: 44px 0; }
+    .f { padding: 44px 0; }
     .f__q::before { margin-left: 0; }
     .f__tags { margin-left: 0; width: 100%; margin-top: 6px; }
   }
@@ -74,7 +70,6 @@
     <div class="chips"><button class="chip" type="button" data-f="all">All</button><button class="chip chip--shelf chip--on" type="button" data-f="Leadership Shelf">Leadership Shelf</button><button class="chip" type="button" data-f="Leadership">Leadership</button><button class="chip" type="button" data-f="Business">Business</button><button class="chip" type="button" data-f="Living">Living</button><button class="chip" type="button" data-f="Stoicism">Stoicism</button><button class="chip" type="button" data-f="Philosophy">Philosophy</button><button class="chip" type="button" data-f="Thinking">Thinking</button><button class="chip" type="button" data-f="Mind">Mind</button><button class="chip" type="button" data-f="Craft">Craft</button><button class="chip" type="button" data-f="History">History</button></div>
     <div class="list">
       <section class="f" data-rank="47" data-tags="Leadership Shelf|Leadership" data-shelf="0">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Wooden on Leadership</span><span class="f__by">John Wooden</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">The score will take care of itself when you take care of the effort that precedes the score.</p>
@@ -83,7 +78,6 @@
         </div>
       </section>
       <section class="f" data-rank="19" data-tags="Leadership Shelf|Leadership" data-shelf="1">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Effective Executive</span><span class="f__by">Peter F. Drucker</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">People in general, and knowledge workers in particular, grow according to the demands they make on themselves.</p>
@@ -92,7 +86,6 @@
         </div>
       </section>
       <section class="f" data-rank="45" data-tags="Leadership Shelf|Leadership|Business" data-shelf="2">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">High Output Management</span><span class="f__by">Andrew S. Grove</span><span class="f__tags">Leadership · Business</span></div>
           <p class="f__q">The output of a manager is the output of the organizational unit under his or her supervision or influence.</p>
@@ -101,7 +94,6 @@
         </div>
       </section>
       <section class="f" data-rank="50" data-tags="Leadership Shelf|Business" data-shelf="3">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Hard Thing About Hard Things</span><span class="f__by">Ben Horowitz</span><span class="f__tags">Business</span></div>
           <p class="f__q">People always ask me, “What’s the secret to being a successful CEO?” Sadly, there is no secret, but if there is one skill that stands out, it’s the ability to focus and make the best move when there are no good moves.</p>
@@ -110,7 +102,6 @@
         </div>
       </section>
       <section class="f" data-rank="52" data-tags="Leadership Shelf|Business" data-shelf="4">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Measure What Matters</span><span class="f__by">John Doerr</span><span class="f__tags">Business</span></div>
           <p class="f__q">“Bad companies,” Andy wrote, “are destroyed by crisis. Good companies survive them. Great companies are improved by them.”</p>
@@ -118,14 +109,12 @@
         </div>
       </section>
       <section class="f" data-rank="54" data-tags="Leadership Shelf|Leadership" data-shelf="5">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Inspiring Leader</span><span class="f__by">John H. Zenger &amp; Joseph Folkman</span><span class="f__tags">Leadership</span></div>
           <p class="f__sum">Zenger and Folkman use data on thousands of leaders to show which behaviors make a leader inspiring, and how to build them.</p>
         </div>
       </section>
       <section class="f" data-rank="51" data-tags="Leadership Shelf|Leadership" data-shelf="6">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Call Sign Chaos</span><span class="f__by">Jim Mattis &amp; Bing West</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">The first is competence. Be brilliant in the basics. Don’t dabble in your job; you must master it.</p>
@@ -134,7 +123,6 @@
         </div>
       </section>
       <section class="f" data-rank="31" data-tags="Leadership Shelf|Business" data-shelf="7">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">BE 2.0</span><span class="f__by">Jim Collins</span><span class="f__tags">Business</span></div>
           <p class="f__q">How do you know if you have a truly great business? Warren Buffett has the best answer: You don’t have to hold a prayer meeting to raise prices.</p>
@@ -143,7 +131,6 @@
         </div>
       </section>
       <section class="f" data-rank="46" data-tags="Leadership Shelf|Leadership" data-shelf="8">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Score Takes Care of Itself</span><span class="f__by">Bill Walsh</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">Expertise coupled with strength of will is going to prevail.</p>
@@ -152,7 +139,6 @@
         </div>
       </section>
       <section class="f" data-rank="20" data-tags="Leadership Shelf|Leadership" data-shelf="9">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Scaling People</span><span class="f__by">Claire Hughes Johnson</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">I often think of my work as a manager as clearing the path my team will need to travel. Anything that slows them down is on me.</p>
@@ -161,7 +147,6 @@
         </div>
       </section>
       <section class="f" data-rank="48" data-tags="Leadership Shelf|Business" data-shelf="10">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Only the Paranoid Survive</span><span class="f__by">Andrew S. Grove</span><span class="f__tags">Business</span></div>
           <p class="f__q">A strategic inflection point is a time in the life of a business when its fundamentals are about to change. That change can mean an opportunity to rise to new heights. But it may just as likely signal the beginning of the end.</p>
@@ -170,7 +155,6 @@
         </div>
       </section>
       <section class="f" data-rank="40" data-tags="Leadership Shelf|Leadership" data-shelf="11">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Captain Class</span><span class="f__by">Sam Walker</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">A great leader is dedicated to doing whatever it takes to make success more likely, even if it’s unpopular, or controversial, or outrageous, or completely invisible to others. A leader has to be committed, above all else, to getting it right.</p>
@@ -179,7 +163,6 @@
         </div>
       </section>
       <section class="f" data-rank="49" data-tags="Leadership Shelf|Leadership|Business" data-shelf="12">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Who</span><span class="f__by">Geoff Smart &amp; Randy Street</span><span class="f__tags">Leadership · Business</span></div>
           <p class="f__q">“Your success as a manager is simply the result of how good you are at hiring the people around you.”</p>
@@ -188,7 +171,6 @@
         </div>
       </section>
       <section class="f" data-rank="21" data-tags="Leadership Shelf|Business" data-shelf="13">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Working Backwards</span><span class="f__by">Colin Bryar &amp; Bill Carr</span><span class="f__tags">Business</span></div>
           <p class="f__q">“The best way to fail at inventing something is by making it somebody’s part-time job.”</p>
@@ -197,7 +179,6 @@
         </div>
       </section>
       <section class="f" data-rank="26" data-tags="Leadership Shelf|Leadership" data-shelf="14">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">What You Do Is Who You Are</span><span class="f__by">Ben Horowitz</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">If you aren’t yourself, even you won’t follow you.</p>
@@ -206,7 +187,6 @@
         </div>
       </section>
       <section class="f" data-rank="13" data-tags="Leadership Shelf|Leadership" data-shelf="15">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Speed of Trust</span><span class="f__by">Stephen M.R. Covey</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">when trust is low, speed goes down and cost goes up. When trust is high, speed goes up and cost goes down.</p>
@@ -215,7 +195,6 @@
         </div>
       </section>
       <section class="f" data-rank="27" data-tags="Leadership Shelf|Leadership" data-shelf="16">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Dare to Lead</span><span class="f__by">Brené Brown</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">Clear is kind. Unclear is unkind.</p>
@@ -224,7 +203,6 @@
         </div>
       </section>
       <section class="f" data-rank="41" data-tags="Leadership Shelf|Leadership|Business" data-shelf="17">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">No Rules Rules</span><span class="f__by">Reed Hastings &amp; Erin Meyer</span><span class="f__tags">Leadership · Business</span></div>
           <p class="f__q">If you build an organization made up of high performers, you can eliminate most controls. The denser the talent, the greater the freedom you can offer.</p>
@@ -233,7 +211,6 @@
         </div>
       </section>
       <section class="f" data-rank="42" data-tags="Leadership Shelf|Leadership" data-shelf="18">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The CEO Test</span><span class="f__by">Adam Bryant &amp; Kevin Sharer</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">Simplifying complexity is a leader's superpower.</p>
@@ -242,7 +219,6 @@
         </div>
       </section>
       <section class="f" data-rank="43" data-tags="Leadership Shelf|Leadership|Craft" data-shelf="19">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Creativity, Inc.</span><span class="f__by">Ed Catmull &amp; Amy Wallace</span><span class="f__tags">Leadership · Craft</span></div>
           <p class="f__q">If you aren’t experiencing failure, then you are making a far worse mistake: You are being driven by the desire to avoid it.</p>
@@ -251,7 +227,6 @@
         </div>
       </section>
       <section class="f" data-rank="44" data-tags="Leadership Shelf|Business" data-shelf="20">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">High Growth Handbook</span><span class="f__by">Elad Gil</span><span class="f__tags">Business</span></div>
           <p class="f__q">A CEO’s energy levels dictate those of the team.</p>
@@ -260,14 +235,12 @@
         </div>
       </section>
       <section class="f" data-rank="53" data-tags="Leadership Shelf|Business" data-shelf="21">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Good to Great</span><span class="f__by">Jim Collins</span><span class="f__tags">Business</span></div>
           <p class="f__sum">Jim Collins and his team studied companies that went from average results to great ones and stayed there, and what set them apart from similar companies that didn't.</p>
         </div>
       </section>
       <section class="f" data-rank="0" hidden data-tags="Business|Thinking">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Principles</span><span class="f__by">Ray Dalio</span><span class="f__tags">Business · Thinking</span></div>
           <p class="f__q">Maturity is the ability to reject good alternatives in order to pursue even better ones.</p>
@@ -276,7 +249,6 @@
         </div>
       </section>
       <section class="f" data-rank="1" hidden data-tags="Stoicism">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Meditations</span><span class="f__by">Marcus Aurelius</span><span class="f__tags">Stoicism</span></div>
           <p class="f__q">The impediment to action advances action. What stands in the way becomes the way.</p>
@@ -285,7 +257,6 @@
         </div>
       </section>
       <section class="f" data-rank="2" hidden data-tags="Mind">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Laws of Human Nature</span><span class="f__by">Robert Greene</span><span class="f__tags">Mind</span></div>
           <p class="f__q">Human desire is never an individual phenomenon. We are social creatures and what we want almost always reflects what other people want.</p>
@@ -294,7 +265,6 @@
         </div>
       </section>
       <section class="f" data-rank="3" hidden data-tags="Stoicism">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Letters From a Stoic</span><span class="f__by">Seneca</span><span class="f__tags">Stoicism</span></div>
           <p class="f__q">We suffer more often in imagination than in reality.</p>
@@ -303,7 +273,6 @@
         </div>
       </section>
       <section class="f" data-rank="4" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">101 Essays That Will Change the Way You Think</span><span class="f__by">Brianna Wiest</span><span class="f__tags">Living</span></div>
           <p class="f__q">Clarity comes from doing, not thinking about doing.</p>
@@ -312,7 +281,6 @@
         </div>
       </section>
       <section class="f" data-rank="5" hidden data-tags="Business|Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Almanack of Naval Ravikant</span><span class="f__by">Eric Jorgenson</span><span class="f__tags">Business · Living</span></div>
           <p class="f__q">Desire is a contract you make with yourself to be unhappy until you get what you want. I don’t think most of us realize that’s what it is.</p>
@@ -321,7 +289,6 @@
         </div>
       </section>
       <section class="f" data-rank="6" hidden data-tags="Mind|Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Courage to Be Disliked</span><span class="f__by">Ichiro Kishimi &amp; Fumitake Koga</span><span class="f__tags">Mind · Living</span></div>
           <p class="f__q">We do not lack ability. We just lack courage. It all comes down to courage.</p>
@@ -330,7 +297,6 @@
         </div>
       </section>
       <section class="f" data-rank="7" hidden data-tags="Stoicism|Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Stillness Is the Key</span><span class="f__by">Ryan Holiday</span><span class="f__tags">Stoicism · Living</span></div>
           <p class="f__q">The one thing you can’t escape in your life is yourself.</p>
@@ -339,7 +305,6 @@
         </div>
       </section>
       <section class="f" data-rank="8" hidden data-tags="Craft">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Mastery</span><span class="f__by">Robert Greene</span><span class="f__tags">Craft</span></div>
           <p class="f__q">Some people never become who they are; they stop trusting themselves; they conform to the tastes of others, and they end up wearing a mask that hides their true identity.</p>
@@ -348,7 +313,6 @@
         </div>
       </section>
       <section class="f" data-rank="9" hidden data-tags="Thinking">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Clear Thinking</span><span class="f__by">Shane Parrish</span><span class="f__tags">Thinking</span></div>
           <p class="f__q">Wisdom is turning your future hindsight into your current foresight.</p>
@@ -357,7 +321,6 @@
         </div>
       </section>
       <section class="f" data-rank="10" hidden data-tags="Leadership">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The 21 Irrefutable Laws of Leadership</span><span class="f__by">John C. Maxwell</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">leadership cannot be awarded, appointed, or assigned. It comes only from influence, and that cannot be mandated. It must be earned. The only thing a title can buy is a little time—either to increase your level of influence with others or to undermine it.</p>
@@ -366,7 +329,6 @@
         </div>
       </section>
       <section class="f" data-rank="11" hidden data-tags="Stoicism">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Ego Is the Enemy</span><span class="f__by">Ryan Holiday</span><span class="f__tags">Stoicism</span></div>
           <p class="f__q">What is rare is not raw talent, skill, or even confidence, but humility, diligence, and self-awareness.</p>
@@ -375,7 +337,6 @@
         </div>
       </section>
       <section class="f" data-rank="12" hidden data-tags="Philosophy">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Lessons From an American Stoic</span><span class="f__by">Mark Matousek</span><span class="f__tags">Philosophy</span></div>
           <p class="f__q">Seeing your narrative come apart before your eyes proves how arbitrary your personal fictions are.</p>
@@ -384,7 +345,6 @@
         </div>
       </section>
       <section class="f" data-rank="14" hidden data-tags="Philosophy">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Aristotle's Way</span><span class="f__by">Edith Hall</span><span class="f__tags">Philosophy</span></div>
           <p class="f__q">Aristotle believed that if you train yourself to be good, by working on your virtues and controlling your vices, you will discover that a happy state of mind comes from habitually doing the right thing.</p>
@@ -393,7 +353,6 @@
         </div>
       </section>
       <section class="f" data-rank="15" hidden data-tags="Leadership|Mind">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The 9 Types of Leadership</span><span class="f__by">Beatrice Chestnut</span><span class="f__tags">Leadership · Mind</span></div>
           <p class="f__q">Most of all, leaders (and all of us) need effective ways to learn to be kinder and more compassionate with ourselves and with others, and less defensive, reactive, and inflexible in the ways we respond to the people and events around us.</p>
@@ -402,7 +361,6 @@
         </div>
       </section>
       <section class="f" data-rank="16" hidden data-tags="Thinking">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The 33 Strategies of War</span><span class="f__by">Robert Greene</span><span class="f__tags">Thinking</span></div>
           <p class="f__q">Getting along with other people is an important skill to have, but it comes with a danger: by always seeking the path of least resistance, the path of conciliation, you forget who you are, and you sink into the center with everyone else.</p>
@@ -411,7 +369,6 @@
         </div>
       </section>
       <section class="f" data-rank="17" hidden data-tags="Mind|Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Courage to Be Happy</span><span class="f__by">Ichiro Kishimi &amp; Fumitake Koga</span><span class="f__tags">Mind · Living</span></div>
           <p class="f__q">The past does not decide now. It is your now that decides the past.</p>
@@ -420,7 +377,6 @@
         </div>
       </section>
       <section class="f" data-rank="18" hidden data-tags="Leadership">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Heroic Leadership</span><span class="f__by">Chris Lowney</span><span class="f__tags">Leadership</span></div>
           <p class="f__q">Only those who know their weaknesses can deal with them or even hope to conquer them.</p>
@@ -429,7 +385,6 @@
         </div>
       </section>
       <section class="f" data-rank="22" hidden data-tags="Business">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Play Bigger</span><span class="f__by">Al Ramadan, Dave Peterson, Christopher Lochhead &amp; Kevin Maney</span><span class="f__tags">Business</span></div>
           <p class="f__q">A company that best frames a problem is the company that often comes to define and take the category. Put another way: winning companies today market the problem, not just the solution.</p>
@@ -438,7 +393,6 @@
         </div>
       </section>
       <section class="f" data-rank="23" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Four Thousand Weeks</span><span class="f__by">Oliver Burkeman</span><span class="f__tags">Living</span></div>
           <p class="f__q">Productivity is a trap. Becoming more efficient just makes you more rushed, and trying to clear the decks simply makes them fill up again faster.</p>
@@ -447,7 +401,6 @@
         </div>
       </section>
       <section class="f" data-rank="24" hidden data-tags="Craft">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">On Writing Well</span><span class="f__by">William Zinsser</span><span class="f__tags">Craft</span></div>
           <p class="f__q">If you find that writing is hard, it’s because it is hard.</p>
@@ -456,7 +409,6 @@
         </div>
       </section>
       <section class="f" data-rank="25" hidden data-tags="Stoicism">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Daily Stoic</span><span class="f__by">Ryan Holiday &amp; Stephen Hanselman</span><span class="f__tags">Stoicism</span></div>
           <p class="f__q">Ask yourself: What haven’t I considered? Why is this thing the way it is? Am I part of the problem here or the solution? Could I be wrong here?</p>
@@ -465,7 +417,6 @@
         </div>
       </section>
       <section class="f" data-rank="28" hidden data-tags="Philosophy">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">A Calendar of Wisdom</span><span class="f__by">Leo Tolstoy</span><span class="f__tags">Philosophy</span></div>
           <p class="f__q">If you want to do a good deed, do it now. The time will pass, and you will not have the chance again.</p>
@@ -474,7 +425,6 @@
         </div>
       </section>
       <section class="f" data-rank="29" hidden data-tags="Philosophy">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Fallen Leaves</span><span class="f__by">Will Durant</span><span class="f__tags">Philosophy</span></div>
           <p class="f__q">Life is that which is discontent, which struggles and seeks, which suffers and creates.</p>
@@ -483,7 +433,6 @@
         </div>
       </section>
       <section class="f" data-rank="30" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Lighter</span><span class="f__by">Yung Pueblo</span><span class="f__tags">Living</span></div>
           <p class="f__q">your first reaction is your past your intentional response is your present</p>
@@ -492,7 +441,6 @@
         </div>
       </section>
       <section class="f" data-rank="32" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">What They Forgot to Teach You at School</span><span class="f__by">The School of Life</span><span class="f__tags">Living</span></div>
           <p class="f__q">Hating ourselves is the easy bit. Learning to give ourselves a break is the true, rare and properly adult achievement.</p>
@@ -501,7 +449,6 @@
         </div>
       </section>
       <section class="f" data-rank="33" hidden data-tags="Thinking">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Antifragile</span><span class="f__by">Nassim Nicholas Taleb</span><span class="f__tags">Thinking</span></div>
           <p class="f__q">Antifragility is beyond resilience or robustness. The resilient resists shocks and stays the same; the antifragile gets better.</p>
@@ -510,7 +457,6 @@
         </div>
       </section>
       <section class="f" data-rank="34" hidden data-tags="Philosophy">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Bhagavad Gita</span><span class="f__by">Eknath Easwaran (translator)</span><span class="f__tags">Philosophy</span></div>
           <p class="f__q">Since the Self is the core of every personality, no one needs to acquire goodness or compassion; they are already there. All that is necessary is to remove the selfish habits that hide them.</p>
@@ -519,7 +465,6 @@
         </div>
       </section>
       <section class="f" data-rank="35" hidden data-tags="History|Leadership">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Truman</span><span class="f__by">David McCullough</span><span class="f__tags">History · Leadership</span></div>
           <p class="f__q">Always be nice to the people who can’t talk back to you.</p>
@@ -528,7 +473,6 @@
         </div>
       </section>
       <section class="f" data-rank="36" hidden data-tags="Business">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Zero to One</span><span class="f__by">Peter Thiel</span><span class="f__tags">Business</span></div>
           <p class="f__q">What important truth do very few people agree with you on?</p>
@@ -537,7 +481,6 @@
         </div>
       </section>
       <section class="f" data-rank="37" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">As a Man Thinketh</span><span class="f__by">James Allen</span><span class="f__tags">Living</span></div>
           <p class="f__q">Men do not attract that which they want, but that which they are.</p>
@@ -546,7 +489,6 @@
         </div>
       </section>
       <section class="f" data-rank="38" hidden data-tags="Business">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">It Doesn't Have to Be Crazy at Work</span><span class="f__by">Jason Fried &amp; David Heinemeier Hansson</span><span class="f__tags">Business</span></div>
           <p class="f__q">A fractured hour isn’t really an hour—it’s a mess of minutes.</p>
@@ -555,7 +497,6 @@
         </div>
       </section>
       <section class="f" data-rank="39" hidden data-tags="Living">
-        <div class="f__no"></div>
         <div class="f__body">
           <div class="f__meta"><span class="f__title">From Strength to Strength</span><span class="f__by">Arthur C. Brooks</span><span class="f__tags">Living</span></div>
           <p class="f__q">Satisfaction comes not from chasing bigger and bigger things, but paying attention to smaller and smaller things.</p>
