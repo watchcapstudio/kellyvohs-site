@@ -29,12 +29,12 @@ const card = (b) => {
     (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') + '>\n' +
     '        <div class="f__no"></div>\n' +
     '        <div class="f__body">\n' +
-    (lead ? '          <p class="f__q">' + esc(lead) + '</p>\n' : '') +
-    '          <div class="f__meta' + (lead ? '' : ' f__meta--bare') + '">' +
+    '          <div class="f__meta">' +
       '<span class="f__title">' + esc(b.title) + '</span>' +
       '<span class="f__by">' + esc(b.author) + '</span>' +
       (tags.length ? '<span class="f__tags">' + tags.map(esc).join(' · ') + '</span>' : '') +
     '</div>\n' +
+    (lead ? '          <p class="f__q">' + esc(lead) + '</p>\n' : '') +
     '          <p class="f__sum">' + esc(b.summary) + '</p>\n' +
     (second ? '          <p class="f__q2">' + esc(second) + '</p>\n' : '') +
     '        </div>\n' +
@@ -101,15 +101,13 @@ const html = `<!DOCTYPE html>
   .f__no::before { content: counter(book, decimal-leading-zero); }
   .list { counter-reset: book; }
   .f:not([hidden]) { counter-increment: book; }
-  .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 0; text-shadow: 0.6px 0 0 currentColor; }
+  .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 22px 0 0; text-shadow: 0.6px 0 0 currentColor; }
   .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
-  .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--fg); }
-  .f__meta--bare { margin-top: 0; padding-top: 0; border-top: 0; }
-  .f__meta--bare .f__title { font-size: 19px; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; }
-  .f__title { font-size: 15px; font-weight: 700; }
+  .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--fg); }
+  .f__title { font-size: 19px; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; }
   .f__by { color: var(--muted); font-size: 13px; }
   .f__tags { margin-left: auto; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-  .f__sum { margin: 14px 0 0; font-size: 14px; line-height: 1.85; color: rgba(10, 10, 10, 0.68); }
+  .f__sum { margin: 18px 0 0; font-size: 14px; line-height: 1.85; color: rgba(10, 10, 10, 0.68); }
   .f__q2 { margin: 16px 0 0; padding-left: 18px; border-left: 2px solid var(--accent); font-size: 14px; line-height: 1.8; }
 
   @media (max-width: 760px) {
