@@ -18,7 +18,6 @@ data/*
 !data/letters.json
 !data/share.json
 !data/books.json
-!data/shelf.json
 
 # Claude
 .claude/
