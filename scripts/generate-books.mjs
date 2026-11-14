@@ -2,9 +2,9 @@
    data/books.json. Typed, one face, one size: title in caps, author, a short
    summary, then up to three quotes indented. Books separated by * * *.
 
-   The subjects list sits once at the top. Mid-page, the site bar's search spot
-   reads "Subjects" (and the thumb bar's "find" reads "subjects"); either opens
-   the same list as a typed sheet. Nothing is pinned.
+   The subjects list sits once at the top. Once it scrolls off, a small
+   "Subjects" pill (top on desktop, bottom on phone) opens the same list as a
+   typed sheet. Each book also lists its own subjects; the current one is [x].
 
    The page opens on "Ones I give away" (firstOrder = Kelly's order). Other
    filters show by highlight count (file order), except Leadership, which keeps
@@ -105,9 +105,13 @@ const html = `<!DOCTYPE html>
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
-  /* on this page the bar's search spot reads "Subjects" and the thumb's "find" reads "subjects" */
-  .books .bar__search { display: none; }
-  .books .thumb__search .thumb__caret { display: none; }
+  /* the subjects pill: top on desktop, bottom on phone, shown once the list scrolls off */
+  .pill { position: fixed; left: 50%; transform: translate(-50%, -8px); z-index: 160; top: 76px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg);
+    background: var(--paper); border: 1px solid var(--hairline); border-radius: 999px; padding: 10px 18px; text-decoration: none;
+    box-shadow: 0 8px 24px -14px rgba(10, 10, 10, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+  .pill--show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .pill:hover { border-color: var(--fg); }
 
   /* the subjects sheet: one piece of paper, typed */
   .sheetx { position: fixed; inset: 0; z-index: 170; background: rgba(10, 10, 10, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
@@ -121,6 +125,8 @@ const html = `<!DOCTYPE html>
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
     .sheetx__paper { left: 0; right: 0; bottom: 0; border-width: 1px 0 0; padding: 28px 24px 40px; max-height: 80vh; overflow: auto; transform: translateY(100%); }
+    .pill { top: auto; bottom: 84px; transform: translate(-50%, 8px); }
+    .pill--show { transform: translate(-50%, 0); }
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
@@ -134,8 +140,9 @@ const html = `<!DOCTYPE html>
 
 <div class="carriage" id="carriage"></div>
 
-${bar(null).replace('<nav class="bar__links">', '<nav class="bar__links"><a class="bar__link" href="#" id="barSubjects">Subjects</a>')}
+${bar(null)}
 
+<a href="#" class="pill" id="pill">Subjects</a>
 <div class="sheetx" id="sheetx"><div class="sheetx__paper" id="sheetpaper"></div></div>
 
 <div class="desk">
@@ -220,11 +227,14 @@ ${rows}    </div>
     }
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
     sync();
-    /* the bar and thumb read "Subjects" and open the sheet */
-    function open(e) { e.preventDefault(); e.stopImmediatePropagation(); sx.classList.add('sheetx--open'); }
-    document.getElementById('barSubjects').addEventListener('click', open);
-    var ts = document.querySelector('.thumb__search');
-    if (ts) { ts.removeAttribute('data-search'); ts.innerHTML = 'subjects'; ts.addEventListener('click', open, true); }
+    /* the pill opens the sheet, and shows once the top list has scrolled off */
+    var pill = document.getElementById('pill');
+    pill.addEventListener('click', function (e) { e.preventDefault(); sx.classList.add('sheetx--open'); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        pill.classList.toggle('pill--show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
+      }, { threshold: 0 }).observe(document.querySelector('.filters'));
+    }
 
     /* each book lists its subjects; the current one is [x], tap it to clear, tap another to switch */
     function pick(name) {
