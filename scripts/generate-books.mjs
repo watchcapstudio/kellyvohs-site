@@ -182,7 +182,16 @@ ${rows}    </div>
     var src = document.querySelectorAll('.filters .ix');
     src.forEach(function (r) {
       var c = r.cloneNode(true);
-      c.addEventListener('click', function (e) { e.preventDefault(); r.dispatchEvent(new Event('click')); });
+      c.addEventListener('click', function (e) {
+        e.preventDefault();
+        r.dispatchEvent(new Event('click'));
+        /* land on the first book of the new group, just under the strip */
+        var first = document.querySelector('.list .tb:not([hidden])');
+        if (first) {
+          var y = first.getBoundingClientRect().top + window.scrollY - pin.getBoundingClientRect().bottom - 32;
+          window.scrollTo({ top: y, behavior: 'auto' });
+        }
+      });
       inner.appendChild(c);
     });
     function sync() {
