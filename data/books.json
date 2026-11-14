@@ -1,8 +1,11 @@
 [
   {
-    "rank": 1,
     "title": "Principles",
     "author": "Ray Dalio",
+    "tags": [
+      "Business",
+      "Thinking"
+    ],
     "summary": "Ray Dalio lays out the rules he developed for decision-making in life and at Bridgewater, the investment firm he founded. The core ideas are radical open-mindedness, radical transparency, and learning from mistakes.",
     "highlights": [
       "Maturity is the ability to reject good alternatives in order to pursue even better ones.",
@@ -11,9 +14,11 @@
     ]
   },
   {
-    "rank": 2,
     "title": "Meditations",
     "author": "Marcus Aurelius",
+    "tags": [
+      "Stoicism"
+    ],
     "summary": "The private notebook of a Roman emperor, written as reminders to himself. He returns again and again to controlling his own judgments, accepting what he can't change, and treating other people well.",
     "highlights": [
       "The impediment to action advances action. What stands in the way becomes the way.",
@@ -22,9 +27,11 @@
     ]
   },
   {
-    "rank": 3,
     "title": "The Laws of Human Nature",
     "author": "Robert Greene",
+    "tags": [
+      "Mind"
+    ],
     "summary": "A guide to the patterns that drive human behavior, including narcissism, envy, conformity, and short-term thinking. Greene uses historical examples to show how to recognize these traits in others and in yourself.",
     "highlights": [
       "Human desire is never an individual phenomenon. We are social creatures and what we want almost always reflects what other people want.",
@@ -33,9 +40,11 @@
     ]
   },
   {
-    "rank": 4,
     "title": "Letters From a Stoic",
     "author": "Seneca",
+    "tags": [
+      "Stoicism"
+    ],
     "summary": "A collection of letters Seneca wrote to his friend Lucilius late in life. They give practical advice on fear, wealth, friendship, time, and death from a Stoic point of view.",
     "highlights": [
       "We suffer more often in imagination than in reality.",
@@ -44,9 +53,11 @@
     ]
   },
   {
-    "rank": 5,
     "title": "101 Essays That Will Change the Way You Think",
     "author": "Brianna Wiest",
+    "tags": [
+      "Living"
+    ],
     "summary": "A collection of short essays on emotions, habits, happiness, and self-sabotage. Most argue that how you interpret your life matters more than the circumstances themselves.",
     "highlights": [
       "Clarity comes from doing, not thinking about doing.",
@@ -55,9 +66,12 @@
     ]
   },
   {
-    "rank": 6,
     "title": "The Almanack of Naval Ravikant",
     "author": "Eric Jorgenson",
+    "tags": [
+      "Business",
+      "Living"
+    ],
     "summary": "A compilation of Naval Ravikant's tweets, interviews, and essays, organized into two parts: building wealth and finding happiness. It covers leverage, specific knowledge, long-term thinking, and peace of mind.",
     "highlights": [
       "Desire is a contract you make with yourself to be unhappy until you get what you want. I don’t think most of us realize that’s what it is.",
@@ -66,9 +80,12 @@
     ]
   },
   {
-    "rank": 7,
     "title": "The Courage to Be Disliked",
     "author": "Ichiro Kishimi & Fumitake Koga",
+    "tags": [
+      "Mind",
+      "Living"
+    ],
     "summary": "A dialogue between a philosopher and a young man that explains Alfred Adler's psychology. It argues that the past doesn't determine who you are, that most problems are about relationships, and that freedom means not living for others' approval.",
     "highlights": [
       "We do not lack ability. We just lack courage. It all comes down to courage.",
@@ -77,9 +94,12 @@
     ]
   },
   {
-    "rank": 8,
     "title": "Stillness Is the Key",
     "author": "Ryan Holiday",
+    "tags": [
+      "Stoicism",
+      "Living"
+    ],
     "summary": "Holiday draws on Stoic, Buddhist, and other traditions to argue that calm focus is the basis for good thinking and good work. The book is split into three parts: mind, spirit, and body.",
     "highlights": [
       "The one thing you can’t escape in your life is yourself.",
@@ -88,9 +108,11 @@
     ]
   },
   {
-    "rank": 9,
     "title": "Mastery",
     "author": "Robert Greene",
+    "tags": [
+      "Craft"
+    ],
     "summary": "Greene studies the lives of masters such as Darwin, Faraday, and da Vinci to describe the path to excellence in a field. That path runs from finding your calling, through a long apprenticeship, to creative work.",
     "highlights": [
       "Some people never become who they are; they stop trusting themselves; they conform to the tastes of others, and they end up wearing a mask that hides their true identity.",
@@ -99,9 +121,11 @@
     ]
   },
   {
-    "rank": 10,
     "title": "Clear Thinking",
     "author": "Shane Parrish",
+    "tags": [
+      "Thinking"
+    ],
     "summary": "Parrish argues that most bad decisions happen in ordinary moments, when emotion, ego, social pressure, or habit react before reasoning starts. The book covers how to spot those defaults and set up habits and conditions for better judgment.",
     "highlights": [
       "Wisdom is turning your future hindsight into your current foresight.",
@@ -110,9 +134,11 @@
     ]
   },
   {
-    "rank": 11,
     "title": "The 21 Irrefutable Laws of Leadership",
     "author": "John C. Maxwell",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Maxwell sets out 21 principles of leadership, such as influence, trust, priorities and succession. Each one comes with examples from business, sports, the military and history.",
     "highlights": [
       "leadership cannot be awarded, appointed, or assigned. It comes only from influence, and that cannot be mandated. It must be earned. The only thing a title can buy is a little time—either to increase your level of influence with others or to undermine it.",
@@ -121,9 +147,11 @@
     ]
   },
   {
-    "rank": 12,
     "title": "Ego Is the Enemy",
     "author": "Ryan Holiday",
+    "tags": [
+      "Stoicism"
+    ],
     "summary": "Holiday argues that ego, meaning an unhealthy belief in your own importance, gets in the way at every stage: when you are starting out, when you succeed and when you fail. He draws on Stoic philosophy and historical figures to make the case for humility and steady work.",
     "highlights": [
       "What is rare is not raw talent, skill, or even confidence, but humility, diligence, and self-awareness.",
@@ -132,9 +160,11 @@
     ]
   },
   {
-    "rank": 13,
     "title": "Lessons From an American Stoic",
     "author": "Mark Matousek",
+    "tags": [
+      "Philosophy"
+    ],
     "summary": "Matousek presents Ralph Waldo Emerson's ideas as practical guidance. He organizes them into lessons on originality, perspective, nonconformity, resilience, courage and love, and ties them to Stoic thought.",
     "highlights": [
       "Seeing your narrative come apart before your eyes proves how arbitrary your personal fictions are.",
@@ -143,9 +173,11 @@
     ]
   },
   {
-    "rank": 14,
     "title": "The Speed of Trust",
     "author": "Stephen M.R. Covey",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Covey argues that trust is a measurable factor in business: when trust is high, work moves faster and costs less. He breaks credibility into integrity, intent, capabilities and results, and lists behaviors that build or restore trust.",
     "highlights": [
       "when trust is low, speed goes down and cost goes up. When trust is high, speed goes up and cost goes down.",
@@ -154,9 +186,11 @@
     ]
   },
   {
-    "rank": 15,
     "title": "Aristotle's Way",
     "author": "Edith Hall",
+    "tags": [
+      "Philosophy"
+    ],
     "summary": "Hall, a classicist, explains Aristotle's ethics as a practical guide to a happy life. The book covers finding your potential, making decisions, communicating, building character, friendship and facing death.",
     "highlights": [
       "Aristotle believed that if you train yourself to be good, by working on your virtues and controlling your vices, you will discover that a happy state of mind comes from habitually doing the right thing.",
@@ -165,9 +199,12 @@
     ]
   },
   {
-    "rank": 16,
     "title": "The 9 Types of Leadership",
     "author": "Beatrice Chestnut",
+    "tags": [
+      "Leadership",
+      "Mind"
+    ],
     "summary": "Chestnut uses the Enneagram to describe nine personality types and how each one tends to lead. She argues that good leadership depends on noticing your own habitual, defensive patterns and working past them.",
     "highlights": [
       "Most of all, leaders (and all of us) need effective ways to learn to be kinder and more compassionate with ourselves and with others, and less defensive, reactive, and inflexible in the ways we respond to the people and events around us.",
@@ -176,9 +213,11 @@
     ]
   },
   {
-    "rank": 17,
     "title": "The 33 Strategies of War",
     "author": "Robert Greene",
+    "tags": [
+      "Thinking"
+    ],
     "summary": "Greene takes 33 strategies from military history and applies them to conflict in everyday life and work. They cover defense, offense, unconventional tactics and self-command.",
     "highlights": [
       "Getting along with other people is an important skill to have, but it comes with a danger: by always seeking the path of least resistance, the path of conciliation, you forget who you are, and you sink into the center with everyone else.",
@@ -187,9 +226,12 @@
     ]
   },
   {
-    "rank": 18,
     "title": "The Courage to Be Happy",
     "author": "Ichiro Kishimi & Fumitake Koga",
+    "tags": [
+      "Mind",
+      "Living"
+    ],
     "summary": "This sequel to The Courage to Be Disliked is a dialogue between a philosopher and a young teacher about Alfred Adler's psychology. It covers praise and punishment, self-reliance, work, friendship and love.",
     "highlights": [
       "The past does not decide now. It is your now that decides the past.",
@@ -198,9 +240,11 @@
     ]
   },
   {
-    "rank": 19,
     "title": "Heroic Leadership",
     "author": "Chris Lowney",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Lowney, a former Jesuit seminarian who became a banker, looks at how the Jesuits built a lasting global organization. He identifies four principles behind it: self-awareness, ingenuity, love and heroism.",
     "highlights": [
       "Only those who know their weaknesses can deal with them or even hope to conquer them.",
@@ -209,9 +253,11 @@
     ]
   },
   {
-    "rank": 20,
     "title": "The Effective Executive",
     "author": "Peter F. Drucker",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Drucker describes the habits that make knowledge workers and managers effective: knowing where their time goes, focusing on contribution, building on strengths, doing first things first and making sound decisions.",
     "highlights": [
       "People in general, and knowledge workers in particular, grow according to the demands they make on themselves.",
@@ -220,9 +266,11 @@
     ]
   },
   {
-    "rank": 21,
     "title": "Scaling People",
     "author": "Claire Hughes Johnson",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "A manager's handbook from Stripe's former COO on building a company's operating system as it grows: planning, hiring, team development, feedback, and communication. It pairs frameworks with templates and exercises for leaders at growing companies.",
     "highlights": [
       "I often think of my work as a manager as clearing the path my team will need to travel. Anything that slows them down is on me.",
@@ -231,9 +279,11 @@
     ]
   },
   {
-    "rank": 22,
     "title": "Working Backwards",
     "author": "Colin Bryar & Bill Carr",
+    "tags": [
+      "Business"
+    ],
     "summary": "Two longtime Amazon executives describe the company's management practices, including single-threaded leadership, six-page narratives, the PR/FAQ process, Bar Raiser hiring, and input metrics. They show how those practices shaped Kindle, Prime, Prime Video, and AWS.",
     "highlights": [
       "“The best way to fail at inventing something is by making it somebody’s part-time job.”",
@@ -242,9 +292,11 @@
     ]
   },
   {
-    "rank": 23,
     "title": "Play Bigger",
     "author": "Al Ramadan, Dave Peterson, Christopher Lochhead & Kevin Maney",
+    "tags": [
+      "Business"
+    ],
     "summary": "The authors argue that the most valuable companies create and define new market categories rather than compete in existing ones. The book lays out \"category design\": framing the problem, writing a point of view, and designing product, company, and category together.",
     "highlights": [
       "A company that best frames a problem is the company that often comes to define and take the category. Put another way: winning companies today market the problem, not just the solution.",
@@ -253,9 +305,11 @@
     ]
   },
   {
-    "rank": 24,
     "title": "Four Thousand Weeks",
     "author": "Oliver Burkeman",
+    "tags": [
+      "Living"
+    ],
     "summary": "A book about time management that starts from the fact that the average life lasts about four thousand weeks. Burkeman argues that trying to get everything done makes things worse, and that accepting limits and making hard choices leads to a better use of time.",
     "highlights": [
       "Productivity is a trap. Becoming more efficient just makes you more rushed, and trying to clear the decks simply makes them fill up again faster.",
@@ -264,9 +318,11 @@
     ]
   },
   {
-    "rank": 25,
     "title": "On Writing Well",
     "author": "William Zinsser",
+    "tags": [
+      "Craft"
+    ],
     "summary": "A guide to writing nonfiction, covering clarity, simplicity, cutting clutter, rewriting, and writing in your own voice. Later chapters apply those principles to interviews, travel, memoir, science, business, and criticism.",
     "highlights": [
       "If you find that writing is hard, it’s because it is hard.",
@@ -275,9 +331,11 @@
     ]
   },
   {
-    "rank": 26,
     "title": "The Daily Stoic",
     "author": "Ryan Holiday & Stephen Hanselman",
+    "tags": [
+      "Stoicism"
+    ],
     "summary": "A year of daily readings, each pairing a passage from Marcus Aurelius, Seneca, Epictetus, or another Stoic with a short commentary. The readings are grouped into monthly themes such as clarity, judgment, acceptance, and mortality.",
     "highlights": [
       "Ask yourself: What haven’t I considered? Why is this thing the way it is? Am I part of the problem here or the solution? Could I be wrong here?",
@@ -286,9 +344,11 @@
     ]
   },
   {
-    "rank": 27,
     "title": "What You Do Is Who You Are",
     "author": "Ben Horowitz",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Horowitz argues that a company's culture is defined by what its people actually do, not by stated values. He draws on examples like the Haitian revolution, the samurai, Genghis Khan, and a prison gang leader to show how leaders shape culture through their actions.",
     "highlights": [
       "If you aren’t yourself, even you won’t follow you.",
@@ -297,9 +357,11 @@
     ]
   },
   {
-    "rank": 28,
     "title": "Dare to Lead",
     "author": "Brené Brown",
+    "tags": [
+      "Leadership"
+    ],
     "summary": "Brown applies her research on vulnerability, shame, and courage to leadership. She covers how leaders can build trust, give honest feedback, live by their values, and recover from setbacks.",
     "highlights": [
       "Clear is kind. Unclear is unkind.",
@@ -308,9 +370,11 @@
     ]
   },
   {
-    "rank": 29,
     "title": "A Calendar of Wisdom",
     "author": "Leo Tolstoy",
+    "tags": [
+      "Philosophy"
+    ],
     "summary": "A collection Tolstoy compiled late in life with one reading for each day of the year. It mixes his own thoughts with sayings from philosophers, religious texts, and writers on topics like kindness, work, wealth, and self-improvement.",
     "highlights": [
       "If you want to do a good deed, do it now. The time will pass, and you will not have the chance again.",
@@ -319,9 +383,11 @@
     ]
   },
   {
-    "rank": 30,
     "title": "Fallen Leaves",
     "author": "Will Durant",
+    "tags": [
+      "Philosophy"
+    ],
     "summary": "Short essays the historian wrote near the end of his life, published after his death. He gives his views on youth, aging, religion, war, politics, art, science, education, and death.",
     "highlights": [
       "Life is that which is discontent, which struggles and seeks, which suffers and creates.",
@@ -330,9 +396,11 @@
     ]
   },
   {
-    "rank": 31,
     "title": "Lighter",
     "author": "Yung Pueblo",
+    "tags": [
+      "Living"
+    ],
     "summary": "A short book on emotional healing and self-awareness, drawing on meditation practice. It covers letting go of old reactions, managing ego, and how personal change affects relationships and community.",
     "highlights": [
       "your first reaction is your past your intentional response is your present",
@@ -341,9 +409,11 @@
     ]
   },
   {
-    "rank": 32,
     "title": "BE 2.0",
     "author": "Jim Collins",
+    "tags": [
+      "Business"
+    ],
     "summary": "An updated edition of Collins's 1992 guide for small and mid-sized companies that want to last. It covers leadership, getting the right people, vision and values, strategy, and day-to-day execution.",
     "highlights": [
       "How do you know if you have a truly great business? Warren Buffett has the best answer: You don’t have to hold a prayer meeting to raise prices.",
@@ -352,9 +422,11 @@
     ]
   },
   {
-    "rank": 33,
     "title": "What They Forgot to Teach You at School",
     "author": "The School of Life",
+    "tags": [
+      "Living"
+    ],
     "summary": "A collection of short essays on the emotional skills school leaves out. Topics include self-compassion, kindness, repairing relationships, managing moods, and living with anxiety.",
     "highlights": [
       "Hating ourselves is the easy bit. Learning to give ourselves a break is the true, rare and properly adult achievement.",
@@ -363,9 +435,11 @@
     ]
   },
   {
-    "rank": 34,
     "title": "Antifragile",
     "author": "Nassim Nicholas Taleb",
+    "tags": [
+      "Thinking"
+    ],
     "summary": "Taleb argues that some things gain from volatility, stress, and disorder, and calls them antifragile. He applies the idea to health, economics, innovation, and ethics, and argues for limiting downside while leaving room for upside.",
     "highlights": [
       "Antifragility is beyond resilience or robustness. The resilient resists shocks and stays the same; the antifragile gets better.",
@@ -374,9 +448,11 @@
     ]
   },
   {
-    "rank": 35,
     "title": "The Bhagavad Gita",
     "author": "Eknath Easwaran (translator)",
+    "tags": [
+      "Philosophy"
+    ],
     "summary": "A Hindu scripture in which Krishna advises the warrior Arjuna before a battle. Easwaran's translation and introductions explain its teachings on duty, selfless action, detachment from results, and meditation.",
     "highlights": [
       "Since the Self is the core of every personality, no one needs to acquire goodness or compassion; they are already there. All that is necessary is to remove the selfish habits that hide them.",
@@ -385,9 +461,12 @@
     ]
   },
   {
-    "rank": 36,
     "title": "Truman",
     "author": "David McCullough",
+    "tags": [
+      "History",
+      "Leadership"
+    ],
     "summary": "A biography of Harry S. Truman, from his Missouri farm upbringing through the Senate and his presidency. It covers the end of World War II, the Marshall Plan, and the early Cold War.",
     "highlights": [
       "Always be nice to the people who can’t talk back to you.",
@@ -396,9 +475,11 @@
     ]
   },
   {
-    "rank": 37,
     "title": "Zero to One",
     "author": "Peter Thiel",
+    "tags": [
+      "Business"
+    ],
     "summary": "Thiel's notes on startups, built around the idea that real progress comes from creating new things, not copying existing ones. He argues that great companies escape competition, build monopolies, and rest on a secret others have missed.",
     "highlights": [
       "What important truth do very few people agree with you on?",
@@ -407,9 +488,11 @@
     ]
   },
   {
-    "rank": 38,
     "title": "As a Man Thinketh",
     "author": "James Allen",
+    "tags": [
+      "Living"
+    ],
     "summary": "A short 1903 essay arguing that a person's character and circumstances come from their habitual thoughts. Allen says that changing how you think is the way to change your life.",
     "highlights": [
       "Men do not attract that which they want, but that which they are.",
@@ -418,9 +501,11 @@
     ]
   },
   {
-    "rank": 39,
     "title": "It Doesn't Have to Be Crazy at Work",
     "author": "Jason Fried & David Heinemeier Hansson",
+    "tags": [
+      "Business"
+    ],
     "summary": "The founders of Basecamp describe how they run a calm company. They cover 40-hour weeks, protecting time and attention, writing instead of meeting, and avoiding growth at all costs.",
     "highlights": [
       "A fractured hour isn’t really an hour—it’s a mess of minutes.",
@@ -429,9 +514,11 @@
     ]
   },
   {
-    "rank": 40,
     "title": "From Strength to Strength",
     "author": "Arthur C. Brooks",
+    "tags": [
+      "Living"
+    ],
     "summary": "Brooks looks at professional decline in middle age and how to handle it. He suggests shifting from raw problem-solving to wisdom and teaching, letting go of success addiction, and investing in relationships.",
     "highlights": [
       "Satisfaction comes not from chasing bigger and bigger things, but paying attention to smaller and smaller things.",
