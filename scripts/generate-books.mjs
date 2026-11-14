@@ -32,7 +32,8 @@ const card = (b, rank) =>
     (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') +
     (b.firstOrder != null ? ' data-first="' + b.firstOrder + '"' : '') +
     (b.firstOrder == null ? ' hidden' : '') + '>\n' +
-  '        <p class="tb__t">' + esc(b.title).toUpperCase() + '<br /><span class="tb__a">' + esc(b.author) + '</span></p>\n' +
+  '        <div class="tb__head"><p class="tb__t">' + esc(b.title).toUpperCase() + '<br /><span class="tb__a">' + esc(b.author) + '</span></p>' +
+    '<p class="tb__subj">' + b.tags.map((t) => '<a href="#" data-s="' + esc(t) + '"><span class="ix__box"></span>' + esc(t) + '</a>').join('') + '</p></div>\n' +
   '        <p class="tb__s">' + esc(b.summary) + '</p>\n' +
   b.highlights.slice(0, 3).map((h) => '        <p class="tb__q">&ldquo;' + esc(h) + '&rdquo;</p>\n').join('') +
   '      </section>\n';
@@ -91,6 +92,13 @@ const html = `<!DOCTYPE html>
   .tb[hidden] { display: none; }
   .tb__t { letter-spacing: 0.06em; text-shadow: 0.6px 0 0 currentColor; }
   .tb__a { letter-spacing: 0; text-shadow: none; color: var(--muted); display: inline-block; margin-top: 0.3em; }
+  .tb__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .tb__subj { font-size: 12px !important; line-height: 2 !important; text-align: right; flex: none; max-width: 40%; padding-top: 4px; }
+  .tb__subj a { display: block; color: var(--muted); text-decoration: none; white-space: nowrap; }
+  .tb__subj a:hover { color: var(--fg); }
+  .tb__subj a.on { color: var(--fg); }
+  .tb__subj a.on .ix__box { color: var(--accent); margin-right: 0.4em; }
+  .tb__subj a.on .ix__box::before { content: "[x]"; }
   .tb__s { margin-top: 1.4em !important; }
   .tb__q { margin: 2.2em 0 0 2.5em !important; text-shadow: 0.6px 0 0 currentColor; }
   .tb__q + .tb__q { margin-top: 1.6em !important; }
@@ -100,8 +108,6 @@ const html = `<!DOCTYPE html>
   /* on this page the bar's search spot reads "Subjects" and the thumb's "find" reads "subjects" */
   .books .bar__search { display: none; }
   .books .thumb__search .thumb__caret { display: none; }
-  .books .bar__link .ix__box, .books .thumb__search .ix__box { color: var(--accent); margin-right: 0.4em; }
-  .books .bar__link .ix__box:hover, .books .thumb__search .ix__box:hover { color: var(--fg); }
 
   /* the subjects sheet: one piece of paper, typed */
   .sheetx { position: fixed; inset: 0; z-index: 170; background: rgba(10, 10, 10, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
@@ -118,6 +124,9 @@ const html = `<!DOCTYPE html>
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
+    .tb__head { display: block; }
+    .tb__subj { text-align: left; max-width: none; margin-top: 0.6em !important; }
+    .tb__subj a { display: inline; margin-right: 1.2em; }
   }
 </style>
 </head>
@@ -211,29 +220,32 @@ ${rows}    </div>
     }
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
     sync();
-    /* the bar and thumb show the current subject, typed; [x] clears it, the name opens the sheet */
-    var barS = document.getElementById('barSubjects'), ts = document.querySelector('.thumb__search');
-    if (ts) { ts.removeAttribute('data-search'); ts.innerHTML = ''; }
-    function label(el, lower) {
+    /* the bar and thumb read "Subjects" and open the sheet */
+    function open(e) { e.preventDefault(); e.stopImmediatePropagation(); sx.classList.add('sheetx--open'); }
+    document.getElementById('barSubjects').addEventListener('click', open);
+    var ts = document.querySelector('.thumb__search');
+    if (ts) { ts.removeAttribute('data-search'); ts.innerHTML = 'subjects'; ts.addEventListener('click', open, true); }
+
+    /* each book lists its subjects; the current one is [x], tap it to clear, tap another to switch */
+    function pick(name) {
+      var r = document.querySelector('.filters .ix[data-f="' + name + '"]');
+      if (!r) return;
+      r.dispatchEvent(new Event('click'));
+      var first = document.querySelector('.list .tb:not([hidden])');
+      if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
+    }
+    function mark() {
       var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
-      if (on === 'All of them') { el.innerHTML = lower ? 'subjects' : 'Subjects'; return; }
-      el.innerHTML = '<span class="ix__box" data-clear>[x]</span>' + (lower ? on.toLowerCase() : on);
+      document.querySelectorAll('.tb__subj a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-s') === on); });
     }
-    function relabel() { label(barS, false); if (ts) label(ts, true); }
-    function act(e) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      if (e.target.hasAttribute('data-clear')) {
-        document.querySelector('.filters .ix[data-f="All of them"]').dispatchEvent(new Event('click'));
-        var first = document.querySelector('.list .tb:not([hidden])');
-        if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
-      } else {
-        sx.classList.add('sheetx--open');
-      }
-    }
-    barS.addEventListener('click', act);
-    if (ts) ts.addEventListener('click', act, true);
-    src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(relabel, 0); }); });
-    relabel();
+    document.querySelectorAll('.tb__subj a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        pick(a.classList.contains('on') ? 'All of them' : a.getAttribute('data-s'));
+      });
+    });
+    src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(mark, 0); }); });
+    mark();
     sx.addEventListener('click', function (e) { if (e.target === sx) sx.classList.remove('sheetx--open'); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') sx.classList.remove('sheetx--open'); });
   })();
