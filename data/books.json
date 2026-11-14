@@ -623,6 +623,7 @@
     "title": "The Score Takes Care of Itself",
     "author": "Bill Walsh",
     "tags": [
+      "Read these first",
       "Leadership Shelf"
     ],
     "summary": "The former 49ers coach explains how he turned a losing team into a champion by setting a standard of performance for every job in the organization, on the view that if the standards and daily habits are right, the wins follow.",
@@ -630,7 +631,8 @@
       "Expertise coupled with strength of will is going to prevail.",
       "No one will ever come back to you later and say \"thank you\" for expecting too little of them."
     ],
-    "shelfOrder": 8
+    "shelfOrder": 8,
+    "firstOrder": 4
   },
   {
     "title": "Wooden on Leadership",
@@ -708,7 +710,6 @@
     "title": "Measure What Matters",
     "author": "John Doerr",
     "tags": [
-      "Read these first",
       "Leadership Shelf",
       "Business"
     ],
@@ -716,8 +717,7 @@
     "highlights": [
       "“Bad companies,” Andy wrote, “are destroyed by crisis. Good companies survive them. Great companies are improved by them.”"
     ],
-    "shelfOrder": 4,
-    "firstOrder": 4
+    "shelfOrder": 4
   },
   {
     "title": "Good to Great",
