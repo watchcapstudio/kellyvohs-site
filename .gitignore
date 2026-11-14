@@ -17,6 +17,7 @@ smart-operator/
 data/*
 !data/letters.json
 !data/share.json
+!data/books.json
 
 # Claude
 .claude/
