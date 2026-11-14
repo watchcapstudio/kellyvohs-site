@@ -1,5 +1,6 @@
 /* generate-books.mjs — writes pages/books.html (served at /books) from
-   data/books.json: the books I've highlighted most in Readwise, each with tags,
+   data/books.json: the books I've highlighted most in Readwise plus the Leadership
+   Shelf picks, each with tags,
    a short summary and two of my highlights. Order = data/books.json order.
 
    To refresh: update data/books.json, then  npm run build
@@ -9,8 +10,10 @@ import { bar, FOOT } from './chrome.mjs';
 
 // Kept in file order: most-highlighted first.
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
-const TAGS = [...new Set(books.flatMap((b) => b.tags))]
-  .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length);
+const SHELF = 'Leadership Shelf';
+// Chips: the Leadership Shelf first, then topics by how many books carry them.
+const TAGS = [SHELF, ...[...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== SHELF)
+  .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length)];
 
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -19,23 +22,20 @@ const TITLE = 'Books';
 const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
 const URL = 'https://kellyvohs.com/books';
 
-// The Leadership Shelf: a hand-picked list shown above the main list, in file order.
-const shelf = JSON.parse(await readFile('data/shelf.json', 'utf8'));
-
 const card = (b) =>
-  '      <section class="b"' + (b.tags ? ' data-tags="' + esc(b.tags.join(' ')) + '"' : '') + '>\n' +
+  '      <section class="b" data-tags="' + esc(b.tags.join('|')) + '"' +
+    (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') + '>\n' +
   '        <h3 class="b__title">' + esc(b.title) + '</h3>\n' +
   '        <div class="b__author">' + esc(b.author) + '</div>\n' +
-  (b.tags ? '        <div class="b__tags">' + b.tags.map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>\n' : '') +
+  '        <div class="b__tags">' + b.tags.filter((t) => t !== SHELF).map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>\n' +
   '        <p class="b__sum">' + esc(b.summary) + '</p>\n' +
   b.highlights.slice(0, 2).map((h) => '        <blockquote class="q">' + esc(h) + '</blockquote>\n').join('') +
   '      </section>\n';
 
-const rows = books.map(card).join('');
-const shelfRows = shelf.map(card).join('');
+const rows = books.map((b, i) => card(b).replace('<section class="b" ', '<section class="b" data-rank="' + i + '" ')).join('');
 
 const chips = '<div class="chips"><button class="chip chip--on" type="button" data-f="all">All</button>' +
-  TAGS.map((t) => '<button class="chip" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
+  TAGS.map((t) => '<button class="chip' + (t === SHELF ? ' chip--shelf' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
   '</div>';
 
 const html = `<!DOCTYPE html>
@@ -64,22 +64,21 @@ const html = `<!DOCTYPE html>
   .books .sheet { padding-top: 84px; padding-bottom: 84px; }
   .intro { color: var(--muted); margin-top: 18px; font-size: 15px; line-height: 1.8; }
 
-  .books .typedbody h2.sec, h2.sec {
-    font-size: 12px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
-    margin: 72px 0 0; padding-bottom: 12px; border-bottom: 1px solid var(--fg);
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 8px; }
   .chip {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 6px 12px; border: 1px solid var(--hairline); border-radius: 999px;
     background: none; color: var(--fg); cursor: pointer;
   }
+  .chip--shelf { color: var(--accent); border-color: var(--accent); font-weight: 700; }
   .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
+  .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 
   .b { padding: 44px 0; border-bottom: 1px solid var(--hairline); }
   .b:last-child { border-bottom: 0; }
   .b__title { font-size: 19px; line-height: 1.35; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; margin: 0; }
   .b__author { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .b__tags:empty { display: none; }
   .b__tags { margin-top: 10px; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
   .b__tags span + span::before { content: "·"; margin: 0 0.6em; color: var(--muted); }
   .b__sum { margin-top: 18px; font-size: 15px; line-height: 1.85; color: rgba(10, 10, 10, 0.72); }
@@ -101,12 +100,6 @@ ${bar(null)}
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
     <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
-
-    <h2 class="sec">Leadership Shelf</h2>
-    <div class="shelf">
-${shelfRows}    </div>
-
-    <h2 class="sec">Most highlighted</h2>
     ${chips}
     <div class="list">
 ${rows}    </div>
@@ -132,9 +125,18 @@ ${rows}    </div>
     c.addEventListener('click', function () {
       chips.forEach(function (x) { x.classList.toggle('chip--on', x === c); });
       var f = c.getAttribute('data-f');
-      document.querySelectorAll('.list .b').forEach(function (b) {
-        b.hidden = !(f === 'all' || b.getAttribute('data-tags').split(' ').indexOf(f) > -1);
+      var list = document.querySelector('.list');
+      var items = Array.prototype.slice.call(list.querySelectorAll('.b'));
+      items.forEach(function (b) {
+        b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
+      /* the Shelf reads in Kelly's order; everything else by highlight count */
+      var key = f === 'Leadership Shelf' ? 'shelf' : 'rank';
+      items.sort(function (a, b) {
+        var ka = key === 'shelf' ? +a.getAttribute('data-shelf') : +a.getAttribute('data-rank');
+        var kb = key === 'shelf' ? +b.getAttribute('data-shelf') : +b.getAttribute('data-rank');
+        return ka - kb;
+      }).forEach(function (b) { list.appendChild(b); });
     });
   });
 </script>
