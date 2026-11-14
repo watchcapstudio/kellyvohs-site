@@ -161,7 +161,7 @@ for (let i = 0; i < items.length; i++) {
 
 // ── sitemap ─────────────────────────────────────────────────────────────────
 const today = new Date(data.items[0]?.pubDate || Date.now()).toISOString().slice(0, 10);
-const routes = ['/', '/sundays', '/made', '/photography', '/type', '/coffee', '/resume'];
+const routes = ['/', '/sundays', '/made', '/books', '/photography', '/type', '/coffee', '/resume'];
 const urls = [];
 for (const r of routes) urls.push('  <url><loc>' + SITE + r + '</loc></url>');
 for (const it of items) {
