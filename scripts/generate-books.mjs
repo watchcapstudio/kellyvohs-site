@@ -105,12 +105,20 @@ const html = `<!DOCTYPE html>
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
-  /* the subjects pill: always there, bottom center, red letters */
-  .pill { position: fixed; left: 50%; transform: translateX(-50%); z-index: 160; bottom: calc(24px + env(safe-area-inset-bottom));
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  /* the subjects pill: bottom center, red letters, shown once you start scrolling;
+     the filter you're on sits just above it, [x] to clear */
+  .pillwrap { position: fixed; left: 50%; transform: translate(-50%, 8px); z-index: 160; bottom: calc(24px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+  .pillwrap--show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .pill { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
     background: var(--paper); border: 1px solid var(--hairline); border-radius: 999px; padding: 10px 18px; text-decoration: none;
     box-shadow: 0 8px 24px -14px rgba(10, 10, 10, 0.5); }
   .pill:hover { border-color: var(--accent); }
+  .pillnow { font-family: var(--mono); font-size: 12px; color: var(--fg); background: var(--paper); padding: 4px 10px; border-radius: 999px; white-space: nowrap; text-decoration: none; }
+  .pillnow[hidden] { display: none; }
+  .pillnow .ix__box { color: var(--accent); margin-right: 0.4em; }
+  .pillnow:hover .ix__box { color: var(--fg); }
 
   /* the subjects sheet: one piece of paper, typed */
   .sheetx { position: fixed; inset: 0; z-index: 170; background: rgba(10, 10, 10, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
@@ -124,7 +132,7 @@ const html = `<!DOCTYPE html>
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
     .sheetx__paper { left: 0; right: 0; bottom: 0; border-width: 1px 0 0; padding: 28px 24px 40px; max-height: 80vh; overflow: auto; transform: translateY(100%); }
-    .pill { bottom: calc(28px + env(safe-area-inset-bottom)); }
+    .pillwrap { bottom: calc(28px + env(safe-area-inset-bottom)); }
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
@@ -138,9 +146,9 @@ const html = `<!DOCTYPE html>
 
 <div class="carriage" id="carriage"></div>
 
-${bar(null)}
+${bar('books')}
 
-<a href="#" class="pill" id="pill">Subjects</a>
+<div class="pillwrap" id="pillwrap"><a href="#" class="pillnow" id="pillnow" hidden></a><a href="#" class="pill" id="pill">Subjects</a></div>
 <div class="sheetx" id="sheetx"><div class="sheetx__paper" id="sheetpaper"></div></div>
 
 <div class="desk">
@@ -225,8 +233,24 @@ ${rows}    </div>
     }
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
     sync();
-    /* the pill opens the sheet */
+    /* the pill opens the sheet; it shows once you've scrolled; the line above it names the filter, [x] clears */
+    var wrap = document.getElementById('pillwrap'), now = document.getElementById('pillnow');
     document.getElementById('pill').addEventListener('click', function (e) { e.preventDefault(); sx.classList.add('sheetx--open'); });
+    function showPill() { wrap.classList.toggle('pillwrap--show', window.scrollY > 120); }
+    window.addEventListener('scroll', showPill, { passive: true }); showPill();
+    function nowLabel() {
+      var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
+      now.hidden = on === 'All of them';
+      now.innerHTML = '<span class="ix__box">[x]</span>' + on;
+    }
+    now.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector('.filters .ix[data-f="All of them"]').dispatchEvent(new Event('click'));
+      var first = document.querySelector('.list .tb:not([hidden])');
+      if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
+    });
+    src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(nowLabel, 0); }); });
+    nowLabel();
 
     /* each book lists its subjects; the current one is [x], tap it to clear, tap another to switch */
     function pick(name) {

@@ -5,7 +5,8 @@
   var ROOMS = [
     { href: '/', label: 'Photos' },
     { href: '/sundays', label: 'Sundays' },
-    { href: '/made', label: 'Made' }
+    { href: '/made', label: 'Made' },
+    { href: '/books', label: 'Books' }
   ];
 
   function isHere(href) {
@@ -21,6 +22,7 @@
   rows += rowFor(ROOMS[1]);
   rows += '<a class="moresheet__row" href="/sundays#catalog">Find</a>';
   rows += rowFor(ROOMS[2]);
+  rows += rowFor(ROOMS[3]);
   rows += '<button class="moresheet__row" data-subscribe>Subscribe</button>';
   sheet.innerHTML = '<div class="moresheet__panel">' + rows + '</div>';
   document.body.appendChild(sheet);
