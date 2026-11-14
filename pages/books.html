@@ -21,17 +21,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../styles/archive.css?v=15" />
 <style>
-  .books .sheet { max-width: 720px; padding: 120px 110px 160px; }
+  .books .sheet { max-width: 760px; padding: 96px 110px 160px; }
   .intro { margin-top: 18px; font-size: 15px; line-height: 1.9; color: var(--muted); }
 
   /* the index: typed checkboxes */
-  .filters { margin: 64px 0 128px; font-size: 15px; line-height: 2.1; }
+  .filters { margin: 40px 0 80px; font-size: 15px; line-height: 2.1; }
   .ix { display: block; color: var(--muted); text-decoration: none; white-space: nowrap; }
   .ix:hover { color: var(--fg); }
   .ix--on { color: var(--fg); }
   .ix--on .ix__box { color: var(--accent); }
   .ix__box { white-space: pre; }
-  .topics { margin-top: 2.1em; columns: 2; column-gap: 2em; }
+  .topics { margin-top: 1.6em; columns: 3; column-gap: 1.5em; }
   .topics .ix { break-inside: avoid; }
 
   /* a book: one face, one size, one weight */
@@ -47,8 +47,8 @@
 
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
-    .filters { margin: 48px 0 96px; }
-    .topics { columns: 1; }
+    .filters { margin: 36px 0 72px; }
+    .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
   }
 </style>
@@ -63,7 +63,6 @@
 
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
-    <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
 
     <div class="filters">
     <div class="lists"><a href="#" class="ix ix--on" data-f="Ones I give away"><span class="ix__box">[x]</span> Ones I give away</a></div>
