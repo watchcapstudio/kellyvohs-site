@@ -16,18 +16,23 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const TITLE = 'Books';
-const DESC = 'The books I’ve highlighted the most, with a short summary and a few of the lines I kept from each.';
+const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
 const URL = 'https://kellyvohs.com/books';
 
-const rows = books.map((b) =>
-  '      <section class="b" data-tags="' + esc(b.tags.join(' ')) + '">\n' +
-  '        <h2 class="b__title">' + esc(b.title) + '</h2>\n' +
+// The Leadership Shelf: a hand-picked list shown above the main list, in file order.
+const shelf = JSON.parse(await readFile('data/shelf.json', 'utf8'));
+
+const card = (b) =>
+  '      <section class="b"' + (b.tags ? ' data-tags="' + esc(b.tags.join(' ')) + '"' : '') + '>\n' +
+  '        <h3 class="b__title">' + esc(b.title) + '</h3>\n' +
   '        <div class="b__author">' + esc(b.author) + '</div>\n' +
-  '        <div class="b__tags">' + b.tags.map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>\n' +
+  (b.tags ? '        <div class="b__tags">' + b.tags.map((t) => '<span>' + esc(t) + '</span>').join('') + '</div>\n' : '') +
   '        <p class="b__sum">' + esc(b.summary) + '</p>\n' +
   b.highlights.slice(0, 2).map((h) => '        <blockquote class="q">' + esc(h) + '</blockquote>\n').join('') +
-  '      </section>\n'
-).join('');
+  '      </section>\n';
+
+const rows = books.map(card).join('');
+const shelfRows = shelf.map(card).join('');
 
 const chips = '<div class="chips"><button class="chip chip--on" type="button" data-f="all">All</button>' +
   TAGS.map((t) => '<button class="chip" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
@@ -59,7 +64,11 @@ const html = `<!DOCTYPE html>
   .books .sheet { padding-top: 84px; padding-bottom: 84px; }
   .intro { color: var(--muted); margin-top: 18px; font-size: 15px; line-height: 1.8; }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 8px; }
+  .books .typedbody h2.sec, h2.sec {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    margin: 72px 0 0; padding-bottom: 12px; border-bottom: 1px solid var(--fg);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
   .chip {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 6px 12px; border: 1px solid var(--hairline); border-radius: 999px;
@@ -92,6 +101,12 @@ ${bar(null)}
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
     <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
+
+    <h2 class="sec">Leadership Shelf</h2>
+    <div class="shelf">
+${shelfRows}    </div>
+
+    <h2 class="sec">Most highlighted</h2>
     ${chips}
     <div class="list">
 ${rows}    </div>
@@ -117,7 +132,7 @@ ${rows}    </div>
     c.addEventListener('click', function () {
       chips.forEach(function (x) { x.classList.toggle('chip--on', x === c); });
       var f = c.getAttribute('data-f');
-      document.querySelectorAll('.b').forEach(function (b) {
+      document.querySelectorAll('.list .b').forEach(function (b) {
         b.hidden = !(f === 'all' || b.getAttribute('data-tags').split(' ').indexOf(f) > -1);
       });
     });
