@@ -67,9 +67,9 @@
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
     <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
-    <div class="chips"><button class="chip" type="button" data-f="all">All</button><button class="chip chip--shelf chip--on" type="button" data-f="The five I give away">The five I give away</button><button class="chip chip--shelf" type="button" data-f="Leadership Shelf">Leadership Shelf</button><button class="chip" type="button" data-f="Business">Business</button><button class="chip" type="button" data-f="Living">Living</button><button class="chip" type="button" data-f="Stoicism">Stoicism</button><button class="chip" type="button" data-f="Philosophy">Philosophy</button><button class="chip" type="button" data-f="Thinking">Thinking</button><button class="chip" type="button" data-f="Mind">Mind</button><button class="chip" type="button" data-f="Craft">Craft</button><button class="chip" type="button" data-f="History">History</button></div>
+    <div class="chips"><button class="chip" type="button" data-f="all">All</button><button class="chip chip--shelf chip--on" type="button" data-f="The ones I give away">The ones I give away</button><button class="chip chip--shelf" type="button" data-f="Leadership Shelf">Leadership Shelf</button><button class="chip" type="button" data-f="Business">Business</button><button class="chip" type="button" data-f="Living">Living</button><button class="chip" type="button" data-f="Stoicism">Stoicism</button><button class="chip" type="button" data-f="Philosophy">Philosophy</button><button class="chip" type="button" data-f="Thinking">Thinking</button><button class="chip" type="button" data-f="Mind">Mind</button><button class="chip" type="button" data-f="Craft">Craft</button><button class="chip" type="button" data-f="History">History</button></div>
     <div class="list">
-      <section class="f" data-rank="48" data-tags="The five I give away|Leadership Shelf" data-shelf="0" data-first="0">
+      <section class="f" data-rank="48" data-tags="The ones I give away|Leadership Shelf" data-shelf="0" data-first="0">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">Wooden on Leadership</span><span class="f__by">John Wooden</span></div>
           <p class="f__q">The score will take care of itself when you take care of the effort that precedes the score.</p>
@@ -77,7 +77,7 @@
           <p class="f__q2">Reputation is what others perceive you as being, and their opinion may be right or wrong. Character, however, is what you really are, and nobody truly knows that but you. But you are what matters most.</p>
         </div>
       </section>
-      <section class="f" data-rank="19" data-tags="The five I give away|Leadership Shelf" data-shelf="1" data-first="1">
+      <section class="f" data-rank="19" data-tags="The ones I give away|Leadership Shelf" data-shelf="1" data-first="1">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Effective Executive</span><span class="f__by">Peter F. Drucker</span></div>
           <p class="f__q">People in general, and knowledge workers in particular, grow according to the demands they make on themselves.</p>
@@ -85,7 +85,7 @@
           <p class="f__q2">Strong people always have strong weaknesses too.</p>
         </div>
       </section>
-      <section class="f" data-rank="46" data-tags="The five I give away|Leadership Shelf|Business" data-shelf="2" data-first="2">
+      <section class="f" data-rank="46" data-tags="The ones I give away|Leadership Shelf|Business" data-shelf="2" data-first="2">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">High Output Management</span><span class="f__by">Andrew S. Grove</span><span class="f__tags">Business</span></div>
           <p class="f__q">The output of a manager is the output of the organizational unit under his or her supervision or influence.</p>
@@ -93,7 +93,7 @@
           <p class="f__q2">Training is quite simply one of the highest leverage activities a manager can perform.</p>
         </div>
       </section>
-      <section class="f" data-rank="51" data-tags="The five I give away|Leadership Shelf|Business" data-shelf="3" data-first="3">
+      <section class="f" data-rank="51" data-tags="The ones I give away|Leadership Shelf|Business" data-shelf="3" data-first="3">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Hard Thing About Hard Things</span><span class="f__by">Ben Horowitz</span><span class="f__tags">Business</span></div>
           <p class="f__q">People always ask me, “What’s the secret to being a successful CEO?” Sadly, there is no secret, but if there is one skill that stands out, it’s the ability to focus and make the best move when there are no good moves.</p>
@@ -101,7 +101,7 @@
           <p class="f__q2">A healthy company culture encourages people to share bad news. A company that discusses its problems freely and openly can quickly solve them. A company that covers up its problems frustrates everyone involved.</p>
         </div>
       </section>
-      <section class="f" data-rank="47" data-tags="The five I give away|Leadership Shelf" data-shelf="8" data-first="4">
+      <section class="f" data-rank="47" data-tags="The ones I give away|Leadership Shelf" data-shelf="8" data-first="4">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Score Takes Care of Itself</span><span class="f__by">Bill Walsh</span></div>
           <p class="f__q">Expertise coupled with strength of will is going to prevail.</p>
@@ -109,7 +109,7 @@
           <p class="f__q2">No one will ever come back to you later and say &quot;thank you&quot; for expecting too little of them.</p>
         </div>
       </section>
-      <section class="f" data-rank="40" data-tags="The five I give away|Living" data-first="5">
+      <section class="f" data-rank="40" data-tags="The ones I give away|Living" data-first="5">
         <div class="f__body">
           <div class="f__meta"><span class="f__title">The Lion Tracker's Guide to Life</span><span class="f__by">Boyd Varty</span><span class="f__tags">Living</span></div>
           <p class="f__q">I don’t know where we are going but I know exactly how to get there might be the motto of the great tracker.</p>
@@ -541,7 +541,7 @@
         b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
       /* the two picked lists read in Kelly's order; everything else by highlight count */
-      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The five I give away' ? 'data-first' : 'data-rank';
+      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The ones I give away' ? 'data-first' : 'data-rank';
       items.sort(function (a, b) {
         return (+a.getAttribute(attr) || 0) - (+b.getAttribute(attr) || 0);
       }).forEach(function (b) { list.appendChild(b); });

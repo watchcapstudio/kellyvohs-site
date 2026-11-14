@@ -11,7 +11,7 @@ import { bar, FOOT } from './chrome.mjs';
 // Kept in file order: most-highlighted first.
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
 const SHELF = 'Leadership Shelf';
-const FIRST = 'The five I give away';
+const FIRST = 'The ones I give away';
 const SPECIAL = [FIRST, SHELF];
 // Chips: the Leadership Shelf first, then topics by how many books carry them.
 const TAGS = [...SPECIAL, ...[...new Set(books.flatMap((b) => b.tags))].filter((t) => !SPECIAL.includes(t))
@@ -43,7 +43,7 @@ const card = (b) => {
     '      </section>\n';
 };
 
-// The page opens on "The five I give away": those five in Kelly's order, everything
+// The page opens on "The ones I give away": those five in Kelly's order, everything
 // else hidden until a chip is tapped. data-rank restores count order.
 const ranked = books.map((b, i) => ({ b, i }));
 const opening = [...ranked].sort((x, y) => {
@@ -158,7 +158,7 @@ ${rows}    </div>
         b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
       /* the two picked lists read in Kelly's order; everything else by highlight count */
-      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The five I give away' ? 'data-first' : 'data-rank';
+      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The ones I give away' ? 'data-first' : 'data-rank';
       items.sort(function (a, b) {
         return (+a.getAttribute(attr) || 0) - (+b.getAttribute(attr) || 0);
       }).forEach(function (b) { list.appendChild(b); });
