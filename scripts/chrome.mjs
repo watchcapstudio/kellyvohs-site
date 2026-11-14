@@ -32,7 +32,7 @@ export function bar(active) {
           room('/sundays', 'Sundays', 'sundays') +
           '<button class="bar__link" data-search>Catalog</button>' +
           room('/made', 'Made', 'made') +
-          room('/books', 'Books', 'books') +
+          room('/books', 'Reading', 'books') +
           '<button class="bar__link" data-subscribe>Subscribe</button>' +
         '</nav>' +
       '</div>' +
@@ -45,5 +45,5 @@ export function bar(active) {
 
 export const FOOT =
   '<footer class="foot">' +
-    '<p><a href="/">PHOTOS</a> · <a href="/sundays">SUNDAYS</a> · <a href="/made">MADE</a> · <a href="/books">BOOKS</a></p>' +
+    '<p><a href="/">PHOTOS</a> · <a href="/sundays">SUNDAYS</a> · <a href="/made">MADE</a> · <a href="/books">READING</a></p>' +
   '</footer>';

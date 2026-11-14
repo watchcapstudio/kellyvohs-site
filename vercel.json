@@ -84,6 +84,11 @@
   ],
   "redirects": [
     {
+      "source": "/reading",
+      "destination": "/books",
+      "permanent": false
+    },
+    {
       "source": "/type",
       "destination": "https://watchcapstudio.com/type",
       "permanent": true
