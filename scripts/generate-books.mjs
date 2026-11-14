@@ -41,10 +41,19 @@ const card = (b) => {
     '      </section>\n';
 };
 
-const rows = books.map((b, i) => card(b).replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ')).join('');
+// The page opens on the Leadership Shelf: shelf books first in Kelly's order,
+// everything else hidden until a chip is tapped. data-rank restores count order.
+const ranked = books.map((b, i) => ({ b, i }));
+const opening = [...ranked].sort((x, y) => {
+  const sx = x.b.shelfOrder ?? 1e9, sy = y.b.shelfOrder ?? 1e9;
+  return sx - sy || x.i - y.i;
+});
+const rows = opening.map(({ b, i }) => card(b)
+  .replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ' + (b.shelfOrder == null ? 'hidden ' : ''))
+).join('');
 
-const chips = '<div class="chips"><button class="chip chip--on" type="button" data-f="all">All</button>' +
-  TAGS.map((t) => '<button class="chip' + (t === SHELF ? ' chip--shelf' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
+const chips = '<div class="chips"><button class="chip" type="button" data-f="all">All</button>' +
+  TAGS.map((t) => '<button class="chip' + (t === SHELF ? ' chip--shelf chip--on' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
   '</div>';
 
 const html = `<!DOCTYPE html>
@@ -87,6 +96,7 @@ const html = `<!DOCTYPE html>
 
   .f { display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; padding: 56px 0; border-bottom: 1px solid var(--hairline); }
   .f:last-child { border-bottom: 0; }
+  .f[hidden] { display: none; }
   .f__no { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; padding-top: 10px; }
   .f__no::before { content: counter(book, decimal-leading-zero); }
   .list { counter-reset: book; }
