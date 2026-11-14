@@ -17,6 +17,7 @@
     "title": "Meditations",
     "author": "Marcus Aurelius",
     "tags": [
+      "Ones I give away",
       "Stoicism"
     ],
     "summary": "The private notebook of a Roman emperor, written as reminders to himself. He returns again and again to controlling his own judgments, accepting what he can't change, and treating other people well.",
@@ -24,7 +25,8 @@
       "The impediment to action advances action. What stands in the way becomes the way.",
       "It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.",
       "Perfection of character: to live your last day, every day, without frenzy, or sloth, or pretense."
-    ]
+    ],
+    "firstOrder": 8
   },
   {
     "title": "The Laws of Human Nature",
@@ -111,6 +113,7 @@
     "title": "Mastery",
     "author": "Robert Greene",
     "tags": [
+      "Ones I give away",
       "Craft"
     ],
     "summary": "Greene studies the lives of masters such as Darwin, Faraday, and da Vinci to describe the path to excellence in a field. That path runs from finding your calling, through a long apprenticeship, to creative work.",
@@ -118,7 +121,8 @@
       "Some people never become who they are; they stop trusting themselves; they conform to the tastes of others, and they end up wearing a mask that hides their true identity.",
       "The moment that you rest, thinking that you have attained the level you desire, a part of your mind enters a phase of decay.",
       "The road to mastery requires patience. You will have to keep your focus on five or ten years down the road, when you will reap the rewards of your efforts."
-    ]
+    ],
+    "firstOrder": 7
   },
   {
     "title": "Clear Thinking",
@@ -611,6 +615,21 @@
       "If you give a good idea to a mediocre team, they will screw it up. If you give a mediocre idea to a brilliant team, they will either fix it or throw it away and come up with something better."
     ],
     "shelfOrder": 19
+  },
+  {
+    "title": "How to Live",
+    "author": "Derek Sivers",
+    "tags": [
+      "Ones I give away",
+      "Living"
+    ],
+    "summary": "Twenty-seven short chapters, each arguing for a different way to live, and each contradicting the last. Sivers makes the case for every one of them and leaves the choosing to you.",
+    "highlights": [
+      "Mastery is not about doing many things. It’s about doing one thing insanely well. The more you take on, the less you’ll achieve. Say no to everything but your mission. This is your one contribution to the world.",
+      "If you avoid pain, you avoid what you really want.",
+      "We overestimate what we can do in one year. We underestimate what we can do in ten years."
+    ],
+    "firstOrder": 6
   },
   {
     "title": "High Growth Handbook",
