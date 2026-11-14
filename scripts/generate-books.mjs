@@ -93,8 +93,19 @@ const html = `<!DOCTYPE html>
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
+  /* the pinned strip: one typed line under the site bar once the index scrolls off */
+  .pin { position: fixed; left: 0; right: 0; top: 56px; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono); font-size: 13px; line-height: 56px; white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding: 0 24px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; scrollbar-width: none; }
+  .pin::-webkit-scrollbar { display: none; }
+  .pin--show { transform: none; opacity: 1; pointer-events: auto; }
+  .pin__in { max-width: 760px; margin: 0 auto; padding: 0 86px; }
+  .pin .ix { display: inline; margin-right: 1.6em; }
+
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
+    .pin { top: 47px; line-height: 48px; padding: 0 16px; }
+    .pin__in { padding: 0; }
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
@@ -106,6 +117,8 @@ const html = `<!DOCTYPE html>
 <div class="carriage" id="carriage"></div>
 
 ${bar(null)}
+
+<div class="pin" id="pin"><div class="pin__in"></div></div>
 
 <div class="desk">
 
@@ -162,6 +175,32 @@ ${rows}    </div>
     });
   });
   document.querySelector('.ix--on').dispatchEvent(new Event('click'));
+
+  /* the pinned strip mirrors the index and appears once it scrolls off */
+  (function () {
+    var pin = document.getElementById('pin'), inner = pin.querySelector('.pin__in');
+    var src = document.querySelectorAll('.filters .ix');
+    src.forEach(function (r) {
+      var c = r.cloneNode(true);
+      c.addEventListener('click', function (e) { e.preventDefault(); r.dispatchEvent(new Event('click')); });
+      inner.appendChild(c);
+    });
+    function sync() {
+      var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
+      inner.querySelectorAll('.ix').forEach(function (x) {
+        var is = x.getAttribute('data-f') === on;
+        x.classList.toggle('ix--on', is);
+        x.querySelector('.ix__box').innerHTML = is ? '[x]' : '[&nbsp;]';
+      });
+    }
+    src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
+    sync();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        pin.classList.toggle('pin--show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
+      }, { threshold: 0 }).observe(document.querySelector('.filters'));
+    }
+  })();
 </script>
 
 <script src="../js/archive-menu.js?v=3"></script>
