@@ -52,13 +52,12 @@
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
-  /* the subjects pill: top on desktop, bottom on phone, shown once the list scrolls off */
-  .pill { position: fixed; left: 50%; transform: translate(-50%, -8px); z-index: 160; top: 76px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg);
+  /* the subjects pill: always there, bottom center, red letters */
+  .pill { position: fixed; left: 50%; transform: translateX(-50%); z-index: 160; bottom: calc(24px + env(safe-area-inset-bottom));
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
     background: var(--paper); border: 1px solid var(--hairline); border-radius: 999px; padding: 10px 18px; text-decoration: none;
-    box-shadow: 0 8px 24px -14px rgba(10, 10, 10, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; }
-  .pill--show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
-  .pill:hover { border-color: var(--fg); }
+    box-shadow: 0 8px 24px -14px rgba(10, 10, 10, 0.5); }
+  .pill:hover { border-color: var(--accent); }
 
   /* the subjects sheet: one piece of paper, typed */
   .sheetx { position: fixed; inset: 0; z-index: 170; background: rgba(10, 10, 10, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
@@ -72,8 +71,7 @@
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
     .sheetx__paper { left: 0; right: 0; bottom: 0; border-width: 1px 0 0; padding: 28px 24px 40px; max-height: 80vh; overflow: auto; transform: translateY(100%); }
-    .pill { top: auto; bottom: 84px; transform: translate(-50%, 8px); }
-    .pill--show { transform: translate(-50%, 0); }
+    .pill { bottom: calc(28px + env(safe-area-inset-bottom)); }
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
@@ -566,14 +564,8 @@
     }
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
     sync();
-    /* the pill opens the sheet, and shows once the top list has scrolled off */
-    var pill = document.getElementById('pill');
-    pill.addEventListener('click', function (e) { e.preventDefault(); sx.classList.add('sheetx--open'); });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        pill.classList.toggle('pill--show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
-      }, { threshold: 0 }).observe(document.querySelector('.filters'));
-    }
+    /* the pill opens the sheet */
+    document.getElementById('pill').addEventListener('click', function (e) { e.preventDefault(); sx.classList.add('sheetx--open'); });
 
     /* each book lists its subjects; the current one is [x], tap it to clear, tap another to switch */
     function pick(name) {

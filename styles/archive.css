@@ -116,36 +116,24 @@ html[data-desk="off"] .bar { background: var(--paper); }
 }
 .bar__mag:hover { color: var(--fg); }
 
-/* ── the thumb bar: a search line and a MORE, with room to breathe ───── */
+/* ── the thumb: one floating circle, bottom right, holding the MORE ─────
+   (the old find line is gone; Find lives inside the MORE sheet) */
 .thumb {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  right: 16px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
   z-index: 150;
   display: none;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
   background: var(--paper);
-  border-top: 1px solid var(--hairline);
-  padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  box-shadow: 0 10px 26px -14px rgba(10, 10, 10, 0.55);
 }
-.thumb__search {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  text-align: left;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: var(--faint);
-  background: none;
-  border: none;
-  padding: 14px 4px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-}
+.thumb__search { display: none; }
 .thumb__caret {
   flex: none;
   width: 2px;
@@ -160,7 +148,7 @@ html[data-desk="off"] .bar { background: var(--paper); }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 14px 6px 14px 14px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 4.5px;
@@ -654,7 +642,7 @@ html[data-accent="carbon"] .catalog__row--current .catalog__title {
   .print--framed { width: calc(100% - 32px); padding: 12px 12px 10px; }
   .print--framed figcaption { padding: 12px 2px 0; }
   .thumb { display: flex; }
-  .foot { padding-bottom: 140px; }
+  .foot { padding-bottom: 110px; }
   .submodal__sheet { padding: 36px 26px 30px; }
   .submodal__form { flex-direction: column; align-items: stretch; }
   .submodal__btn { padding: 14px 0; }
