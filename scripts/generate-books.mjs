@@ -2,6 +2,10 @@
    data/books.json. Typed, one face, one size: title in caps, author, a short
    summary, then up to three quotes indented. Books separated by * * *.
 
+   The subjects list sits once at the top. Mid-page, the site bar's search spot
+   reads "Subjects" (and the thumb bar's "find" reads "subjects"); either opens
+   the same list as a typed sheet. Nothing is pinned.
+
    The page opens on "Ones I give away" (firstOrder = Kelly's order). Other
    filters show by highlight count (file order), except Leadership, which keeps
    Kelly's shelf order (shelfOrder) with the rest appended by count.
@@ -93,19 +97,24 @@ const html = `<!DOCTYPE html>
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
-  /* the pinned strip: one typed line under the site bar once the index scrolls off */
-  .pin { position: fixed; left: 0; right: 0; top: 56px; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--hairline);
-    font-family: var(--mono); font-size: 13px; line-height: 56px; white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    padding: 0 24px; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; scrollbar-width: none; }
-  .pin::-webkit-scrollbar { display: none; }
-  .pin--show { transform: none; opacity: 1; pointer-events: auto; }
-  .pin__in { max-width: 760px; margin: 0 auto; padding: 0 86px; }
-  .pin .ix { display: inline; margin-right: 1.6em; }
+  /* on this page the bar's search spot reads "Subjects" and the thumb's "find" reads "subjects" */
+  .books .bar__search { display: none; }
+  .books .thumb__search .thumb__caret { display: none; }
+  .books .bar__link .ix__box, .books .thumb__search .ix__box { color: var(--accent); margin-right: 0.4em; }
+  .books .bar__link .ix__box:hover, .books .thumb__search .ix__box:hover { color: var(--fg); }
+
+  /* the subjects sheet: one piece of paper, typed */
+  .sheetx { position: fixed; inset: 0; z-index: 170; background: rgba(10, 10, 10, 0.28); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .sheetx--open { opacity: 1; pointer-events: auto; }
+  .sheetx__paper { position: absolute; background: var(--paper); border: 1px solid var(--hairline); padding: 36px 44px 40px; transform: translateY(12px); transition: transform 0.22s ease; }
+  .sheetx--open .sheetx__paper { transform: none; }
+  .sheetx .ix { font-size: 15px; line-height: 2.3; }
+  .sheetx .gap { height: 1.2em; }
+  @media (min-width: 761px) { .sheetx__paper { left: 50%; top: 120px; width: 360px; margin-left: -180px; } }
 
   @media (max-width: 760px) {
     .books .sheet { padding: 72px 24px 120px; }
-    .pin { top: 47px; line-height: 48px; padding: 0 16px; }
-    .pin__in { padding: 0; }
+    .sheetx__paper { left: 0; right: 0; bottom: 0; border-width: 1px 0 0; padding: 28px 24px 40px; max-height: 80vh; overflow: auto; transform: translateY(100%); }
     .filters { margin: 36px 0 72px; }
     .topics { columns: 2; column-gap: 1em; }
     .tb__q { margin-left: 1.5em !important; }
@@ -116,9 +125,9 @@ const html = `<!DOCTYPE html>
 
 <div class="carriage" id="carriage"></div>
 
-${bar(null)}
+${bar(null).replace('<nav class="bar__links">', '<nav class="bar__links"><a class="bar__link" href="#" id="barSubjects">Subjects</a>')}
 
-<div class="pin" id="pin"><div class="pin__in"></div></div>
+<div class="sheetx" id="sheetx"><div class="sheetx__paper" id="sheetpaper"></div></div>
 
 <div class="desk">
 
@@ -176,27 +185,25 @@ ${rows}    </div>
   });
   document.querySelector('.ix--on').dispatchEvent(new Event('click'));
 
-  /* the pinned strip mirrors the index and appears once it scrolls off */
+  /* the subjects sheet: a copy of the list, opened from the bar or the thumb */
   (function () {
-    var pin = document.getElementById('pin'), inner = pin.querySelector('.pin__in');
+    var sx = document.getElementById('sheetx'), paper = document.getElementById('sheetpaper');
     var src = document.querySelectorAll('.filters .ix');
-    src.forEach(function (r) {
+    src.forEach(function (r, i) {
+      if (i === 1) { var g = document.createElement('div'); g.className = 'gap'; paper.appendChild(g); }
       var c = r.cloneNode(true);
       c.addEventListener('click', function (e) {
         e.preventDefault();
         r.dispatchEvent(new Event('click'));
-        /* land on the first book of the new group, just under the strip */
+        sx.classList.remove('sheetx--open');
         var first = document.querySelector('.list .tb:not([hidden])');
-        if (first) {
-          var y = first.getBoundingClientRect().top + window.scrollY - pin.getBoundingClientRect().bottom - 32;
-          window.scrollTo({ top: y, behavior: 'auto' });
-        }
+        if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
       });
-      inner.appendChild(c);
+      paper.appendChild(c);
     });
     function sync() {
       var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
-      inner.querySelectorAll('.ix').forEach(function (x) {
+      paper.querySelectorAll('.ix').forEach(function (x) {
         var is = x.getAttribute('data-f') === on;
         x.classList.toggle('ix--on', is);
         x.querySelector('.ix__box').innerHTML = is ? '[x]' : '[&nbsp;]';
@@ -204,11 +211,31 @@ ${rows}    </div>
     }
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(sync, 0); }); });
     sync();
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        pin.classList.toggle('pin--show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0);
-      }, { threshold: 0 }).observe(document.querySelector('.filters'));
+    /* the bar and thumb show the current subject, typed; [x] clears it, the name opens the sheet */
+    var barS = document.getElementById('barSubjects'), ts = document.querySelector('.thumb__search');
+    if (ts) { ts.removeAttribute('data-search'); ts.innerHTML = ''; }
+    function label(el, lower) {
+      var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
+      if (on === 'All of them') { el.innerHTML = lower ? 'subjects' : 'Subjects'; return; }
+      el.innerHTML = '<span class="ix__box" data-clear>[x]</span>' + (lower ? on.toLowerCase() : on);
     }
+    function relabel() { label(barS, false); if (ts) label(ts, true); }
+    function act(e) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      if (e.target.hasAttribute('data-clear')) {
+        document.querySelector('.filters .ix[data-f="All of them"]').dispatchEvent(new Event('click'));
+        var first = document.querySelector('.list .tb:not([hidden])');
+        if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
+      } else {
+        sx.classList.add('sheetx--open');
+      }
+    }
+    barS.addEventListener('click', act);
+    if (ts) ts.addEventListener('click', act, true);
+    src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(relabel, 0); }); });
+    relabel();
+    sx.addEventListener('click', function (e) { if (e.target === sx) sx.classList.remove('sheetx--open'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') sx.classList.remove('sheetx--open'); });
   })();
 </script>
 
