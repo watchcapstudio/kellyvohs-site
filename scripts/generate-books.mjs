@@ -23,7 +23,7 @@ const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GI
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const TITLE = 'Books';
+const TITLE = 'Reading';
 const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
 const URL = 'https://kellyvohs.com/books';
 
@@ -154,7 +154,7 @@ ${bar('books')}
 <div class="desk">
 
   <article class="sheet">
-    <h1 class="typedtitle">Books</h1>
+    <h1 class="typedtitle">Reading</h1>
 
     <div class="filters">
     ${filters}
