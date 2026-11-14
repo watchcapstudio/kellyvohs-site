@@ -137,7 +137,7 @@
     "title": "The 21 Irrefutable Laws of Leadership",
     "author": "John C. Maxwell",
     "tags": [
-      "Leadership"
+      "Business"
     ],
     "summary": "Maxwell sets out 21 principles of leadership, such as influence, trust, priorities and succession. Each one comes with examples from business, sports, the military and history.",
     "highlights": [
@@ -176,8 +176,7 @@
     "title": "The Speed of Trust",
     "author": "Stephen M.R. Covey",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Covey argues that trust is a measurable factor in business: when trust is high, work moves faster and costs less. He breaks credibility into integrity, intent, capabilities and results, and lists behaviors that build or restore trust.",
     "highlights": [
@@ -204,7 +203,6 @@
     "title": "The 9 Types of Leadership",
     "author": "Beatrice Chestnut",
     "tags": [
-      "Leadership",
       "Mind"
     ],
     "summary": "Chestnut uses the Enneagram to describe nine personality types and how each one tends to lead. She argues that good leadership depends on noticing your own habitual, defensive patterns and working past them.",
@@ -245,7 +243,7 @@
     "title": "Heroic Leadership",
     "author": "Chris Lowney",
     "tags": [
-      "Leadership"
+      "Business"
     ],
     "summary": "Lowney, a former Jesuit seminarian who became a banker, looks at how the Jesuits built a lasting global organization. He identifies four principles behind it: self-awareness, ingenuity, love and heroism.",
     "highlights": [
@@ -258,8 +256,8 @@
     "title": "The Effective Executive",
     "author": "Peter F. Drucker",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Read these first",
+      "Leadership Shelf"
     ],
     "summary": "Drucker describes the habits that make knowledge workers and managers effective: knowing where their time goes, focusing on contribution, building on strengths, doing first things first and making sound decisions.",
     "highlights": [
@@ -267,14 +265,14 @@
       "Strong people always have strong weaknesses too.",
       "a decision that has to satisfy two different and at bottom incompatible specifications is not a decision but a prayer for a miracle"
     ],
-    "shelfOrder": 1
+    "shelfOrder": 1,
+    "firstOrder": 1
   },
   {
     "title": "Scaling People",
     "author": "Claire Hughes Johnson",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "A manager's handbook from Stripe's former COO on building a company's operating system as it grows: planning, hiring, team development, feedback, and communication. It pairs frameworks with templates and exercises for leaders at growing companies.",
     "highlights": [
@@ -355,8 +353,7 @@
     "title": "What You Do Is Who You Are",
     "author": "Ben Horowitz",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Horowitz argues that a company's culture is defined by what its people actually do, not by stated values. He draws on examples like the Haitian revolution, the samurai, Genghis Khan, and a prison gang leader to show how leaders shape culture through their actions.",
     "highlights": [
@@ -370,8 +367,7 @@
     "title": "Dare to Lead",
     "author": "Brené Brown",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Brown applies her research on vulnerability, shame, and courage to leadership. She covers how leaders can build trust, give honest feedback, live by their values, and recover from setbacks.",
     "highlights": [
@@ -478,8 +474,7 @@
     "title": "Truman",
     "author": "David McCullough",
     "tags": [
-      "History",
-      "Leadership"
+      "History"
     ],
     "summary": "A biography of Harry S. Truman, from his Missouri farm upbringing through the Senate and his presidency. It covers the end of World War II, the Marshall Plan, and the early Cold War.",
     "highlights": [
@@ -544,8 +539,7 @@
     "title": "The Captain Class",
     "author": "Sam Walker",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "A study of the most dominant teams in sports history, which finds that the common factor was not a star player or coach but a captain who did unglamorous work, held the team to a high standard, and led mostly through example and private conversation.",
     "highlights": [
@@ -559,7 +553,6 @@
     "author": "Reed Hastings & Erin Meyer",
     "tags": [
       "Leadership Shelf",
-      "Leadership",
       "Business"
     ],
     "summary": "Netflix's co-founder and a business professor explain the company's culture: hire very strong people, pay them well, ask for constant candid feedback, and then remove most rules and approvals so they can make their own decisions.",
@@ -573,8 +566,7 @@
     "title": "The CEO Test",
     "author": "Adam Bryant & Kevin Sharer",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Drawing on interviews with hundreds of CEOs, the authors lay out the core tests of leadership: writing a simple plan, building culture and a strong team, leading change, listening, and handling a crisis.",
     "highlights": [
@@ -588,7 +580,6 @@
     "author": "Ed Catmull & Amy Wallace",
     "tags": [
       "Leadership Shelf",
-      "Leadership",
       "Craft"
     ],
     "summary": "Pixar's co-founder explains how the studio protects creative work: candid feedback on early drafts, treating failure as part of the process, and managers whose job is to find and remove the hidden problems that block good people.",
@@ -616,8 +607,8 @@
     "title": "High Output Management",
     "author": "Andrew S. Grove",
     "tags": [
+      "Read these first",
       "Leadership Shelf",
-      "Leadership",
       "Business"
     ],
     "summary": "Intel's former CEO treats management like production: a manager's output is the output of their team, so their time should go to the work with the most leverage.",
@@ -625,14 +616,14 @@
       "The output of a manager is the output of the organizational unit under his or her supervision or influence.",
       "Training is quite simply one of the highest leverage activities a manager can perform."
     ],
-    "shelfOrder": 2
+    "shelfOrder": 2,
+    "firstOrder": 2
   },
   {
     "title": "The Score Takes Care of Itself",
     "author": "Bill Walsh",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "The former 49ers coach explains how he turned a losing team into a champion by setting a standard of performance for every job in the organization, on the view that if the standards and daily habits are right, the wins follow.",
     "highlights": [
@@ -645,15 +636,16 @@
     "title": "Wooden on Leadership",
     "author": "John Wooden",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Read these first",
+      "Leadership Shelf"
     ],
     "summary": "John Wooden, who won ten NCAA titles at UCLA, explains how he led: focus on effort and preparation over winning, and teach character along with skill.",
     "highlights": [
       "The score will take care of itself when you take care of the effort that precedes the score.",
       "Reputation is what others perceive you as being, and their opinion may be right or wrong. Character, however, is what you really are, and nobody truly knows that but you. But you are what matters most."
     ],
-    "shelfOrder": 0
+    "shelfOrder": 0,
+    "firstOrder": 0
   },
   {
     "title": "Only the Paranoid Survive",
@@ -674,7 +666,6 @@
     "author": "Geoff Smart & Randy Street",
     "tags": [
       "Leadership Shelf",
-      "Leadership",
       "Business"
     ],
     "summary": "A practical hiring method: define the outcomes a role must deliver in a scorecard, source candidates through referrals, and use structured interviews to find people who can actually hit those outcomes.",
@@ -688,6 +679,7 @@
     "title": "The Hard Thing About Hard Things",
     "author": "Ben Horowitz",
     "tags": [
+      "Read these first",
       "Leadership Shelf",
       "Business"
     ],
@@ -696,14 +688,14 @@
       "People always ask me, “What’s the secret to being a successful CEO?” Sadly, there is no secret, but if there is one skill that stands out, it’s the ability to focus and make the best move when there are no good moves.",
       "A healthy company culture encourages people to share bad news. A company that discusses its problems freely and openly can quickly solve them. A company that covers up its problems frustrates everyone involved."
     ],
-    "shelfOrder": 3
+    "shelfOrder": 3,
+    "firstOrder": 3
   },
   {
     "title": "Call Sign Chaos",
     "author": "Jim Mattis & Bing West",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Jim Mattis on what he learned leading Marines over four decades, from commanding a platoon to running U.S. Central Command.",
     "highlights": [
@@ -716,6 +708,7 @@
     "title": "Measure What Matters",
     "author": "John Doerr",
     "tags": [
+      "Read these first",
       "Leadership Shelf",
       "Business"
     ],
@@ -723,7 +716,8 @@
     "highlights": [
       "“Bad companies,” Andy wrote, “are destroyed by crisis. Good companies survive them. Great companies are improved by them.”"
     ],
-    "shelfOrder": 4
+    "shelfOrder": 4,
+    "firstOrder": 4
   },
   {
     "title": "Good to Great",
@@ -740,8 +734,7 @@
     "title": "The Inspiring Leader",
     "author": "John H. Zenger & Joseph Folkman",
     "tags": [
-      "Leadership Shelf",
-      "Leadership"
+      "Leadership Shelf"
     ],
     "summary": "Zenger and Folkman use data on thousands of leaders to show which behaviors make a leader inspiring, and how to build them.",
     "highlights": [],
