@@ -1,21 +1,20 @@
 /* generate-books.mjs — writes pages/books.html (served at /books) from
-   data/books.json: the books I've highlighted most in Readwise plus the Leadership
-   Shelf picks, each with tags,
-   a short summary and two of my highlights. Order = data/books.json order.
+   data/books.json. Typed, one face, one size: title in caps, author, a short
+   summary, then up to three quotes indented. Books separated by * * *.
 
-   To refresh: update data/books.json, then  npm run build
+   The page opens on "Ones I give away" (firstOrder = Kelly's order). Other
+   filters show by highlight count (file order), except Leadership, which keeps
+   Kelly's shelf order (shelfOrder) with the rest appended by count.
+
+   To refresh: edit data/books.json, then  npm run build
    Header/footer come from scripts/chrome.mjs like every other page. */
 import { readFile, writeFile } from 'node:fs/promises';
 import { bar, FOOT } from './chrome.mjs';
 
-// Kept in file order: most-highlighted first.
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
-const SHELF = 'Leadership Shelf';
-const FIRST = 'The ones I give away';
-const SPECIAL = [FIRST, SHELF];
-// Chips: the Leadership Shelf first, then topics by how many books carry them.
-const TAGS = [...SPECIAL, ...[...new Set(books.flatMap((b) => b.tags))].filter((t) => !SPECIAL.includes(t))
-  .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length)];
+const GIVE = 'Ones I give away';
+const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GIVE)
+  .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length);
 
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -24,39 +23,28 @@ const TITLE = 'Books';
 const DESC = 'The books I’ve highlighted the most, and a few of the lines I kept.';
 const URL = 'https://kellyvohs.com/books';
 
-const card = (b) => {
-  const tags = b.tags.filter((t) => !SPECIAL.includes(t));
-  const [lead, second] = b.highlights;
-  return '      <section class="f" data-tags="' + esc(b.tags.join('|')) + '"' +
+const card = (b, rank) =>
+  '      <section class="tb" data-tags="' + esc(b.tags.join('|')) + '" data-rank="' + rank + '"' +
     (b.shelfOrder != null ? ' data-shelf="' + b.shelfOrder + '"' : '') +
-    (b.firstOrder != null ? ' data-first="' + b.firstOrder + '"' : '') + '>\n' +
-    '        <div class="f__body">\n' +
-    '          <div class="f__meta">' +
-      '<span class="f__title">' + esc(b.title) + '</span>' +
-      '<span class="f__by">' + esc(b.author) + '</span>' +
-      (tags.length ? '<span class="f__tags">' + tags.map(esc).join(' · ') + '</span>' : '') +
-    '</div>\n' +
-    (lead ? '          <p class="f__q">' + esc(lead) + '</p>\n' : '') +
-    '          <p class="f__sum">' + esc(b.summary) + '</p>\n' +
-    (second ? '          <p class="f__q2">' + esc(second) + '</p>\n' : '') +
-    '        </div>\n' +
-    '      </section>\n';
-};
+    (b.firstOrder != null ? ' data-first="' + b.firstOrder + '"' : '') +
+    (b.firstOrder == null ? ' hidden' : '') + '>\n' +
+  '        <p class="tb__t">' + esc(b.title).toUpperCase() + '<br /><span class="tb__a">' + esc(b.author) + '</span></p>\n' +
+  '        <p class="tb__s">' + esc(b.summary) + '</p>\n' +
+  b.highlights.slice(0, 3).map((h) => '        <p class="tb__q">&ldquo;' + esc(h) + '&rdquo;</p>\n').join('') +
+  '      </section>\n';
 
-// The page opens on "The ones I give away": those five in Kelly's order, everything
-// else hidden until a chip is tapped. data-rank restores count order.
-const ranked = books.map((b, i) => ({ b, i }));
-const opening = [...ranked].sort((x, y) => {
-  const sx = x.b.firstOrder ?? 1e9, sy = y.b.firstOrder ?? 1e9;
-  return sx - sy || x.i - y.i;
-});
-const rows = opening.map(({ b, i }) => card(b)
-  .replace('<section class="f" ', '<section class="f" data-rank="' + i + '" ' + (b.firstOrder == null ? 'hidden ' : ''))
-).join('');
+// Opening order: the give-away books first in Kelly's order; the rest follow
+// hidden, in count order. data-rank lets the script restore count order.
+const opening = books.map((b, i) => ({ b, i }))
+  .sort((x, y) => (x.b.firstOrder ?? 1e9) - (y.b.firstOrder ?? 1e9) || x.i - y.i);
+const rows = opening.map(({ b, i }) => card(b, i)).join('');
 
-const chips = '<div class="chips"><button class="chip" type="button" data-f="all">All</button>' +
-  TAGS.map((t) => '<button class="chip' + (SPECIAL.includes(t) ? ' chip--shelf' : '') + (t === FIRST ? ' chip--on' : '') + '" type="button" data-f="' + esc(t) + '">' + esc(t) + '</button>').join('') +
-  '</div>';
+const row = (t, on) =>
+  '<a href="#" class="ix' + (on ? ' ix--on' : '') + '" data-f="' + esc(t) + '">' +
+  '<span class="ix__box">[' + (on ? 'x' : '&nbsp;') + ']</span> ' + esc(t) + '</a>';
+const filters =
+  '<div class="lists">' + row(GIVE, true) + '</div>\n' +
+  '    <div class="topics">' + row('All of them', false) + TOPICS.map((t) => row(t, false)).join('') + '</div>';
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -79,40 +67,37 @@ const html = `<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../styles/archive.css?v=14" />
+<link rel="stylesheet" href="../styles/archive.css?v=15" />
 <style>
-  .books .sheet { padding-top: 84px; padding-bottom: 84px; }
-  .intro { color: var(--muted); margin-top: 18px; font-size: 15px; line-height: 1.8; }
+  .books .sheet { max-width: 720px; padding: 120px 110px 160px; }
+  .intro { margin-top: 18px; font-size: 15px; line-height: 1.9; color: var(--muted); }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 8px; }
-  .chip {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 6px 12px; border: 1px solid var(--hairline); border-radius: 999px;
-    background: none; color: var(--fg); cursor: pointer;
-  }
-  .chip--shelf { color: var(--accent); border-color: var(--accent); font-weight: 700; }
-  .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
-  .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  /* the index: typed checkboxes */
+  .filters { margin: 64px 0 128px; font-size: 15px; line-height: 2.1; }
+  .ix { display: block; color: var(--muted); text-decoration: none; white-space: nowrap; }
+  .ix:hover { color: var(--fg); }
+  .ix--on { color: var(--fg); }
+  .ix--on .ix__box { color: var(--accent); }
+  .ix__box { white-space: pre; }
+  .topics { margin-top: 2.1em; columns: 2; column-gap: 2em; }
+  .topics .ix { break-inside: avoid; }
 
-  .books .sheet { max-width: 840px; padding-left: 120px; padding-right: 120px; }
-
-  .f { padding: 56px 0; border-bottom: 1px solid var(--hairline); }
-  .f:last-child { border-bottom: 0; }
-  .f[hidden] { display: none; }
-  .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 18px 0 0; text-shadow: 0.6px 0 0 currentColor; }
-  .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
-  .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; }
-  .f__title { font-size: 19px; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; }
-  .f__by { color: var(--muted); font-size: 13px; }
-  .f__tags { margin-left: auto; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-  .f__sum { margin: 18px 0 0; font-size: 14px; line-height: 1.85; color: rgba(10, 10, 10, 0.68); }
-  .f__q2 { margin: 16px 0 0; padding-left: 24px; font-size: 14px; line-height: 1.8; text-shadow: 0.6px 0 0 currentColor; color: rgba(10, 10, 10, 0.8); }
+  /* a book: one face, one size, one weight */
+  .tb p { font-size: 15px; line-height: 2.1; margin: 0; }
+  .tb[hidden] { display: none; }
+  .tb__t { letter-spacing: 0.06em; text-shadow: 0.6px 0 0 currentColor; }
+  .tb__a { letter-spacing: 0; text-shadow: none; color: var(--muted); display: inline-block; margin-top: 0.3em; }
+  .tb__s { margin-top: 1.4em !important; }
+  .tb__q { margin: 2.2em 0 0 2.5em !important; text-shadow: 0.6px 0 0 currentColor; }
+  .tb__q + .tb__q { margin-top: 1.6em !important; }
+  .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
+  .tb--first::before { display: none !important; }
 
   @media (max-width: 760px) {
-    .books .sheet { padding-left: 22px; padding-right: 22px; }
-    .f { padding: 44px 0; }
-    .f__q::before { margin-left: 0; }
-    .f__tags { margin-left: 0; width: 100%; margin-top: 6px; }
+    .books .sheet { padding: 72px 24px 120px; }
+    .filters { margin: 48px 0 96px; }
+    .topics { columns: 1; }
+    .tb__q { margin-left: 1.5em !important; }
   }
 </style>
 </head>
@@ -127,7 +112,11 @@ ${bar(null)}
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
     <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
-    ${chips}
+
+    <div class="filters">
+    ${filters}
+    </div>
+
     <div class="list">
 ${rows}    </div>
   </article>
@@ -146,24 +135,34 @@ ${rows}    </div>
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* tag filter */
-  var chips = document.querySelectorAll('.chip');
-  chips.forEach(function (c) {
-    c.addEventListener('click', function () {
-      chips.forEach(function (x) { x.classList.toggle('chip--on', x === c); });
-      var f = c.getAttribute('data-f');
-      var list = document.querySelector('.list');
-      var items = Array.prototype.slice.call(list.querySelectorAll('.f'));
-      items.forEach(function (b) {
-        b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+  /* the index: show one list, in its order */
+  var rows = document.querySelectorAll('.ix');
+  rows.forEach(function (r) {
+    r.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = r.getAttribute('data-f');
+      rows.forEach(function (x) {
+        var on = x === r;
+        x.classList.toggle('ix--on', on);
+        x.querySelector('.ix__box').innerHTML = on ? '[x]' : '[&nbsp;]';
       });
-      /* the two picked lists read in Kelly's order; everything else by highlight count */
-      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The ones I give away' ? 'data-first' : 'data-rank';
+      var list = document.querySelector('.list');
+      var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
+      var attr = f === 'Ones I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : 'data-rank';
+      items.forEach(function (b) {
+        b.hidden = !(f === 'All of them' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+      });
       items.sort(function (a, b) {
-        return (+a.getAttribute(attr) || 0) - (+b.getAttribute(attr) || 0);
+        var ka = a.hasAttribute(attr) ? +a.getAttribute(attr) : 1e6 + (+a.getAttribute('data-rank'));
+        var kb = b.hasAttribute(attr) ? +b.getAttribute(attr) : 1e6 + (+b.getAttribute('data-rank'));
+        return ka - kb;
       }).forEach(function (b) { list.appendChild(b); });
+      /* the first visible book has no * * * above it */
+      var seen = false;
+      items.forEach(function (b) { b.classList.toggle('tb--first', !b.hidden && !seen); if (!b.hidden) seen = true; });
     });
   });
+  document.querySelector('.ix--on').dispatchEvent(new Event('click'));
 </script>
 
 <script src="../js/archive-menu.js?v=3"></script>

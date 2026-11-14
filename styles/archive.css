@@ -1,13 +1,13 @@
 /* ============================================================================
    kellyvohs.com — "the archive"
    Shared language for the three rooms: Photos / Letters / Made.
-   Default ribbon = rust (#b5572a). Carbon + ink kept as data-accent options.
+   Default ribbon = red (#BE2E2E). Carbon + ink kept as data-accent options.
    ========================================================================== */
 :root {
   --desk: #f3f3f0;
   --paper: #fcfcfa;
   --fg: #0a0a0a;
-  --accent: #b5572a;
+  --accent: #BE2E2E;
   --muted: rgba(10, 10, 10, 0.45);
   --faint: rgba(10, 10, 10, 0.3);
   --hairline: rgba(10, 10, 10, 0.15);

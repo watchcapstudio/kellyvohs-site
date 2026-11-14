@@ -19,40 +19,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../styles/archive.css?v=14" />
+<link rel="stylesheet" href="../styles/archive.css?v=15" />
 <style>
-  .books .sheet { padding-top: 84px; padding-bottom: 84px; }
-  .intro { color: var(--muted); margin-top: 18px; font-size: 15px; line-height: 1.8; }
+  .books .sheet { max-width: 720px; padding: 120px 110px 160px; }
+  .intro { margin-top: 18px; font-size: 15px; line-height: 1.9; color: var(--muted); }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 8px; }
-  .chip {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 6px 12px; border: 1px solid var(--hairline); border-radius: 999px;
-    background: none; color: var(--fg); cursor: pointer;
-  }
-  .chip--shelf { color: var(--accent); border-color: var(--accent); font-weight: 700; }
-  .chip--on { background: var(--fg); color: var(--paper); border-color: var(--fg); }
-  .chip--shelf.chip--on { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  /* the index: typed checkboxes */
+  .filters { margin: 64px 0 128px; font-size: 15px; line-height: 2.1; }
+  .ix { display: block; color: var(--muted); text-decoration: none; white-space: nowrap; }
+  .ix:hover { color: var(--fg); }
+  .ix--on { color: var(--fg); }
+  .ix--on .ix__box { color: var(--accent); }
+  .ix__box { white-space: pre; }
+  .topics { margin-top: 2.1em; columns: 2; column-gap: 2em; }
+  .topics .ix { break-inside: avoid; }
 
-  .books .sheet { max-width: 840px; padding-left: 120px; padding-right: 120px; }
-
-  .f { padding: 56px 0; border-bottom: 1px solid var(--hairline); }
-  .f:last-child { border-bottom: 0; }
-  .f[hidden] { display: none; }
-  .f__q { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.55; margin: 18px 0 0; text-shadow: 0.6px 0 0 currentColor; }
-  .f__q::before { content: "“"; color: var(--accent); margin-left: -0.6em; margin-right: 0.1em; }
-  .f__meta { display: flex; flex-wrap: wrap; gap: 0 14px; align-items: baseline; }
-  .f__title { font-size: 19px; font-weight: 400; text-shadow: 0.6px 0 0 currentColor; }
-  .f__by { color: var(--muted); font-size: 13px; }
-  .f__tags { margin-left: auto; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-  .f__sum { margin: 18px 0 0; font-size: 14px; line-height: 1.85; color: rgba(10, 10, 10, 0.68); }
-  .f__q2 { margin: 16px 0 0; padding-left: 24px; font-size: 14px; line-height: 1.8; text-shadow: 0.6px 0 0 currentColor; color: rgba(10, 10, 10, 0.8); }
+  /* a book: one face, one size, one weight */
+  .tb p { font-size: 15px; line-height: 2.1; margin: 0; }
+  .tb[hidden] { display: none; }
+  .tb__t { letter-spacing: 0.06em; text-shadow: 0.6px 0 0 currentColor; }
+  .tb__a { letter-spacing: 0; text-shadow: none; color: var(--muted); display: inline-block; margin-top: 0.3em; }
+  .tb__s { margin-top: 1.4em !important; }
+  .tb__q { margin: 2.2em 0 0 2.5em !important; text-shadow: 0.6px 0 0 currentColor; }
+  .tb__q + .tb__q { margin-top: 1.6em !important; }
+  .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
+  .tb--first::before { display: none !important; }
 
   @media (max-width: 760px) {
-    .books .sheet { padding-left: 22px; padding-right: 22px; }
-    .f { padding: 44px 0; }
-    .f__q::before { margin-left: 0; }
-    .f__tags { margin-left: 0; width: 100%; margin-top: 6px; }
+    .books .sheet { padding: 72px 24px 120px; }
+    .filters { margin: 48px 0 96px; }
+    .topics { columns: 1; }
+    .tb__q { margin-left: 1.5em !important; }
   }
 </style>
 </head>
@@ -67,450 +64,396 @@
   <article class="sheet">
     <h1 class="typedtitle">Books</h1>
     <p class="intro">The books I've highlighted the most, and a few of the lines I kept.</p>
-    <div class="chips"><button class="chip" type="button" data-f="all">All</button><button class="chip chip--shelf chip--on" type="button" data-f="The ones I give away">The ones I give away</button><button class="chip chip--shelf" type="button" data-f="Leadership Shelf">Leadership Shelf</button><button class="chip" type="button" data-f="Business">Business</button><button class="chip" type="button" data-f="Living">Living</button><button class="chip" type="button" data-f="Stoicism">Stoicism</button><button class="chip" type="button" data-f="Philosophy">Philosophy</button><button class="chip" type="button" data-f="Thinking">Thinking</button><button class="chip" type="button" data-f="Mind">Mind</button><button class="chip" type="button" data-f="Craft">Craft</button><button class="chip" type="button" data-f="History">History</button></div>
+
+    <div class="filters">
+    <div class="lists"><a href="#" class="ix ix--on" data-f="Ones I give away"><span class="ix__box">[x]</span> Ones I give away</a></div>
+    <div class="topics"><a href="#" class="ix" data-f="All of them"><span class="ix__box">[&nbsp;]</span> All of them</a><a href="#" class="ix" data-f="Leadership"><span class="ix__box">[&nbsp;]</span> Leadership</a><a href="#" class="ix" data-f="Business"><span class="ix__box">[&nbsp;]</span> Business</a><a href="#" class="ix" data-f="Living"><span class="ix__box">[&nbsp;]</span> Living</a><a href="#" class="ix" data-f="Stoicism"><span class="ix__box">[&nbsp;]</span> Stoicism</a><a href="#" class="ix" data-f="Philosophy"><span class="ix__box">[&nbsp;]</span> Philosophy</a><a href="#" class="ix" data-f="Thinking"><span class="ix__box">[&nbsp;]</span> Thinking</a><a href="#" class="ix" data-f="Mind"><span class="ix__box">[&nbsp;]</span> Mind</a><a href="#" class="ix" data-f="Craft"><span class="ix__box">[&nbsp;]</span> Craft</a><a href="#" class="ix" data-f="History"><span class="ix__box">[&nbsp;]</span> History</a></div>
+    </div>
+
     <div class="list">
-      <section class="f" data-rank="48" data-tags="The ones I give away|Leadership Shelf" data-shelf="0" data-first="0">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Wooden on Leadership</span><span class="f__by">John Wooden</span></div>
-          <p class="f__q">The score will take care of itself when you take care of the effort that precedes the score.</p>
-          <p class="f__sum">John Wooden, who won ten NCAA titles at UCLA, explains how he led: focus on effort and preparation over winning, and teach character along with skill.</p>
-          <p class="f__q2">Reputation is what others perceive you as being, and their opinion may be right or wrong. Character, however, is what you really are, and nobody truly knows that but you. But you are what matters most.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Leadership" data-rank="48" data-shelf="0" data-first="0">
+        <p class="tb__t">WOODEN ON LEADERSHIP<br /><span class="tb__a">John Wooden</span></p>
+        <p class="tb__s">John Wooden, who won ten NCAA titles at UCLA, explains how he led: focus on effort and preparation over winning, and teach character along with skill.</p>
+        <p class="tb__q">&ldquo;The score will take care of itself when you take care of the effort that precedes the score.&rdquo;</p>
+        <p class="tb__q">&ldquo;Reputation is what others perceive you as being, and their opinion may be right or wrong. Character, however, is what you really are, and nobody truly knows that but you. But you are what matters most.&rdquo;</p>
+        <p class="tb__q">&ldquo;Before You Can Lead Others, You Must Be Able to Lead Yourself.&rdquo;</p>
       </section>
-      <section class="f" data-rank="19" data-tags="The ones I give away|Leadership Shelf" data-shelf="1" data-first="1">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Effective Executive</span><span class="f__by">Peter F. Drucker</span></div>
-          <p class="f__q">People in general, and knowledge workers in particular, grow according to the demands they make on themselves.</p>
-          <p class="f__sum">Drucker describes the habits that make knowledge workers and managers effective: knowing where their time goes, focusing on contribution, building on strengths, doing first things first and making sound decisions.</p>
-          <p class="f__q2">Strong people always have strong weaknesses too.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Leadership" data-rank="19" data-shelf="1" data-first="1">
+        <p class="tb__t">THE EFFECTIVE EXECUTIVE<br /><span class="tb__a">Peter F. Drucker</span></p>
+        <p class="tb__s">Drucker describes the habits that make knowledge workers and managers effective: knowing where their time goes, focusing on contribution, building on strengths, doing first things first and making sound decisions.</p>
+        <p class="tb__q">&ldquo;People in general, and knowledge workers in particular, grow according to the demands they make on themselves.&rdquo;</p>
+        <p class="tb__q">&ldquo;Strong people always have strong weaknesses too.&rdquo;</p>
+        <p class="tb__q">&ldquo;a decision that has to satisfy two different and at bottom incompatible specifications is not a decision but a prayer for a miracle&rdquo;</p>
       </section>
-      <section class="f" data-rank="46" data-tags="The ones I give away|Leadership Shelf|Business" data-shelf="2" data-first="2">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">High Output Management</span><span class="f__by">Andrew S. Grove</span><span class="f__tags">Business</span></div>
-          <p class="f__q">The output of a manager is the output of the organizational unit under his or her supervision or influence.</p>
-          <p class="f__sum">Intel's former CEO treats management like production: a manager's output is the output of their team, so their time should go to the work with the most leverage.</p>
-          <p class="f__q2">Training is quite simply one of the highest leverage activities a manager can perform.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Leadership|Business" data-rank="46" data-shelf="2" data-first="2">
+        <p class="tb__t">HIGH OUTPUT MANAGEMENT<br /><span class="tb__a">Andrew S. Grove</span></p>
+        <p class="tb__s">Intel's former CEO treats management like production: a manager's output is the output of their team, so their time should go to the work with the most leverage.</p>
+        <p class="tb__q">&ldquo;The output of a manager is the output of the organizational unit under his or her supervision or influence.&rdquo;</p>
+        <p class="tb__q">&ldquo;Training is quite simply one of the highest leverage activities a manager can perform.&rdquo;</p>
+        <p class="tb__q">&ldquo;Are you adding real value or merely passing information?&rdquo;</p>
       </section>
-      <section class="f" data-rank="51" data-tags="The ones I give away|Leadership Shelf|Business" data-shelf="3" data-first="3">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Hard Thing About Hard Things</span><span class="f__by">Ben Horowitz</span><span class="f__tags">Business</span></div>
-          <p class="f__q">People always ask me, “What’s the secret to being a successful CEO?” Sadly, there is no secret, but if there is one skill that stands out, it’s the ability to focus and make the best move when there are no good moves.</p>
-          <p class="f__sum">Ben Horowitz on the parts of running a company that management books skip: layoffs, firing executives, and making decisions when every option is bad.</p>
-          <p class="f__q2">A healthy company culture encourages people to share bad news. A company that discusses its problems freely and openly can quickly solve them. A company that covers up its problems frustrates everyone involved.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Leadership|Business" data-rank="51" data-shelf="3" data-first="3">
+        <p class="tb__t">THE HARD THING ABOUT HARD THINGS<br /><span class="tb__a">Ben Horowitz</span></p>
+        <p class="tb__s">Ben Horowitz on the parts of running a company that management books skip: layoffs, firing executives, and making decisions when every option is bad.</p>
+        <p class="tb__q">&ldquo;People always ask me, “What’s the secret to being a successful CEO?” Sadly, there is no secret, but if there is one skill that stands out, it’s the ability to focus and make the best move when there are no good moves.&rdquo;</p>
+        <p class="tb__q">&ldquo;A healthy company culture encourages people to share bad news. A company that discusses its problems freely and openly can quickly solve them. A company that covers up its problems frustrates everyone involved.&rdquo;</p>
+        <p class="tb__q">&ldquo;If you are going to eat shit, don’t nibble.&rdquo;</p>
       </section>
-      <section class="f" data-rank="47" data-tags="The ones I give away|Leadership Shelf" data-shelf="8" data-first="4">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Score Takes Care of Itself</span><span class="f__by">Bill Walsh</span></div>
-          <p class="f__q">Expertise coupled with strength of will is going to prevail.</p>
-          <p class="f__sum">The former 49ers coach explains how he turned a losing team into a champion by setting a standard of performance for every job in the organization, on the view that if the standards and daily habits are right, the wins follow.</p>
-          <p class="f__q2">No one will ever come back to you later and say &quot;thank you&quot; for expecting too little of them.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Leadership" data-rank="47" data-shelf="8" data-first="4">
+        <p class="tb__t">THE SCORE TAKES CARE OF ITSELF<br /><span class="tb__a">Bill Walsh</span></p>
+        <p class="tb__s">The former 49ers coach explains how he turned a losing team into a champion by setting a standard of performance for every job in the organization, on the view that if the standards and daily habits are right, the wins follow.</p>
+        <p class="tb__q">&ldquo;Expertise coupled with strength of will is going to prevail.&rdquo;</p>
+        <p class="tb__q">&ldquo;No one will ever come back to you later and say &quot;thank you&quot; for expecting too little of them.&rdquo;</p>
+        <p class="tb__q">&ldquo;Leaders are paid to make a decision.&rdquo;</p>
       </section>
-      <section class="f" data-rank="40" data-tags="The ones I give away|Living" data-first="5">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Lion Tracker's Guide to Life</span><span class="f__by">Boyd Varty</span><span class="f__tags">Living</span></div>
-          <p class="f__q">I don’t know where we are going but I know exactly how to get there might be the motto of the great tracker.</p>
-          <p class="f__sum">Boyd Varty, who grew up on a game reserve in South Africa, follows two master trackers on a lion's trail and uses what they do to talk about finding your own path: notice the first small sign, act on it, and keep going when the trail disappears.</p>
-          <p class="f__q2">You can’t think your way to a calling. Finding what is uniquely yours requires more than rationality.</p>
-        </div>
+      <section class="tb" data-tags="Ones I give away|Living" data-rank="40" data-first="5">
+        <p class="tb__t">THE LION TRACKER'S GUIDE TO LIFE<br /><span class="tb__a">Boyd Varty</span></p>
+        <p class="tb__s">Boyd Varty, who grew up on a game reserve in South Africa, follows two master trackers on a lion's trail and uses what they do to talk about finding your own path: notice the first small sign, act on it, and keep going when the trail disappears.</p>
+        <p class="tb__q">&ldquo;I don’t know where we are going but I know exactly how to get there might be the motto of the great tracker.&rdquo;</p>
+        <p class="tb__q">&ldquo;You can’t think your way to a calling. Finding what is uniquely yours requires more than rationality.&rdquo;</p>
+        <p class="tb__q">&ldquo;Nature doesn’t see status or wealth or social position. It cares only about presence, one’s ability to read the signs, navigate the terrain, and translate the language of the wilderness. Nature is the great equalizer.&rdquo;</p>
       </section>
-      <section class="f" data-rank="0" hidden data-tags="Business|Thinking">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Principles</span><span class="f__by">Ray Dalio</span><span class="f__tags">Business · Thinking</span></div>
-          <p class="f__q">Maturity is the ability to reject good alternatives in order to pursue even better ones.</p>
-          <p class="f__sum">Ray Dalio lays out the rules he developed for decision-making in life and at Bridgewater, the investment firm he founded. The core ideas are radical open-mindedness, radical transparency, and learning from mistakes.</p>
-          <p class="f__q2">Pain + Reflection = Progress.</p>
-        </div>
+      <section class="tb" data-tags="Business|Thinking" data-rank="0" hidden>
+        <p class="tb__t">PRINCIPLES<br /><span class="tb__a">Ray Dalio</span></p>
+        <p class="tb__s">Ray Dalio lays out the rules he developed for decision-making in life and at Bridgewater, the investment firm he founded. The core ideas are radical open-mindedness, radical transparency, and learning from mistakes.</p>
+        <p class="tb__q">&ldquo;Maturity is the ability to reject good alternatives in order to pursue even better ones.&rdquo;</p>
+        <p class="tb__q">&ldquo;Pain + Reflection = Progress.&rdquo;</p>
+        <p class="tb__q">&ldquo;Every time you confront something painful, you are at a potentially important juncture in your life-you have the opportunity to choose healthy and painful truth or unhealthy but comfortable delusion.&rdquo;</p>
       </section>
-      <section class="f" data-rank="1" hidden data-tags="Stoicism">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Meditations</span><span class="f__by">Marcus Aurelius</span><span class="f__tags">Stoicism</span></div>
-          <p class="f__q">The impediment to action advances action. What stands in the way becomes the way.</p>
-          <p class="f__sum">The private notebook of a Roman emperor, written as reminders to himself. He returns again and again to controlling his own judgments, accepting what he can't change, and treating other people well.</p>
-          <p class="f__q2">It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.</p>
-        </div>
+      <section class="tb" data-tags="Stoicism" data-rank="1" hidden>
+        <p class="tb__t">MEDITATIONS<br /><span class="tb__a">Marcus Aurelius</span></p>
+        <p class="tb__s">The private notebook of a Roman emperor, written as reminders to himself. He returns again and again to controlling his own judgments, accepting what he can't change, and treating other people well.</p>
+        <p class="tb__q">&ldquo;The impediment to action advances action. What stands in the way becomes the way.&rdquo;</p>
+        <p class="tb__q">&ldquo;It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.&rdquo;</p>
+        <p class="tb__q">&ldquo;Perfection of character: to live your last day, every day, without frenzy, or sloth, or pretense.&rdquo;</p>
       </section>
-      <section class="f" data-rank="2" hidden data-tags="Mind">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Laws of Human Nature</span><span class="f__by">Robert Greene</span><span class="f__tags">Mind</span></div>
-          <p class="f__q">Human desire is never an individual phenomenon. We are social creatures and what we want almost always reflects what other people want.</p>
-          <p class="f__sum">A guide to the patterns that drive human behavior, including narcissism, envy, conformity, and short-term thinking. Greene uses historical examples to show how to recognize these traits in others and in yourself.</p>
-          <p class="f__q2">You need some detachment and perspective. Get your ego to calm down. Remind yourself that winning an argument or proving your point really gets you nowhere in the long run.</p>
-        </div>
+      <section class="tb" data-tags="Mind" data-rank="2" hidden>
+        <p class="tb__t">THE LAWS OF HUMAN NATURE<br /><span class="tb__a">Robert Greene</span></p>
+        <p class="tb__s">A guide to the patterns that drive human behavior, including narcissism, envy, conformity, and short-term thinking. Greene uses historical examples to show how to recognize these traits in others and in yourself.</p>
+        <p class="tb__q">&ldquo;Human desire is never an individual phenomenon. We are social creatures and what we want almost always reflects what other people want.&rdquo;</p>
+        <p class="tb__q">&ldquo;You need some detachment and perspective. Get your ego to calm down. Remind yourself that winning an argument or proving your point really gets you nowhere in the long run.&rdquo;</p>
+        <p class="tb__q">&ldquo;Time is the greatest teacher of them all, the revealer of reality.&rdquo;</p>
       </section>
-      <section class="f" data-rank="3" hidden data-tags="Stoicism">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Letters From a Stoic</span><span class="f__by">Seneca</span><span class="f__tags">Stoicism</span></div>
-          <p class="f__q">We suffer more often in imagination than in reality.</p>
-          <p class="f__sum">A collection of letters Seneca wrote to his friend Lucilius late in life. They give practical advice on fear, wealth, friendship, time, and death from a Stoic point of view.</p>
-          <p class="f__q2">It is equally faulty to trust everyone and to trust no one.</p>
-        </div>
+      <section class="tb" data-tags="Stoicism" data-rank="3" hidden>
+        <p class="tb__t">LETTERS FROM A STOIC<br /><span class="tb__a">Seneca</span></p>
+        <p class="tb__s">A collection of letters Seneca wrote to his friend Lucilius late in life. They give practical advice on fear, wealth, friendship, time, and death from a Stoic point of view.</p>
+        <p class="tb__q">&ldquo;We suffer more often in imagination than in reality.&rdquo;</p>
+        <p class="tb__q">&ldquo;It is equally faulty to trust everyone and to trust no one.&rdquo;</p>
+        <p class="tb__q">&ldquo;How many men, I say to myself, train their bodies, and how few train their minds!&rdquo;</p>
       </section>
-      <section class="f" data-rank="4" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">101 Essays That Will Change the Way You Think</span><span class="f__by">Brianna Wiest</span><span class="f__tags">Living</span></div>
-          <p class="f__q">Clarity comes from doing, not thinking about doing.</p>
-          <p class="f__sum">A collection of short essays on emotions, habits, happiness, and self-sabotage. Most argue that how you interpret your life matters more than the circumstances themselves.</p>
-          <p class="f__q2">Most people don’t change until not changing is the less comfortable option.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="4" hidden>
+        <p class="tb__t">101 ESSAYS THAT WILL CHANGE THE WAY YOU THINK<br /><span class="tb__a">Brianna Wiest</span></p>
+        <p class="tb__s">A collection of short essays on emotions, habits, happiness, and self-sabotage. Most argue that how you interpret your life matters more than the circumstances themselves.</p>
+        <p class="tb__q">&ldquo;Clarity comes from doing, not thinking about doing.&rdquo;</p>
+        <p class="tb__q">&ldquo;Most people don’t change until not changing is the less comfortable option.&rdquo;</p>
+        <p class="tb__q">&ldquo;Everything is hard, but you choose your hard. You choose what’s worth it. You don’t choose whether or not you’ll suffer, but you do choose what you want to suffer for.&rdquo;</p>
       </section>
-      <section class="f" data-rank="5" hidden data-tags="Business|Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Almanack of Naval Ravikant</span><span class="f__by">Eric Jorgenson</span><span class="f__tags">Business · Living</span></div>
-          <p class="f__q">Desire is a contract you make with yourself to be unhappy until you get what you want. I don’t think most of us realize that’s what it is.</p>
-          <p class="f__sum">A compilation of Naval Ravikant's tweets, interviews, and essays, organized into two parts: building wealth and finding happiness. It covers leverage, specific knowledge, long-term thinking, and peace of mind.</p>
-          <p class="f__q2">Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.</p>
-        </div>
+      <section class="tb" data-tags="Business|Living" data-rank="5" hidden>
+        <p class="tb__t">THE ALMANACK OF NAVAL RAVIKANT<br /><span class="tb__a">Eric Jorgenson</span></p>
+        <p class="tb__s">A compilation of Naval Ravikant's tweets, interviews, and essays, organized into two parts: building wealth and finding happiness. It covers leverage, specific knowledge, long-term thinking, and peace of mind.</p>
+        <p class="tb__q">&ldquo;Desire is a contract you make with yourself to be unhappy until you get what you want. I don’t think most of us realize that’s what it is.&rdquo;</p>
+        <p class="tb__q">&ldquo;Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.&rdquo;</p>
+        <p class="tb__q">&ldquo;If you can’t see yourself working with someone for life, don’t work with them for a day.&rdquo;</p>
       </section>
-      <section class="f" data-rank="6" hidden data-tags="Mind|Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Courage to Be Disliked</span><span class="f__by">Ichiro Kishimi &amp; Fumitake Koga</span><span class="f__tags">Mind · Living</span></div>
-          <p class="f__q">We do not lack ability. We just lack courage. It all comes down to courage.</p>
-          <p class="f__sum">A dialogue between a philosopher and a young man that explains Alfred Adler's psychology. It argues that the past doesn't determine who you are, that most problems are about relationships, and that freedom means not living for others' approval.</p>
-          <p class="f__q2">A healthy feeling of inferiority is not something that comes from comparing oneself to others; it comes from one’s comparison with one’s ideal self.</p>
-        </div>
+      <section class="tb" data-tags="Mind|Living" data-rank="6" hidden>
+        <p class="tb__t">THE COURAGE TO BE DISLIKED<br /><span class="tb__a">Ichiro Kishimi &amp; Fumitake Koga</span></p>
+        <p class="tb__s">A dialogue between a philosopher and a young man that explains Alfred Adler's psychology. It argues that the past doesn't determine who you are, that most problems are about relationships, and that freedom means not living for others' approval.</p>
+        <p class="tb__q">&ldquo;We do not lack ability. We just lack courage. It all comes down to courage.&rdquo;</p>
+        <p class="tb__q">&ldquo;A healthy feeling of inferiority is not something that comes from comparing oneself to others; it comes from one’s comparison with one’s ideal self.&rdquo;</p>
+        <p class="tb__q">&ldquo;When one seeks recognition from others, and concerns oneself only with how one is judged by others, in the end, one is living other people’s lives.&rdquo;</p>
       </section>
-      <section class="f" data-rank="7" hidden data-tags="Stoicism|Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Stillness Is the Key</span><span class="f__by">Ryan Holiday</span><span class="f__tags">Stoicism · Living</span></div>
-          <p class="f__q">The one thing you can’t escape in your life is yourself.</p>
-          <p class="f__sum">Holiday draws on Stoic, Buddhist, and other traditions to argue that calm focus is the basis for good thinking and good work. The book is split into three parts: mind, spirit, and body.</p>
-          <p class="f__q2">This is what the best journals look like. They aren’t for the reader. They are for the writer. To slow the mind down. To wage peace with oneself.</p>
-        </div>
+      <section class="tb" data-tags="Stoicism|Living" data-rank="7" hidden>
+        <p class="tb__t">STILLNESS IS THE KEY<br /><span class="tb__a">Ryan Holiday</span></p>
+        <p class="tb__s">Holiday draws on Stoic, Buddhist, and other traditions to argue that calm focus is the basis for good thinking and good work. The book is split into three parts: mind, spirit, and body.</p>
+        <p class="tb__q">&ldquo;The one thing you can’t escape in your life is yourself.&rdquo;</p>
+        <p class="tb__q">&ldquo;This is what the best journals look like. They aren’t for the reader. They are for the writer. To slow the mind down. To wage peace with oneself.&rdquo;</p>
+        <p class="tb__q">&ldquo;No one in the sway of envy or jealousy has a chance to think clearly or live peacefully.&rdquo;</p>
       </section>
-      <section class="f" data-rank="8" hidden data-tags="Craft">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Mastery</span><span class="f__by">Robert Greene</span><span class="f__tags">Craft</span></div>
-          <p class="f__q">Some people never become who they are; they stop trusting themselves; they conform to the tastes of others, and they end up wearing a mask that hides their true identity.</p>
-          <p class="f__sum">Greene studies the lives of masters such as Darwin, Faraday, and da Vinci to describe the path to excellence in a field. That path runs from finding your calling, through a long apprenticeship, to creative work.</p>
-          <p class="f__q2">The moment that you rest, thinking that you have attained the level you desire, a part of your mind enters a phase of decay.</p>
-        </div>
+      <section class="tb" data-tags="Craft" data-rank="8" hidden>
+        <p class="tb__t">MASTERY<br /><span class="tb__a">Robert Greene</span></p>
+        <p class="tb__s">Greene studies the lives of masters such as Darwin, Faraday, and da Vinci to describe the path to excellence in a field. That path runs from finding your calling, through a long apprenticeship, to creative work.</p>
+        <p class="tb__q">&ldquo;Some people never become who they are; they stop trusting themselves; they conform to the tastes of others, and they end up wearing a mask that hides their true identity.&rdquo;</p>
+        <p class="tb__q">&ldquo;The moment that you rest, thinking that you have attained the level you desire, a part of your mind enters a phase of decay.&rdquo;</p>
+        <p class="tb__q">&ldquo;The road to mastery requires patience. You will have to keep your focus on five or ten years down the road, when you will reap the rewards of your efforts.&rdquo;</p>
       </section>
-      <section class="f" data-rank="9" hidden data-tags="Thinking">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Clear Thinking</span><span class="f__by">Shane Parrish</span><span class="f__tags">Thinking</span></div>
-          <p class="f__q">Wisdom is turning your future hindsight into your current foresight.</p>
-          <p class="f__sum">Parrish argues that most bad decisions happen in ordinary moments, when emotion, ego, social pressure, or habit react before reasoning starts. The book covers how to spot those defaults and set up habits and conditions for better judgment.</p>
-          <p class="f__q2">Many people think they’re bad problem solvers when in fact they’re bad problem anticipators.</p>
-        </div>
+      <section class="tb" data-tags="Thinking" data-rank="9" hidden>
+        <p class="tb__t">CLEAR THINKING<br /><span class="tb__a">Shane Parrish</span></p>
+        <p class="tb__s">Parrish argues that most bad decisions happen in ordinary moments, when emotion, ego, social pressure, or habit react before reasoning starts. The book covers how to spot those defaults and set up habits and conditions for better judgment.</p>
+        <p class="tb__q">&ldquo;Wisdom is turning your future hindsight into your current foresight.&rdquo;</p>
+        <p class="tb__q">&ldquo;Many people think they’re bad problem solvers when in fact they’re bad problem anticipators.&rdquo;</p>
+        <p class="tb__q">&ldquo;More dreams die from a lack of confidence than a lack of competence.&rdquo;</p>
       </section>
-      <section class="f" data-rank="10" hidden data-tags="Business">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The 21 Irrefutable Laws of Leadership</span><span class="f__by">John C. Maxwell</span><span class="f__tags">Business</span></div>
-          <p class="f__q">leadership cannot be awarded, appointed, or assigned. It comes only from influence, and that cannot be mandated. It must be earned. The only thing a title can buy is a little time—either to increase your level of influence with others or to undermine it.</p>
-          <p class="f__sum">Maxwell sets out 21 principles of leadership, such as influence, trust, priorities and succession. Each one comes with examples from business, sports, the military and history.</p>
-          <p class="f__q2">Character makes trust possible. And trust makes leadership possible.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="10" hidden>
+        <p class="tb__t">THE 21 IRREFUTABLE LAWS OF LEADERSHIP<br /><span class="tb__a">John C. Maxwell</span></p>
+        <p class="tb__s">Maxwell sets out 21 principles of leadership, such as influence, trust, priorities and succession. Each one comes with examples from business, sports, the military and history.</p>
+        <p class="tb__q">&ldquo;leadership cannot be awarded, appointed, or assigned. It comes only from influence, and that cannot be mandated. It must be earned. The only thing a title can buy is a little time—either to increase your level of influence with others or to undermine it.&rdquo;</p>
+        <p class="tb__q">&ldquo;Character makes trust possible. And trust makes leadership possible.&rdquo;</p>
+        <p class="tb__q">&ldquo;Followers may doubt what their leaders say, but they usually believe what they do.&rdquo;</p>
       </section>
-      <section class="f" data-rank="11" hidden data-tags="Stoicism">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Ego Is the Enemy</span><span class="f__by">Ryan Holiday</span><span class="f__tags">Stoicism</span></div>
-          <p class="f__q">What is rare is not raw talent, skill, or even confidence, but humility, diligence, and self-awareness.</p>
-          <p class="f__sum">Holiday argues that ego, meaning an unhealthy belief in your own importance, gets in the way at every stage: when you are starting out, when you succeed and when you fail. He draws on Stoic philosophy and historical figures to make the case for humility and steady work.</p>
-          <p class="f__q2">Ego needs honors in order to be validated. Confidence, on the other hand, is able to wait and focus on the task at hand regardless of external recognition.</p>
-        </div>
+      <section class="tb" data-tags="Stoicism" data-rank="11" hidden>
+        <p class="tb__t">EGO IS THE ENEMY<br /><span class="tb__a">Ryan Holiday</span></p>
+        <p class="tb__s">Holiday argues that ego, meaning an unhealthy belief in your own importance, gets in the way at every stage: when you are starting out, when you succeed and when you fail. He draws on Stoic philosophy and historical figures to make the case for humility and steady work.</p>
+        <p class="tb__q">&ldquo;What is rare is not raw talent, skill, or even confidence, but humility, diligence, and self-awareness.&rdquo;</p>
+        <p class="tb__q">&ldquo;Ego needs honors in order to be validated. Confidence, on the other hand, is able to wait and focus on the task at hand regardless of external recognition.&rdquo;</p>
+        <p class="tb__q">&ldquo;It takes a special kind of humility to grasp that you know less, even as you know and grasp more and more.&rdquo;</p>
       </section>
-      <section class="f" data-rank="12" hidden data-tags="Philosophy">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Lessons From an American Stoic</span><span class="f__by">Mark Matousek</span><span class="f__tags">Philosophy</span></div>
-          <p class="f__q">Seeing your narrative come apart before your eyes proves how arbitrary your personal fictions are.</p>
-          <p class="f__sum">Matousek presents Ralph Waldo Emerson's ideas as practical guidance. He organizes them into lessons on originality, perspective, nonconformity, resilience, courage and love, and ties them to Stoic thought.</p>
-          <p class="f__q2">We underestimate the impact of confidence on our ability to flourish.</p>
-        </div>
+      <section class="tb" data-tags="Philosophy" data-rank="12" hidden>
+        <p class="tb__t">LESSONS FROM AN AMERICAN STOIC<br /><span class="tb__a">Mark Matousek</span></p>
+        <p class="tb__s">Matousek presents Ralph Waldo Emerson's ideas as practical guidance. He organizes them into lessons on originality, perspective, nonconformity, resilience, courage and love, and ties them to Stoic thought.</p>
+        <p class="tb__q">&ldquo;Seeing your narrative come apart before your eyes proves how arbitrary your personal fictions are.&rdquo;</p>
+        <p class="tb__q">&ldquo;We underestimate the impact of confidence on our ability to flourish.&rdquo;</p>
+        <p class="tb__q">&ldquo;Self-reliance depends on the ability to say no without apology or explanation.&rdquo;</p>
       </section>
-      <section class="f" data-rank="13" hidden data-tags="Leadership Shelf" data-shelf="15">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Speed of Trust</span><span class="f__by">Stephen M.R. Covey</span></div>
-          <p class="f__q">when trust is low, speed goes down and cost goes up. When trust is high, speed goes up and cost goes down.</p>
-          <p class="f__sum">Covey argues that trust is a measurable factor in business: when trust is high, work moves faster and costs less. He breaks credibility into integrity, intent, capabilities and results, and lists behaviors that build or restore trust.</p>
-          <p class="f__q2">Ultimately micromanagers who trust only themselves can take their companies only as far as they themselves can take them.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="13" data-shelf="15" hidden>
+        <p class="tb__t">THE SPEED OF TRUST<br /><span class="tb__a">Stephen M.R. Covey</span></p>
+        <p class="tb__s">Covey argues that trust is a measurable factor in business: when trust is high, work moves faster and costs less. He breaks credibility into integrity, intent, capabilities and results, and lists behaviors that build or restore trust.</p>
+        <p class="tb__q">&ldquo;when trust is low, speed goes down and cost goes up. When trust is high, speed goes up and cost goes down.&rdquo;</p>
+        <p class="tb__q">&ldquo;Ultimately micromanagers who trust only themselves can take their companies only as far as they themselves can take them.&rdquo;</p>
+        <p class="tb__q">&ldquo;What creates trust, in the end, is the leader’s manifest respect for the followers. —JAMES O’TOOLE, AUTHOR OF LEADING CHANGE&rdquo;</p>
       </section>
-      <section class="f" data-rank="14" hidden data-tags="Philosophy">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Aristotle's Way</span><span class="f__by">Edith Hall</span><span class="f__tags">Philosophy</span></div>
-          <p class="f__q">Aristotle believed that if you train yourself to be good, by working on your virtues and controlling your vices, you will discover that a happy state of mind comes from habitually doing the right thing.</p>
-          <p class="f__sum">Hall, a classicist, explains Aristotle's ethics as a practical guide to a happy life. The book covers finding your potential, making decisions, communicating, building character, friendship and facing death.</p>
-          <p class="f__q2">The trick is to find out what you like doing and have an aptitude for, and then stick at it.</p>
-        </div>
+      <section class="tb" data-tags="Philosophy" data-rank="14" hidden>
+        <p class="tb__t">ARISTOTLE'S WAY<br /><span class="tb__a">Edith Hall</span></p>
+        <p class="tb__s">Hall, a classicist, explains Aristotle's ethics as a practical guide to a happy life. The book covers finding your potential, making decisions, communicating, building character, friendship and facing death.</p>
+        <p class="tb__q">&ldquo;Aristotle believed that if you train yourself to be good, by working on your virtues and controlling your vices, you will discover that a happy state of mind comes from habitually doing the right thing.&rdquo;</p>
+        <p class="tb__q">&ldquo;The trick is to find out what you like doing and have an aptitude for, and then stick at it.&rdquo;</p>
+        <p class="tb__q">&ldquo;Time spent worrying about things which you cannot change is wasted.&rdquo;</p>
       </section>
-      <section class="f" data-rank="15" hidden data-tags="Mind">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The 9 Types of Leadership</span><span class="f__by">Beatrice Chestnut</span><span class="f__tags">Mind</span></div>
-          <p class="f__q">Most of all, leaders (and all of us) need effective ways to learn to be kinder and more compassionate with ourselves and with others, and less defensive, reactive, and inflexible in the ways we respond to the people and events around us.</p>
-          <p class="f__sum">Chestnut uses the Enneagram to describe nine personality types and how each one tends to lead. She argues that good leadership depends on noticing your own habitual, defensive patterns and working past them.</p>
-          <p class="f__q2">the ability to achieve and maintain harmonious and productive working relationships depends on one thing: how well the people involved have the humility and the will to understand and manage themselves and understand and relate well to others.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Mind" data-rank="15" hidden>
+        <p class="tb__t">THE 9 TYPES OF LEADERSHIP<br /><span class="tb__a">Beatrice Chestnut</span></p>
+        <p class="tb__s">Chestnut uses the Enneagram to describe nine personality types and how each one tends to lead. She argues that good leadership depends on noticing your own habitual, defensive patterns and working past them.</p>
+        <p class="tb__q">&ldquo;Most of all, leaders (and all of us) need effective ways to learn to be kinder and more compassionate with ourselves and with others, and less defensive, reactive, and inflexible in the ways we respond to the people and events around us.&rdquo;</p>
+        <p class="tb__q">&ldquo;the ability to achieve and maintain harmonious and productive working relationships depends on one thing: how well the people involved have the humility and the will to understand and manage themselves and understand and relate well to others.&rdquo;</p>
+        <p class="tb__q">&ldquo;other people don’t all view the world the way we do; different people can look at the same situation and see completely different things.&rdquo;</p>
       </section>
-      <section class="f" data-rank="16" hidden data-tags="Thinking">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The 33 Strategies of War</span><span class="f__by">Robert Greene</span><span class="f__tags">Thinking</span></div>
-          <p class="f__q">Getting along with other people is an important skill to have, but it comes with a danger: by always seeking the path of least resistance, the path of conciliation, you forget who you are, and you sink into the center with everyone else.</p>
-          <p class="f__sum">Greene takes 33 strategies from military history and applies them to conflict in everyday life and work. They cover defense, offense, unconventional tactics and self-command.</p>
-          <p class="f__q2">Unintimidate yourself. Intimidation will always threaten your presence of mind.</p>
-        </div>
+      <section class="tb" data-tags="Thinking" data-rank="16" hidden>
+        <p class="tb__t">THE 33 STRATEGIES OF WAR<br /><span class="tb__a">Robert Greene</span></p>
+        <p class="tb__s">Greene takes 33 strategies from military history and applies them to conflict in everyday life and work. They cover defense, offense, unconventional tactics and self-command.</p>
+        <p class="tb__q">&ldquo;Getting along with other people is an important skill to have, but it comes with a danger: by always seeking the path of least resistance, the path of conciliation, you forget who you are, and you sink into the center with everyone else.&rdquo;</p>
+        <p class="tb__q">&ldquo;Unintimidate yourself. Intimidation will always threaten your presence of mind.&rdquo;</p>
+        <p class="tb__q">&ldquo;Once you learn patience, your options suddenly expand.&rdquo;</p>
       </section>
-      <section class="f" data-rank="17" hidden data-tags="Mind|Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Courage to Be Happy</span><span class="f__by">Ichiro Kishimi &amp; Fumitake Koga</span><span class="f__tags">Mind · Living</span></div>
-          <p class="f__q">The past does not decide now. It is your now that decides the past.</p>
-          <p class="f__sum">This sequel to The Courage to Be Disliked is a dialogue between a philosopher and a young teacher about Alfred Adler's psychology. It covers praise and punishment, self-reliance, work, friendship and love.</p>
-          <p class="f__q2">Instead of seeking approval, one has to approve oneself, with one’s own mind.</p>
-        </div>
+      <section class="tb" data-tags="Mind|Living" data-rank="17" hidden>
+        <p class="tb__t">THE COURAGE TO BE HAPPY<br /><span class="tb__a">Ichiro Kishimi &amp; Fumitake Koga</span></p>
+        <p class="tb__s">This sequel to The Courage to Be Disliked is a dialogue between a philosopher and a young teacher about Alfred Adler's psychology. It covers praise and punishment, self-reliance, work, friendship and love.</p>
+        <p class="tb__q">&ldquo;The past does not decide now. It is your now that decides the past.&rdquo;</p>
+        <p class="tb__q">&ldquo;Instead of seeking approval, one has to approve oneself, with one’s own mind.&rdquo;</p>
+        <p class="tb__q">&ldquo;a person’s worth is not something that is decided by what kind of work they engage in. It is decided by the attitude with which they undertake that work.&rdquo;</p>
       </section>
-      <section class="f" data-rank="18" hidden data-tags="Business">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Heroic Leadership</span><span class="f__by">Chris Lowney</span><span class="f__tags">Business</span></div>
-          <p class="f__q">Only those who know their weaknesses can deal with them or even hope to conquer them.</p>
-          <p class="f__sum">Lowney, a former Jesuit seminarian who became a banker, looks at how the Jesuits built a lasting global organization. He identifies four principles behind it: self-awareness, ingenuity, love and heroism.</p>
-          <p class="f__q2">Heroic leaders don’t bide their time until the big moment comes along; they grasp the opportunities within reach and extract as much richness from them as possible.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="18" hidden>
+        <p class="tb__t">HEROIC LEADERSHIP<br /><span class="tb__a">Chris Lowney</span></p>
+        <p class="tb__s">Lowney, a former Jesuit seminarian who became a banker, looks at how the Jesuits built a lasting global organization. He identifies four principles behind it: self-awareness, ingenuity, love and heroism.</p>
+        <p class="tb__q">&ldquo;Only those who know their weaknesses can deal with them or even hope to conquer them.&rdquo;</p>
+        <p class="tb__q">&ldquo;Heroic leaders don’t bide their time until the big moment comes along; they grasp the opportunities within reach and extract as much richness from them as possible.&rdquo;</p>
+        <p class="tb__q">&ldquo;Companies aren’t self-aware; people are. And organizations don’t love; only humans do. Leadership is a personal choice.&rdquo;</p>
       </section>
-      <section class="f" data-rank="20" hidden data-tags="Leadership Shelf" data-shelf="9">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Scaling People</span><span class="f__by">Claire Hughes Johnson</span></div>
-          <p class="f__q">I often think of my work as a manager as clearing the path my team will need to travel. Anything that slows them down is on me.</p>
-          <p class="f__sum">A manager's handbook from Stripe's former COO on building a company's operating system as it grows: planning, hiring, team development, feedback, and communication. It pairs frameworks with templates and exercises for leaders at growing companies.</p>
-          <p class="f__q2">Good communication is about providing timely and honest information, including being willing to acknowledge mistakes. People forgive mistakes, but they lose trust when information is hidden, false, or misleading, or when leadership says something but doesn’t follow through.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="20" data-shelf="9" hidden>
+        <p class="tb__t">SCALING PEOPLE<br /><span class="tb__a">Claire Hughes Johnson</span></p>
+        <p class="tb__s">A manager's handbook from Stripe's former COO on building a company's operating system as it grows: planning, hiring, team development, feedback, and communication. It pairs frameworks with templates and exercises for leaders at growing companies.</p>
+        <p class="tb__q">&ldquo;I often think of my work as a manager as clearing the path my team will need to travel. Anything that slows them down is on me.&rdquo;</p>
+        <p class="tb__q">&ldquo;Good communication is about providing timely and honest information, including being willing to acknowledge mistakes. People forgive mistakes, but they lose trust when information is hidden, false, or misleading, or when leadership says something but doesn’t follow through.&rdquo;</p>
+        <p class="tb__q">&ldquo;Every part of the stack—the team, the division, and the company—should have a mission. A team’s mission should ladder up to the division’s mission, and the division’s mission should ladder up to the company’s mission.&rdquo;</p>
       </section>
-      <section class="f" data-rank="21" hidden data-tags="Leadership Shelf|Business" data-shelf="13">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Working Backwards</span><span class="f__by">Colin Bryar &amp; Bill Carr</span><span class="f__tags">Business</span></div>
-          <p class="f__q">“The best way to fail at inventing something is by making it somebody’s part-time job.”</p>
-          <p class="f__sum">Two longtime Amazon executives describe the company's management practices, including single-threaded leadership, six-page narratives, the PR/FAQ process, Bar Raiser hiring, and input metrics. They show how those practices shaped Kindle, Prime, Prime Video, and AWS.</p>
-          <p class="f__q2">There’s a saying often heard at Amazon: “Good intentions don’t work. Mechanisms do.”</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="21" data-shelf="13" hidden>
+        <p class="tb__t">WORKING BACKWARDS<br /><span class="tb__a">Colin Bryar &amp; Bill Carr</span></p>
+        <p class="tb__s">Two longtime Amazon executives describe the company's management practices, including single-threaded leadership, six-page narratives, the PR/FAQ process, Bar Raiser hiring, and input metrics. They show how those practices shaped Kindle, Prime, Prime Video, and AWS.</p>
+        <p class="tb__q">&ldquo;“The best way to fail at inventing something is by making it somebody’s part-time job.”&rdquo;</p>
+        <p class="tb__q">&ldquo;There’s a saying often heard at Amazon: “Good intentions don’t work. Mechanisms do.”&rdquo;</p>
+        <p class="tb__q">&ldquo;Input metrics measure things that, done right, bring about the desired results in your output metrics.&rdquo;</p>
       </section>
-      <section class="f" data-rank="22" hidden data-tags="Business">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Play Bigger</span><span class="f__by">Al Ramadan, Dave Peterson, Christopher Lochhead &amp; Kevin Maney</span><span class="f__tags">Business</span></div>
-          <p class="f__q">A company that best frames a problem is the company that often comes to define and take the category. Put another way: winning companies today market the problem, not just the solution.</p>
-          <p class="f__sum">The authors argue that the most valuable companies create and define new market categories rather than compete in existing ones. The book lays out &quot;category design&quot;: framing the problem, writing a point of view, and designing product, company, and category together.</p>
-          <p class="f__q2">Customers will ask for better. You want to hear different. Look for what’s missing, not what can be improved.</p>
-        </div>
+      <section class="tb" data-tags="Business" data-rank="22" hidden>
+        <p class="tb__t">PLAY BIGGER<br /><span class="tb__a">Al Ramadan, Dave Peterson, Christopher Lochhead &amp; Kevin Maney</span></p>
+        <p class="tb__s">The authors argue that the most valuable companies create and define new market categories rather than compete in existing ones. The book lays out &quot;category design&quot;: framing the problem, writing a point of view, and designing product, company, and category together.</p>
+        <p class="tb__q">&ldquo;A company that best frames a problem is the company that often comes to define and take the category. Put another way: winning companies today market the problem, not just the solution.&rdquo;</p>
+        <p class="tb__q">&ldquo;Customers will ask for better. You want to hear different. Look for what’s missing, not what can be improved.&rdquo;</p>
+        <p class="tb__q">&ldquo;The taxonomy becomes “truth” and it describes all the elements of the solution and how they fit into the category. Words matter. Category kings lead with language. The name of products and features can change the way people value them.&rdquo;</p>
       </section>
-      <section class="f" data-rank="23" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Four Thousand Weeks</span><span class="f__by">Oliver Burkeman</span><span class="f__tags">Living</span></div>
-          <p class="f__q">Productivity is a trap. Becoming more efficient just makes you more rushed, and trying to clear the decks simply makes them fill up again faster.</p>
-          <p class="f__sum">A book about time management that starts from the fact that the average life lasts about four thousand weeks. Burkeman argues that trying to get everything done makes things worse, and that accepting limits and making hard choices leads to a better use of time.</p>
-          <p class="f__q2">The real measure of any time management technique is whether or not it helps you neglect the right things.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="23" hidden>
+        <p class="tb__t">FOUR THOUSAND WEEKS<br /><span class="tb__a">Oliver Burkeman</span></p>
+        <p class="tb__s">A book about time management that starts from the fact that the average life lasts about four thousand weeks. Burkeman argues that trying to get everything done makes things worse, and that accepting limits and making hard choices leads to a better use of time.</p>
+        <p class="tb__q">&ldquo;Productivity is a trap. Becoming more efficient just makes you more rushed, and trying to clear the decks simply makes them fill up again faster.&rdquo;</p>
+        <p class="tb__q">&ldquo;The real measure of any time management technique is whether or not it helps you neglect the right things.&rdquo;</p>
+        <p class="tb__q">&ldquo;We’re all in the position of medieval stonemasons, adding a few more bricks to a cathedral whose completion we know we’ll never see. The cathedral’s still worth building, all the same.&rdquo;</p>
       </section>
-      <section class="f" data-rank="24" hidden data-tags="Craft">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">On Writing Well</span><span class="f__by">William Zinsser</span><span class="f__tags">Craft</span></div>
-          <p class="f__q">If you find that writing is hard, it’s because it is hard.</p>
-          <p class="f__sum">A guide to writing nonfiction, covering clarity, simplicity, cutting clutter, rewriting, and writing in your own voice. Later chapters apply those principles to interviews, travel, memoir, science, business, and criticism.</p>
-          <p class="f__q2">Readers want the person who is talking to them to sound genuine. Therefore a fundamental rule is: be yourself.</p>
-        </div>
+      <section class="tb" data-tags="Craft" data-rank="24" hidden>
+        <p class="tb__t">ON WRITING WELL<br /><span class="tb__a">William Zinsser</span></p>
+        <p class="tb__s">A guide to writing nonfiction, covering clarity, simplicity, cutting clutter, rewriting, and writing in your own voice. Later chapters apply those principles to interviews, travel, memoir, science, business, and criticism.</p>
+        <p class="tb__q">&ldquo;If you find that writing is hard, it’s because it is hard.&rdquo;</p>
+        <p class="tb__q">&ldquo;Readers want the person who is talking to them to sound genuine. Therefore a fundamental rule is: be yourself.&rdquo;</p>
+        <p class="tb__q">&ldquo;Readers should always feel that you know more about your subject than you’ve put in writing.&rdquo;</p>
       </section>
-      <section class="f" data-rank="25" hidden data-tags="Stoicism">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Daily Stoic</span><span class="f__by">Ryan Holiday &amp; Stephen Hanselman</span><span class="f__tags">Stoicism</span></div>
-          <p class="f__q">Ask yourself: What haven’t I considered? Why is this thing the way it is? Am I part of the problem here or the solution? Could I be wrong here?</p>
-          <p class="f__sum">A year of daily readings, each pairing a passage from Marcus Aurelius, Seneca, Epictetus, or another Stoic with a short commentary. The readings are grouped into monthly themes such as clarity, judgment, acceptance, and mortality.</p>
-          <p class="f__q2">“Throw out your conceited opinions, for it is impossible for a person to begin to learn what he thinks he already knows.” —EPICTETUS, DISCOURSES, 2.17.1</p>
-        </div>
+      <section class="tb" data-tags="Stoicism" data-rank="25" hidden>
+        <p class="tb__t">THE DAILY STOIC<br /><span class="tb__a">Ryan Holiday &amp; Stephen Hanselman</span></p>
+        <p class="tb__s">A year of daily readings, each pairing a passage from Marcus Aurelius, Seneca, Epictetus, or another Stoic with a short commentary. The readings are grouped into monthly themes such as clarity, judgment, acceptance, and mortality.</p>
+        <p class="tb__q">&ldquo;Ask yourself: What haven’t I considered? Why is this thing the way it is? Am I part of the problem here or the solution? Could I be wrong here?&rdquo;</p>
+        <p class="tb__q">&ldquo;“Throw out your conceited opinions, for it is impossible for a person to begin to learn what he thinks he already knows.” —EPICTETUS, DISCOURSES, 2.17.1&rdquo;</p>
+        <p class="tb__q">&ldquo;“If a person gave away your body to some passerby, you’d be furious. Yet you hand over your mind to anyone who comes along, so they may abuse you, leaving it disturbed and troubled—have you no shame in that?” —EPICTETUS, ENCHIRIDION, 28&rdquo;</p>
       </section>
-      <section class="f" data-rank="26" hidden data-tags="Leadership Shelf" data-shelf="14">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">What You Do Is Who You Are</span><span class="f__by">Ben Horowitz</span></div>
-          <p class="f__q">If you aren’t yourself, even you won’t follow you.</p>
-          <p class="f__sum">Horowitz argues that a company's culture is defined by what its people actually do, not by stated values. He draws on examples like the Haitian revolution, the samurai, Genghis Khan, and a prison gang leader to show how leaders shape culture through their actions.</p>
-          <p class="f__q2">If somebody behaves in a way you can’t believe, remember that your culture somehow made that acceptable.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="26" data-shelf="14" hidden>
+        <p class="tb__t">WHAT YOU DO IS WHO YOU ARE<br /><span class="tb__a">Ben Horowitz</span></p>
+        <p class="tb__s">Horowitz argues that a company's culture is defined by what its people actually do, not by stated values. He draws on examples like the Haitian revolution, the samurai, Genghis Khan, and a prison gang leader to show how leaders shape culture through their actions.</p>
+        <p class="tb__q">&ldquo;If you aren’t yourself, even you won’t follow you.&rdquo;</p>
+        <p class="tb__q">&ldquo;If somebody behaves in a way you can’t believe, remember that your culture somehow made that acceptable.&rdquo;</p>
+        <p class="tb__q">&ldquo;The truth about telling the truth is that it doesn’t come easy. It’s not natural. What’s natural is telling people what they want to hear.&rdquo;</p>
       </section>
-      <section class="f" data-rank="27" hidden data-tags="Leadership Shelf" data-shelf="16">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Dare to Lead</span><span class="f__by">Brené Brown</span></div>
-          <p class="f__q">Clear is kind. Unclear is unkind.</p>
-          <p class="f__sum">Brown applies her research on vulnerability, shame, and courage to leadership. She covers how leaders can build trust, give honest feedback, live by their values, and recover from setbacks.</p>
-          <p class="f__q2">Integrity is choosing courage over comfort; it’s choosing what’s right over what’s fun, fast, or easy; and it’s practicing your values, not just professing them.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="27" data-shelf="16" hidden>
+        <p class="tb__t">DARE TO LEAD<br /><span class="tb__a">Brené Brown</span></p>
+        <p class="tb__s">Brown applies her research on vulnerability, shame, and courage to leadership. She covers how leaders can build trust, give honest feedback, live by their values, and recover from setbacks.</p>
+        <p class="tb__q">&ldquo;Clear is kind. Unclear is unkind.&rdquo;</p>
+        <p class="tb__q">&ldquo;Integrity is choosing courage over comfort; it’s choosing what’s right over what’s fun, fast, or easy; and it’s practicing your values, not just professing them.&rdquo;</p>
+        <p class="tb__q">&ldquo;I know I’m ready to give feedback when I’m willing to put the problem in front of us rather than between us (or sliding it toward you).&rdquo;</p>
       </section>
-      <section class="f" data-rank="28" hidden data-tags="Philosophy">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">A Calendar of Wisdom</span><span class="f__by">Leo Tolstoy</span><span class="f__tags">Philosophy</span></div>
-          <p class="f__q">If you want to do a good deed, do it now. The time will pass, and you will not have the chance again.</p>
-          <p class="f__sum">A collection Tolstoy compiled late in life with one reading for each day of the year. It mixes his own thoughts with sayings from philosophers, religious texts, and writers on topics like kindness, work, wealth, and self-improvement.</p>
-          <p class="f__q2">The more urgently you want to speak, the more likely it is that you will say something foolish.</p>
-        </div>
+      <section class="tb" data-tags="Philosophy" data-rank="28" hidden>
+        <p class="tb__t">A CALENDAR OF WISDOM<br /><span class="tb__a">Leo Tolstoy</span></p>
+        <p class="tb__s">A collection Tolstoy compiled late in life with one reading for each day of the year. It mixes his own thoughts with sayings from philosophers, religious texts, and writers on topics like kindness, work, wealth, and self-improvement.</p>
+        <p class="tb__q">&ldquo;If you want to do a good deed, do it now. The time will pass, and you will not have the chance again.&rdquo;</p>
+        <p class="tb__q">&ldquo;The more urgently you want to speak, the more likely it is that you will say something foolish.&rdquo;</p>
+        <p class="tb__q">&ldquo;When I sit on the seashore and listen to the waves beating on the sand, I feel free from any obligation, and I think that all the people of the world can change their constitutions without me. —HENRY DAVID THOREAU&rdquo;</p>
       </section>
-      <section class="f" data-rank="29" hidden data-tags="Philosophy">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Fallen Leaves</span><span class="f__by">Will Durant</span><span class="f__tags">Philosophy</span></div>
-          <p class="f__q">Life is that which is discontent, which struggles and seeks, which suffers and creates.</p>
-          <p class="f__sum">Short essays the historian wrote near the end of his life, published after his death. He gives his views on youth, aging, religion, war, politics, art, science, education, and death.</p>
-          <p class="f__q2">Let us ask the gods not for possessions, but for things to do; happiness is in making things rather than in consuming them.</p>
-        </div>
+      <section class="tb" data-tags="Philosophy" data-rank="29" hidden>
+        <p class="tb__t">FALLEN LEAVES<br /><span class="tb__a">Will Durant</span></p>
+        <p class="tb__s">Short essays the historian wrote near the end of his life, published after his death. He gives his views on youth, aging, religion, war, politics, art, science, education, and death.</p>
+        <p class="tb__q">&ldquo;Life is that which is discontent, which struggles and seeks, which suffers and creates.&rdquo;</p>
+        <p class="tb__q">&ldquo;Let us ask the gods not for possessions, but for things to do; happiness is in making things rather than in consuming them.&rdquo;</p>
+        <p class="tb__q">&ldquo;Intellect is the capacity for acquiring and accumulating ideas; intelligence is the ability to use experience—even the experience of others—for the clarification and attainment of one’s ends.&rdquo;</p>
       </section>
-      <section class="f" data-rank="30" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Lighter</span><span class="f__by">Yung Pueblo</span><span class="f__tags">Living</span></div>
-          <p class="f__q">your first reaction is your past your intentional response is your present</p>
-          <p class="f__sum">A short book on emotional healing and self-awareness, drawing on meditation practice. It covers letting go of old reactions, managing ego, and how personal change affects relationships and community.</p>
-          <p class="f__q2">Ego craves to win, but loving clarity seeks to understand.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="30" hidden>
+        <p class="tb__t">LIGHTER<br /><span class="tb__a">Yung Pueblo</span></p>
+        <p class="tb__s">A short book on emotional healing and self-awareness, drawing on meditation practice. It covers letting go of old reactions, managing ego, and how personal change affects relationships and community.</p>
+        <p class="tb__q">&ldquo;your first reaction is your past your intentional response is your present&rdquo;</p>
+        <p class="tb__q">&ldquo;Ego craves to win, but loving clarity seeks to understand.&rdquo;</p>
+        <p class="tb__q">&ldquo;Real maturity is keeping your peace in the midst of a disagreement.&rdquo;</p>
       </section>
-      <section class="f" data-rank="31" hidden data-tags="Leadership Shelf|Business" data-shelf="7">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">BE 2.0</span><span class="f__by">Jim Collins</span><span class="f__tags">Business</span></div>
-          <p class="f__q">How do you know if you have a truly great business? Warren Buffett has the best answer: You don’t have to hold a prayer meeting to raise prices.</p>
-          <p class="f__sum">An updated edition of Collins's 1992 guide for small and mid-sized companies that want to last. It covers leadership, getting the right people, vision and values, strategy, and day-to-day execution.</p>
-          <p class="f__q2">Innovation often comes from seeing the relationship between unconnected ideas and melding them together.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="31" data-shelf="7" hidden>
+        <p class="tb__t">BE 2.0<br /><span class="tb__a">Jim Collins</span></p>
+        <p class="tb__s">An updated edition of Collins's 1992 guide for small and mid-sized companies that want to last. It covers leadership, getting the right people, vision and values, strategy, and day-to-day execution.</p>
+        <p class="tb__q">&ldquo;How do you know if you have a truly great business? Warren Buffett has the best answer: You don’t have to hold a prayer meeting to raise prices.&rdquo;</p>
+        <p class="tb__q">&ldquo;Innovation often comes from seeing the relationship between unconnected ideas and melding them together.&rdquo;</p>
+        <p class="tb__q">&ldquo;The first step in being built to last is don’t die. The only mistakes you can learn from are the ones you survive.&rdquo;</p>
       </section>
-      <section class="f" data-rank="32" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">What They Forgot to Teach You at School</span><span class="f__by">The School of Life</span><span class="f__tags">Living</span></div>
-          <p class="f__q">Hating ourselves is the easy bit. Learning to give ourselves a break is the true, rare and properly adult achievement.</p>
-          <p class="f__sum">A collection of short essays on the emotional skills school leaves out. Topics include self-compassion, kindness, repairing relationships, managing moods, and living with anxiety.</p>
-          <p class="f__q2">Small acts of kindness are a way of lending others small change in the currency of hope and courage which we depend on for our emotional survival.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="32" hidden>
+        <p class="tb__t">WHAT THEY FORGOT TO TEACH YOU AT SCHOOL<br /><span class="tb__a">The School of Life</span></p>
+        <p class="tb__s">A collection of short essays on the emotional skills school leaves out. Topics include self-compassion, kindness, repairing relationships, managing moods, and living with anxiety.</p>
+        <p class="tb__q">&ldquo;Hating ourselves is the easy bit. Learning to give ourselves a break is the true, rare and properly adult achievement.&rdquo;</p>
+        <p class="tb__q">&ldquo;Small acts of kindness are a way of lending others small change in the currency of hope and courage which we depend on for our emotional survival.&rdquo;</p>
+        <p class="tb__q">&ldquo;It can feel so much easier to get offended with someone than to dare to imagine they might have something important to tell us.&rdquo;</p>
       </section>
-      <section class="f" data-rank="33" hidden data-tags="Thinking">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Antifragile</span><span class="f__by">Nassim Nicholas Taleb</span><span class="f__tags">Thinking</span></div>
-          <p class="f__q">Antifragility is beyond resilience or robustness. The resilient resists shocks and stays the same; the antifragile gets better.</p>
-          <p class="f__sum">Taleb argues that some things gain from volatility, stress, and disorder, and calls them antifragile. He applies the idea to health, economics, innovation, and ethics, and argues for limiting downside while leaving room for upside.</p>
-          <p class="f__q2">Steve Jobs figured out that “you have to work hard to get your thinking clean to make it simple.”</p>
-        </div>
+      <section class="tb" data-tags="Thinking" data-rank="33" hidden>
+        <p class="tb__t">ANTIFRAGILE<br /><span class="tb__a">Nassim Nicholas Taleb</span></p>
+        <p class="tb__s">Taleb argues that some things gain from volatility, stress, and disorder, and calls them antifragile. He applies the idea to health, economics, innovation, and ethics, and argues for limiting downside while leaving room for upside.</p>
+        <p class="tb__q">&ldquo;Antifragility is beyond resilience or robustness. The resilient resists shocks and stays the same; the antifragile gets better.&rdquo;</p>
+        <p class="tb__q">&ldquo;Steve Jobs figured out that “you have to work hard to get your thinking clean to make it simple.”&rdquo;</p>
+        <p class="tb__q">&ldquo;My idea of the modern Stoic sage is someone who transforms fear into prudence, pain into information, mistakes into initiation, and desire into undertaking.&rdquo;</p>
       </section>
-      <section class="f" data-rank="34" hidden data-tags="Philosophy">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Bhagavad Gita</span><span class="f__by">Eknath Easwaran (translator)</span><span class="f__tags">Philosophy</span></div>
-          <p class="f__q">Since the Self is the core of every personality, no one needs to acquire goodness or compassion; they are already there. All that is necessary is to remove the selfish habits that hide them.</p>
-          <p class="f__sum">A Hindu scripture in which Krishna advises the warrior Arjuna before a battle. Easwaran's translation and introductions explain its teachings on duty, selfless action, detachment from results, and meditation.</p>
-          <p class="f__q2">When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.</p>
-        </div>
+      <section class="tb" data-tags="Philosophy" data-rank="34" hidden>
+        <p class="tb__t">THE BHAGAVAD GITA<br /><span class="tb__a">Eknath Easwaran (translator)</span></p>
+        <p class="tb__s">A Hindu scripture in which Krishna advises the warrior Arjuna before a battle. Easwaran's translation and introductions explain its teachings on duty, selfless action, detachment from results, and meditation.</p>
+        <p class="tb__q">&ldquo;Since the Self is the core of every personality, no one needs to acquire goodness or compassion; they are already there. All that is necessary is to remove the selfish habits that hide them.&rdquo;</p>
+        <p class="tb__q">&ldquo;When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.&rdquo;</p>
+        <p class="tb__q">&ldquo;Give freely. Be self-controlled, sincere, truthful, loving, and full of the desire to serve.&rdquo;</p>
       </section>
-      <section class="f" data-rank="35" hidden data-tags="History">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Truman</span><span class="f__by">David McCullough</span><span class="f__tags">History</span></div>
-          <p class="f__q">Always be nice to the people who can’t talk back to you.</p>
-          <p class="f__sum">A biography of Harry S. Truman, from his Missouri farm upbringing through the Senate and his presidency. It covers the end of World War II, the Marshall Plan, and the early Cold War.</p>
-          <p class="f__q2">More than once in his presidency, Truman would be remembered saying it was remarkable how much could be accomplished if you didn’t care who received the credit.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|History" data-rank="35" hidden>
+        <p class="tb__t">TRUMAN<br /><span class="tb__a">David McCullough</span></p>
+        <p class="tb__s">A biography of Harry S. Truman, from his Missouri farm upbringing through the Senate and his presidency. It covers the end of World War II, the Marshall Plan, and the early Cold War.</p>
+        <p class="tb__q">&ldquo;Always be nice to the people who can’t talk back to you.&rdquo;</p>
+        <p class="tb__q">&ldquo;More than once in his presidency, Truman would be remembered saying it was remarkable how much could be accomplished if you didn’t care who received the credit.&rdquo;</p>
+        <p class="tb__q">&ldquo;Truman remarked, “You never know what’s in you until you have to do it.”&rdquo;</p>
       </section>
-      <section class="f" data-rank="36" hidden data-tags="Business">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Zero to One</span><span class="f__by">Peter Thiel</span><span class="f__tags">Business</span></div>
-          <p class="f__q">What important truth do very few people agree with you on?</p>
-          <p class="f__sum">Thiel's notes on startups, built around the idea that real progress comes from creating new things, not copying existing ones. He argues that great companies escape competition, build monopolies, and rest on a secret others have missed.</p>
-          <p class="f__q2">The most contrarian thing of all is not to oppose the crowd but to think for yourself.</p>
-        </div>
+      <section class="tb" data-tags="Business" data-rank="36" hidden>
+        <p class="tb__t">ZERO TO ONE<br /><span class="tb__a">Peter Thiel</span></p>
+        <p class="tb__s">Thiel's notes on startups, built around the idea that real progress comes from creating new things, not copying existing ones. He argues that great companies escape competition, build monopolies, and rest on a secret others have missed.</p>
+        <p class="tb__q">&ldquo;What important truth do very few people agree with you on?&rdquo;</p>
+        <p class="tb__q">&ldquo;The most contrarian thing of all is not to oppose the crowd but to think for yourself.&rdquo;</p>
+        <p class="tb__q">&ldquo;All happy companies are different: each one earns a monopoly by solving a unique problem. All failed companies are the same: they failed to escape competition.&rdquo;</p>
       </section>
-      <section class="f" data-rank="37" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">As a Man Thinketh</span><span class="f__by">James Allen</span><span class="f__tags">Living</span></div>
-          <p class="f__q">Men do not attract that which they want, but that which they are.</p>
-          <p class="f__sum">A short 1903 essay arguing that a person's character and circumstances come from their habitual thoughts. Allen says that changing how you think is the way to change your life.</p>
-          <p class="f__q2">Men are anxious to improve their circumstances, but are unwilling to improve themselves; they therefore remain bound.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="37" hidden>
+        <p class="tb__t">AS A MAN THINKETH<br /><span class="tb__a">James Allen</span></p>
+        <p class="tb__s">A short 1903 essay arguing that a person's character and circumstances come from their habitual thoughts. Allen says that changing how you think is the way to change your life.</p>
+        <p class="tb__q">&ldquo;Men do not attract that which they want, but that which they are.&rdquo;</p>
+        <p class="tb__q">&ldquo;Men are anxious to improve their circumstances, but are unwilling to improve themselves; they therefore remain bound.&rdquo;</p>
+        <p class="tb__q">&ldquo;We imagine that thought can be kept secret, but it cannot; it rapidly crystallizes into habit, and habit solidifies into circumstance.&rdquo;</p>
       </section>
-      <section class="f" data-rank="38" hidden data-tags="Business">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">It Doesn't Have to Be Crazy at Work</span><span class="f__by">Jason Fried &amp; David Heinemeier Hansson</span><span class="f__tags">Business</span></div>
-          <p class="f__q">A fractured hour isn’t really an hour—it’s a mess of minutes.</p>
-          <p class="f__sum">The founders of Basecamp describe how they run a calm company. They cover 40-hour weeks, protecting time and attention, writing instead of meeting, and avoiding growth at all costs.</p>
-          <p class="f__q2">Don’t meet, write. Don’t react, consider.</p>
-        </div>
+      <section class="tb" data-tags="Business" data-rank="38" hidden>
+        <p class="tb__t">IT DOESN'T HAVE TO BE CRAZY AT WORK<br /><span class="tb__a">Jason Fried &amp; David Heinemeier Hansson</span></p>
+        <p class="tb__s">The founders of Basecamp describe how they run a calm company. They cover 40-hour weeks, protecting time and attention, writing instead of meeting, and avoiding growth at all costs.</p>
+        <p class="tb__q">&ldquo;A fractured hour isn’t really an hour—it’s a mess of minutes.&rdquo;</p>
+        <p class="tb__q">&ldquo;Don’t meet, write. Don’t react, consider.&rdquo;</p>
+        <p class="tb__q">&ldquo;Calm requires getting comfortable with enough.&rdquo;</p>
       </section>
-      <section class="f" data-rank="39" hidden data-tags="Living">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">From Strength to Strength</span><span class="f__by">Arthur C. Brooks</span><span class="f__tags">Living</span></div>
-          <p class="f__q">Satisfaction comes not from chasing bigger and bigger things, but paying attention to smaller and smaller things.</p>
-          <p class="f__sum">Brooks looks at professional decline in middle age and how to handle it. He suggests shifting from raw problem-solving to wisdom and teaching, letting go of success addiction, and investing in relationships.</p>
-          <p class="f__q2">Success, the fruit of excellence, becomes an addiction. All because of pride.</p>
-        </div>
+      <section class="tb" data-tags="Living" data-rank="39" hidden>
+        <p class="tb__t">FROM STRENGTH TO STRENGTH<br /><span class="tb__a">Arthur C. Brooks</span></p>
+        <p class="tb__s">Brooks looks at professional decline in middle age and how to handle it. He suggests shifting from raw problem-solving to wisdom and teaching, letting go of success addiction, and investing in relationships.</p>
+        <p class="tb__q">&ldquo;Satisfaction comes not from chasing bigger and bigger things, but paying attention to smaller and smaller things.&rdquo;</p>
+        <p class="tb__q">&ldquo;Success, the fruit of excellence, becomes an addiction. All because of pride.&rdquo;</p>
+        <p class="tb__q">&ldquo;Being open to reevaluating our ideas about ourselves can keep us from getting stuck in patterns that aren’t true to our changing selves.&rdquo;</p>
       </section>
-      <section class="f" data-rank="41" hidden data-tags="Leadership Shelf" data-shelf="11">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Captain Class</span><span class="f__by">Sam Walker</span></div>
-          <p class="f__q">A great leader is dedicated to doing whatever it takes to make success more likely, even if it’s unpopular, or controversial, or outrageous, or completely invisible to others. A leader has to be committed, above all else, to getting it right.</p>
-          <p class="f__sum">A study of the most dominant teams in sports history, which finds that the common factor was not a star player or coach but a captain who did unglamorous work, held the team to a high standard, and led mostly through example and private conversation.</p>
-          <p class="f__q2">“You do your job so everyone around you can do their job,” Tom Brady once said. “There’s no big secret to it.”</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="41" data-shelf="11" hidden>
+        <p class="tb__t">THE CAPTAIN CLASS<br /><span class="tb__a">Sam Walker</span></p>
+        <p class="tb__s">A study of the most dominant teams in sports history, which finds that the common factor was not a star player or coach but a captain who did unglamorous work, held the team to a high standard, and led mostly through example and private conversation.</p>
+        <p class="tb__q">&ldquo;A great leader is dedicated to doing whatever it takes to make success more likely, even if it’s unpopular, or controversial, or outrageous, or completely invisible to others. A leader has to be committed, above all else, to getting it right.&rdquo;</p>
+        <p class="tb__q">&ldquo;“You do your job so everyone around you can do their job,” Tom Brady once said. “There’s no big secret to it.”&rdquo;</p>
+        <p class="tb__q">&ldquo;One of the great paradoxes of management is that the people who pursue leadership positions most ardently are often the wrong people for the job. They’re motivated by the prestige the role conveys rather than a desire to promote the goals and values of the organization.&rdquo;</p>
       </section>
-      <section class="f" data-rank="42" hidden data-tags="Leadership Shelf|Business" data-shelf="17">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">No Rules Rules</span><span class="f__by">Reed Hastings &amp; Erin Meyer</span><span class="f__tags">Business</span></div>
-          <p class="f__q">If you build an organization made up of high performers, you can eliminate most controls. The denser the talent, the greater the freedom you can offer.</p>
-          <p class="f__sum">Netflix's co-founder and a business professor explain the company's culture: hire very strong people, pay them well, ask for constant candid feedback, and then remove most rules and approvals so they can make their own decisions.</p>
-          <p class="f__q2">When the boss steps out of the role of “decision approver,” the entire business speeds up and innovation increases.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="42" data-shelf="17" hidden>
+        <p class="tb__t">NO RULES RULES<br /><span class="tb__a">Reed Hastings &amp; Erin Meyer</span></p>
+        <p class="tb__s">Netflix's co-founder and a business professor explain the company's culture: hire very strong people, pay them well, ask for constant candid feedback, and then remove most rules and approvals so they can make their own decisions.</p>
+        <p class="tb__q">&ldquo;If you build an organization made up of high performers, you can eliminate most controls. The denser the talent, the greater the freedom you can offer.&rdquo;</p>
+        <p class="tb__q">&ldquo;When the boss steps out of the role of “decision approver,” the entire business speeds up and innovation increases.&rdquo;</p>
+        <p class="tb__q">&ldquo;If you hope for more innovation on your team, teach employees to seek ways to move the business forward, not ways to please their bosses.&rdquo;</p>
       </section>
-      <section class="f" data-rank="43" hidden data-tags="Leadership Shelf" data-shelf="18">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The CEO Test</span><span class="f__by">Adam Bryant &amp; Kevin Sharer</span></div>
-          <p class="f__q">Simplifying complexity is a leader's superpower.</p>
-          <p class="f__sum">Drawing on interviews with hundreds of CEOs, the authors lay out the core tests of leadership: writing a simple plan, building culture and a strong team, leading change, listening, and handling a crisis.</p>
-          <p class="f__q2">Though many people are loath to admit it, except to perhaps friends, family, and trusted confidants, leadership is hellishly difficult.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="43" data-shelf="18" hidden>
+        <p class="tb__t">THE CEO TEST<br /><span class="tb__a">Adam Bryant &amp; Kevin Sharer</span></p>
+        <p class="tb__s">Drawing on interviews with hundreds of CEOs, the authors lay out the core tests of leadership: writing a simple plan, building culture and a strong team, leading change, listening, and handling a crisis.</p>
+        <p class="tb__q">&ldquo;Simplifying complexity is a leader's superpower.&rdquo;</p>
+        <p class="tb__q">&ldquo;Though many people are loath to admit it, except to perhaps friends, family, and trusted confidants, leadership is hellishly difficult.&rdquo;</p>
+        <p class="tb__q">&ldquo;Now you need to live a key principle of leadership: there is no such thing as overcommunication.&rdquo;</p>
       </section>
-      <section class="f" data-rank="44" hidden data-tags="Leadership Shelf|Craft" data-shelf="19">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Creativity, Inc.</span><span class="f__by">Ed Catmull &amp; Amy Wallace</span><span class="f__tags">Craft</span></div>
-          <p class="f__q">If you aren’t experiencing failure, then you are making a far worse mistake: You are being driven by the desire to avoid it.</p>
-          <p class="f__sum">Pixar's co-founder explains how the studio protects creative work: candid feedback on early drafts, treating failure as part of the process, and managers whose job is to find and remove the hidden problems that block good people.</p>
-          <p class="f__q2">Management’s job is not to prevent risk but to build the ability to recover.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Craft" data-rank="44" data-shelf="19" hidden>
+        <p class="tb__t">CREATIVITY, INC.<br /><span class="tb__a">Ed Catmull &amp; Amy Wallace</span></p>
+        <p class="tb__s">Pixar's co-founder explains how the studio protects creative work: candid feedback on early drafts, treating failure as part of the process, and managers whose job is to find and remove the hidden problems that block good people.</p>
+        <p class="tb__q">&ldquo;If you aren’t experiencing failure, then you are making a far worse mistake: You are being driven by the desire to avoid it.&rdquo;</p>
+        <p class="tb__q">&ldquo;Management’s job is not to prevent risk but to build the ability to recover.&rdquo;</p>
+        <p class="tb__q">&ldquo;If you give a good idea to a mediocre team, they will screw it up. If you give a mediocre idea to a brilliant team, they will either fix it or throw it away and come up with something better.&rdquo;</p>
       </section>
-      <section class="f" data-rank="45" hidden data-tags="Leadership Shelf|Business" data-shelf="20">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">High Growth Handbook</span><span class="f__by">Elad Gil</span><span class="f__tags">Business</span></div>
-          <p class="f__q">A CEO’s energy levels dictate those of the team.</p>
-          <p class="f__sum">A guide to scaling a startup after it finds product-market fit, covering the CEO's role, hiring and managing executives, boards, culture, and company functions, with interviews from founders and operators who have done it.</p>
-          <p class="f__q2">“You do not want to preserve culture; you want to collectively steer the right evolution of the culture.” —Patrick Collison</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="45" data-shelf="20" hidden>
+        <p class="tb__t">HIGH GROWTH HANDBOOK<br /><span class="tb__a">Elad Gil</span></p>
+        <p class="tb__s">A guide to scaling a startup after it finds product-market fit, covering the CEO's role, hiring and managing executives, boards, culture, and company functions, with interviews from founders and operators who have done it.</p>
+        <p class="tb__q">&ldquo;A CEO’s energy levels dictate those of the team.&rdquo;</p>
+        <p class="tb__q">&ldquo;“You do not want to preserve culture; you want to collectively steer the right evolution of the culture.” —Patrick Collison&rdquo;</p>
+        <p class="tb__q">&ldquo;The most important job of a CEO is just to make sure that the company succeeds. So if there’s a whole chunk of work that you’re not good at, you don’t personally have to be good at it to be a good CEO. You have to make sure the company is good at it to be a good CEO.&rdquo;</p>
       </section>
-      <section class="f" data-rank="49" hidden data-tags="Leadership Shelf|Business" data-shelf="10">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Only the Paranoid Survive</span><span class="f__by">Andrew S. Grove</span><span class="f__tags">Business</span></div>
-          <p class="f__q">A strategic inflection point is a time in the life of a business when its fundamentals are about to change. That change can mean an opportunity to rise to new heights. But it may just as likely signal the beginning of the end.</p>
-          <p class="f__sum">Intel's former CEO describes strategic inflection points, the moments when a business's fundamentals change, and how leaders can recognize them early and commit to a new direction before the old one fails.</p>
-          <p class="f__q2">Strategic change doesn't just start at the top. It starts with your calendar.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="49" data-shelf="10" hidden>
+        <p class="tb__t">ONLY THE PARANOID SURVIVE<br /><span class="tb__a">Andrew S. Grove</span></p>
+        <p class="tb__s">Intel's former CEO describes strategic inflection points, the moments when a business's fundamentals change, and how leaders can recognize them early and commit to a new direction before the old one fails.</p>
+        <p class="tb__q">&ldquo;A strategic inflection point is a time in the life of a business when its fundamentals are about to change. That change can mean an opportunity to rise to new heights. But it may just as likely signal the beginning of the end.&rdquo;</p>
+        <p class="tb__q">&ldquo;Strategic change doesn't just start at the top. It starts with your calendar.&rdquo;</p>
+        <p class="tb__q">&ldquo;You have to commit yourself to a certain course and a certain pace, otherwise you will run out of water and energy before long.&rdquo;</p>
       </section>
-      <section class="f" data-rank="50" hidden data-tags="Leadership Shelf|Business" data-shelf="12">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Who</span><span class="f__by">Geoff Smart &amp; Randy Street</span><span class="f__tags">Business</span></div>
-          <p class="f__q">“Your success as a manager is simply the result of how good you are at hiring the people around you.”</p>
-          <p class="f__sum">A practical hiring method: define the outcomes a role must deliver in a scorecard, source candidates through referrals, and use structured interviews to find people who can actually hit those outcomes.</p>
-          <p class="f__q2">The first failure point of hiring is not being crystal clear about what you really want the person you hire to accomplish.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="50" data-shelf="12" hidden>
+        <p class="tb__t">WHO<br /><span class="tb__a">Geoff Smart &amp; Randy Street</span></p>
+        <p class="tb__s">A practical hiring method: define the outcomes a role must deliver in a scorecard, source candidates through referrals, and use structured interviews to find people who can actually hit those outcomes.</p>
+        <p class="tb__q">&ldquo;“Your success as a manager is simply the result of how good you are at hiring the people around you.”&rdquo;</p>
+        <p class="tb__q">&ldquo;The first failure point of hiring is not being crystal clear about what you really want the person you hire to accomplish.&rdquo;</p>
+        <p class="tb__q">&ldquo;A Players tend to talk about outcomes linked to expectations. B and C Players talk generally about events, people they met, or aspects of the job they liked without ever getting into results.&rdquo;</p>
       </section>
-      <section class="f" data-rank="52" hidden data-tags="Leadership Shelf" data-shelf="6">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Call Sign Chaos</span><span class="f__by">Jim Mattis &amp; Bing West</span></div>
-          <p class="f__q">The first is competence. Be brilliant in the basics. Don’t dabble in your job; you must master it.</p>
-          <p class="f__sum">Jim Mattis on what he learned leading Marines over four decades, from commanding a platoon to running U.S. Central Command.</p>
-          <p class="f__q2">Remember: As an officer, you need to win only one battle—for the hearts of your troops. Win their hearts and they will win the fights.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="52" data-shelf="6" hidden>
+        <p class="tb__t">CALL SIGN CHAOS<br /><span class="tb__a">Jim Mattis &amp; Bing West</span></p>
+        <p class="tb__s">Jim Mattis on what he learned leading Marines over four decades, from commanding a platoon to running U.S. Central Command.</p>
+        <p class="tb__q">&ldquo;The first is competence. Be brilliant in the basics. Don’t dabble in your job; you must master it.&rdquo;</p>
+        <p class="tb__q">&ldquo;Remember: As an officer, you need to win only one battle—for the hearts of your troops. Win their hearts and they will win the fights.&rdquo;</p>
+        <p class="tb__q">&ldquo;Third, conviction. This is harder and deeper than physical courage. Your peers are the first to know what you will stand for and, more important, what you won’t stand for.&rdquo;</p>
       </section>
-      <section class="f" data-rank="53" hidden data-tags="Leadership Shelf|Business" data-shelf="4">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Measure What Matters</span><span class="f__by">John Doerr</span><span class="f__tags">Business</span></div>
-          <p class="f__q">“Bad companies,” Andy wrote, “are destroyed by crisis. Good companies survive them. Great companies are improved by them.”</p>
-          <p class="f__sum">John Doerr explains OKRs (objectives and key results), the goal-setting system he learned from Andy Grove at Intel, with examples from Google and other companies.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="53" data-shelf="4" hidden>
+        <p class="tb__t">MEASURE WHAT MATTERS<br /><span class="tb__a">John Doerr</span></p>
+        <p class="tb__s">John Doerr explains OKRs (objectives and key results), the goal-setting system he learned from Andy Grove at Intel, with examples from Google and other companies.</p>
+        <p class="tb__q">&ldquo;“Bad companies,” Andy wrote, “are destroyed by crisis. Good companies survive them. Great companies are improved by them.”&rdquo;</p>
       </section>
-      <section class="f" data-rank="54" hidden data-tags="Leadership Shelf|Business" data-shelf="21">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">Good to Great</span><span class="f__by">Jim Collins</span><span class="f__tags">Business</span></div>
-          <p class="f__sum">Jim Collins and his team studied companies that went from average results to great ones and stayed there, and what set them apart from similar companies that didn't.</p>
-        </div>
+      <section class="tb" data-tags="Leadership|Business" data-rank="54" data-shelf="21" hidden>
+        <p class="tb__t">GOOD TO GREAT<br /><span class="tb__a">Jim Collins</span></p>
+        <p class="tb__s">Jim Collins and his team studied companies that went from average results to great ones and stayed there, and what set them apart from similar companies that didn't.</p>
       </section>
-      <section class="f" data-rank="55" hidden data-tags="Leadership Shelf" data-shelf="5">
-        <div class="f__body">
-          <div class="f__meta"><span class="f__title">The Inspiring Leader</span><span class="f__by">John H. Zenger &amp; Joseph Folkman</span></div>
-          <p class="f__sum">Zenger and Folkman use data on thousands of leaders to show which behaviors make a leader inspiring, and how to build them.</p>
-        </div>
+      <section class="tb" data-tags="Leadership" data-rank="55" data-shelf="5" hidden>
+        <p class="tb__t">THE INSPIRING LEADER<br /><span class="tb__a">John H. Zenger &amp; Joseph Folkman</span></p>
+        <p class="tb__s">Zenger and Folkman use data on thousands of leaders to show which behaviors make a leader inspiring, and how to build them.</p>
       </section>
     </div>
   </article>
@@ -529,24 +472,34 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* tag filter */
-  var chips = document.querySelectorAll('.chip');
-  chips.forEach(function (c) {
-    c.addEventListener('click', function () {
-      chips.forEach(function (x) { x.classList.toggle('chip--on', x === c); });
-      var f = c.getAttribute('data-f');
-      var list = document.querySelector('.list');
-      var items = Array.prototype.slice.call(list.querySelectorAll('.f'));
-      items.forEach(function (b) {
-        b.hidden = !(f === 'all' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+  /* the index: show one list, in its order */
+  var rows = document.querySelectorAll('.ix');
+  rows.forEach(function (r) {
+    r.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = r.getAttribute('data-f');
+      rows.forEach(function (x) {
+        var on = x === r;
+        x.classList.toggle('ix--on', on);
+        x.querySelector('.ix__box').innerHTML = on ? '[x]' : '[&nbsp;]';
       });
-      /* the two picked lists read in Kelly's order; everything else by highlight count */
-      var attr = f === 'Leadership Shelf' ? 'data-shelf' : f === 'The ones I give away' ? 'data-first' : 'data-rank';
+      var list = document.querySelector('.list');
+      var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
+      var attr = f === 'Ones I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : 'data-rank';
+      items.forEach(function (b) {
+        b.hidden = !(f === 'All of them' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+      });
       items.sort(function (a, b) {
-        return (+a.getAttribute(attr) || 0) - (+b.getAttribute(attr) || 0);
+        var ka = a.hasAttribute(attr) ? +a.getAttribute(attr) : 1e6 + (+a.getAttribute('data-rank'));
+        var kb = b.hasAttribute(attr) ? +b.getAttribute(attr) : 1e6 + (+b.getAttribute('data-rank'));
+        return ka - kb;
       }).forEach(function (b) { list.appendChild(b); });
+      /* the first visible book has no * * * above it */
+      var seen = false;
+      items.forEach(function (b) { b.classList.toggle('tb--first', !b.hidden && !seen); if (!b.hidden) seen = true; });
     });
   });
+  document.querySelector('.ix--on').dispatchEvent(new Event('click'));
 </script>
 
 <script src="../js/archive-menu.js?v=3"></script>
