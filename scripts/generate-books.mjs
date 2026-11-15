@@ -10,7 +10,7 @@
    filters show by highlight count (file order), except Leadership, which keeps
    Kelly's shelf order (shelfOrder) with the rest appended by count.
 
-   "Posts you might like" is a second list under it: Kelly's own Sunday letters,
+   "My favorite BTTY posts" is a second list under it: Kelly's own Sunday letters,
    from data/favorite-letters.json, in his order. They show only under that
    filter (never under "All of them") and link to /p/<slug>.
 
@@ -22,7 +22,7 @@ import { bar, FOOT } from './chrome.mjs';
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
 const letters = JSON.parse(await readFile('data/favorite-letters.json', 'utf8'));
 const GIVE = 'Books I give away';
-const MINE = 'Posts you might like';
+const MINE = 'My favorite BTTY posts';
 const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GIVE)
   .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length);
 
@@ -214,7 +214,7 @@ ${rows}    </div>
       });
       var list = document.querySelector('.list');
       var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
-      var attr = f === 'Books I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'Posts you might like' ? 'data-letter' : 'data-rank';
+      var attr = f === 'Books I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'My favorite BTTY posts' ? 'data-letter' : 'data-rank';
       items.forEach(function (b) {
         /* letters show only under their own list, never under "All of them" */
         b.hidden = !(f === 'All of them' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
