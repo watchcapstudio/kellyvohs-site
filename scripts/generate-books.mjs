@@ -177,7 +177,6 @@ ${bar('reading')}
 
   <article class="sheet">
     <h1 class="typedtitle">Reading</h1>
-    <p class="intro">Books I give away, a few favorite posts, and the books I've highlighted the most.</p>
 
     <div class="filters">
     ${filters}
