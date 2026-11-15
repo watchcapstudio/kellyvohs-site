@@ -30,7 +30,7 @@ const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const TITLE = 'Reading';
-const DESC = 'Some of my favorites, and the books I’ve highlighted the most.';
+const DESC = 'A few of my favorite posts and the books I’ve highlighted the most.';
 const URL = 'https://kellyvohs.com/reading';
 
 const card = (b, rank) =>
@@ -177,7 +177,7 @@ ${bar('reading')}
 
   <article class="sheet">
     <h1 class="typedtitle">Reading</h1>
-    <p class="intro">Some of my favorites, and the books I've highlighted the most.</p>
+    <p class="intro">A few of my favorite posts and the books I've highlighted the most.</p>
 
     <div class="filters">
     ${filters}
