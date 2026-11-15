@@ -12,7 +12,7 @@
 
    "My favorite BTTY posts" is a second list under it: Kelly's own Sunday letters,
    from data/favorite-letters.json, in his order. They show only under that
-   filter (never under "All of them") and link to /p/<slug>.
+   filter (never under "All books") and link to /p/<slug>.
 
    To refresh: edit data/books.json, then  npm run build
    Header/footer come from scripts/chrome.mjs like every other page. */
@@ -65,7 +65,7 @@ const row = (t, on) =>
   '<span class="ix__box">[' + (on ? 'x' : '&nbsp;') + ']</span> ' + esc(t) + '</a>';
 const filters =
   '<div class="lists">' + row(GIVE, true) + row(MINE, false) + '</div>\n' +
-  '    <div class="topics">' + row('All of them', false) + TOPICS.map((t) => row(t, false)).join('') + '</div>';
+  '    <div class="topics">' + row('All books', false) + TOPICS.map((t) => row(t, false)).join('') + '</div>';
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -215,8 +215,8 @@ ${rows}    </div>
       var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
       var attr = f === 'Books I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'My favorite BTTY posts' ? 'data-letter' : 'data-rank';
       items.forEach(function (b) {
-        /* letters show only under their own list, never under "All of them" */
-        b.hidden = !(f === 'All of them' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+        /* letters show only under their own list, never under "All books" */
+        b.hidden = !(f === 'All books' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
       items.sort(function (a, b) {
         var ka = a.hasAttribute(attr) ? +a.getAttribute(attr) : 1e6 + (+a.getAttribute('data-rank'));
@@ -264,12 +264,12 @@ ${rows}    </div>
     window.addEventListener('scroll', showPill, { passive: true }); showPill();
     function nowLabel() {
       var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
-      now.hidden = on === 'All of them';
+      now.hidden = on === 'All books';
       now.innerHTML = '<span class="ix__box">[x]</span>' + on;
     }
     now.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector('.filters .ix[data-f="All of them"]').dispatchEvent(new Event('click'));
+      document.querySelector('.filters .ix[data-f="All books"]').dispatchEvent(new Event('click'));
       var first = document.querySelector('.list .tb:not([hidden])');
       if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
     });
@@ -291,7 +291,7 @@ ${rows}    </div>
     document.querySelectorAll('.tb__subj a').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        pick(a.classList.contains('on') ? 'All of them' : a.getAttribute('data-s'));
+        pick(a.classList.contains('on') ? 'All books' : a.getAttribute('data-s'));
       });
     });
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(mark, 0); }); });
