@@ -1,4 +1,4 @@
-/* generate-books.mjs — writes pages/books.html (served at /reading) from
+/* generate-books.mjs — writes pages/books.html (served at /liked) from
    data/books.json. Typed, one face, one size: title in caps, author, a short
    summary, then up to three quotes indented. Books separated by * * *.
 
@@ -29,9 +29,9 @@ const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GI
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const TITLE = 'Reading';
+const TITLE = 'Liked';
 const DESC = 'Books I give away, a few favorite posts, and the books I’ve highlighted the most.';
-const URL = 'https://kellyvohs.com/reading';
+const URL = 'https://kellyvohs.com/liked';
 
 const card = (b, rank) =>
   '      <section class="tb" data-tags="' + esc(b.tags.join('|')) + '" data-rank="' + rank + '"' +
@@ -168,7 +168,7 @@ const html = `<!DOCTYPE html>
 
 <div class="carriage" id="carriage"></div>
 
-${bar('reading')}
+${bar('liked')}
 
 <div class="pillwrap" id="pillwrap"><a href="#" class="pillnow" id="pillnow" hidden></a><a href="#" class="pill" id="pill">Subjects</a></div>
 <div class="sheetx" id="sheetx"><div class="sheetx__paper" id="sheetpaper"></div></div>
@@ -176,7 +176,7 @@ ${bar('reading')}
 <div class="desk">
 
   <article class="sheet">
-    <h1 class="typedtitle">Reading</h1>
+    <h1 class="typedtitle">Liked</h1>
 
     <div class="filters">
     ${filters}

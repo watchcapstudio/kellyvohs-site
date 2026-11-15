@@ -6,7 +6,7 @@
     { href: '/', label: 'Photos' },
     { href: '/sundays', label: 'Sundays' },
     { href: '/made', label: 'Made' },
-    { href: '/reading', label: 'Reading' }
+    { href: '/liked', label: 'Liked' }
   ];
 
   function isHere(href) {

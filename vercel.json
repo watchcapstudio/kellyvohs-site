@@ -34,7 +34,7 @@
       "destination": "/pages/made.html"
     },
     {
-      "source": "/reading",
+      "source": "/liked",
       "destination": "/pages/books.html"
     },
     {
@@ -84,8 +84,13 @@
   ],
   "redirects": [
     {
+      "source": "/reading",
+      "destination": "/liked",
+      "permanent": true
+    },
+    {
       "source": "/books",
-      "destination": "/reading",
+      "destination": "/liked",
       "permanent": true
     },
     {
