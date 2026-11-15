@@ -48,7 +48,7 @@ const card = (b, rank) =>
 const letter = (l, i) =>
   '      <section class="tb tb--letter" data-tags="' + esc(MINE) + '" data-rank="' + (1e5 + i) + '" data-letter="' + i + '" hidden>\n' +
   '        <div class="tb__head"><p class="tb__t"><a href="/p/' + esc(l.slug) + '">' + esc(l.title).toUpperCase() + '</a><br />' +
-    '<span class="tb__a">Sunday Letter No. ' + l.no + ', ' + esc(l.date) + '</span></p></div>\n' +
+    '<span class="tb__a">No. ' + l.no + ', ' + esc(l.date) + '</span></p></div>\n' +
   '        <p class="tb__s">' + esc(l.summary) + '</p>\n' +
   (l.quote ? '        <p class="tb__q">&ldquo;' + esc(l.quote) + '&rdquo;</p>\n' : '') +
   '        <p class="tb__go"><a href="/p/' + esc(l.slug) + '">READ IT &rarr;</a></p>\n' +
