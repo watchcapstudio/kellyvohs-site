@@ -10,13 +10,19 @@
    filters show by highlight count (file order), except Leadership, which keeps
    Kelly's shelf order (shelfOrder) with the rest appended by count.
 
+   "Posts you might like" is a second list under it: Kelly's own Sunday letters,
+   from data/favorite-letters.json, in his order. They show only under that
+   filter (never under "All of them") and link to /p/<slug>.
+
    To refresh: edit data/books.json, then  npm run build
    Header/footer come from scripts/chrome.mjs like every other page. */
 import { readFile, writeFile } from 'node:fs/promises';
 import { bar, FOOT } from './chrome.mjs';
 
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
+const letters = JSON.parse(await readFile('data/favorite-letters.json', 'utf8'));
 const GIVE = 'Ones I give away';
+const MINE = 'Posts you might like';
 const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GIVE)
   .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length);
 
@@ -38,17 +44,27 @@ const card = (b, rank) =>
   b.highlights.slice(0, 3).map((h) => '        <p class="tb__q">&ldquo;' + esc(h) + '&rdquo;</p>\n').join('') +
   '      </section>\n';
 
+// A favorite letter: same typed card, title links to the letter, no subjects.
+const letter = (l, i) =>
+  '      <section class="tb tb--letter" data-tags="' + esc(MINE) + '" data-rank="' + (1e5 + i) + '" data-letter="' + i + '" hidden>\n' +
+  '        <div class="tb__head"><p class="tb__t"><a href="/p/' + esc(l.slug) + '">' + esc(l.title).toUpperCase() + '</a><br />' +
+    '<span class="tb__a">Sunday Letter No. ' + l.no + ', ' + esc(l.date) + '</span></p></div>\n' +
+  '        <p class="tb__s">' + esc(l.summary) + '</p>\n' +
+  (l.quote ? '        <p class="tb__q">&ldquo;' + esc(l.quote) + '&rdquo;</p>\n' : '') +
+  '        <p class="tb__go"><a href="/p/' + esc(l.slug) + '">READ IT &rarr;</a></p>\n' +
+  '      </section>\n';
+
 // Opening order: the give-away books first in Kelly's order; the rest follow
 // hidden, in count order. data-rank lets the script restore count order.
 const opening = books.map((b, i) => ({ b, i }))
   .sort((x, y) => (x.b.firstOrder ?? 1e9) - (y.b.firstOrder ?? 1e9) || x.i - y.i);
-const rows = opening.map(({ b, i }) => card(b, i)).join('');
+const rows = opening.map(({ b, i }) => card(b, i)).join('') + letters.map(letter).join('');
 
 const row = (t, on) =>
   '<a href="#" class="ix' + (on ? ' ix--on' : '') + '" data-f="' + esc(t) + '">' +
   '<span class="ix__box">[' + (on ? 'x' : '&nbsp;') + ']</span> ' + esc(t) + '</a>';
 const filters =
-  '<div class="lists">' + row(GIVE, true) + '</div>\n' +
+  '<div class="lists">' + row(GIVE, true) + row(MINE, false) + '</div>\n' +
   '    <div class="topics">' + row('All of them', false) + TOPICS.map((t) => row(t, false)).join('') + '</div>';
 
 const html = `<!DOCTYPE html>
@@ -103,6 +119,11 @@ const html = `<!DOCTYPE html>
   .tb__s { margin-top: 1.4em !important; }
   .tb__q { margin: 2.2em 0 0 2.5em !important; text-shadow: 0.6px 0 0 currentColor; }
   .tb__q + .tb__q { margin-top: 1.6em !important; }
+  .tb__t a { color: inherit; text-decoration: none; }
+  .tb__t a:hover { color: var(--accent); }
+  .tb__go { margin-top: 2.2em !important; font-size: 11px !important; letter-spacing: 0.12em; }
+  .tb__go a { color: var(--muted); text-decoration: none; }
+  .tb__go a:hover { color: var(--accent); }
   .tb + .tb::before { content: "*  *  *"; display: block; text-align: center; color: var(--accent); margin: 6em 0; font-size: 15px; letter-spacing: 0.4em; white-space: pre; }
   .tb--first::before { display: none !important; }
 
@@ -193,9 +214,10 @@ ${rows}    </div>
       });
       var list = document.querySelector('.list');
       var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
-      var attr = f === 'Ones I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : 'data-rank';
+      var attr = f === 'Ones I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'Posts you might like' ? 'data-letter' : 'data-rank';
       items.forEach(function (b) {
-        b.hidden = !(f === 'All of them' || b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+        /* letters show only under their own list, never under "All of them" */
+        b.hidden = !(f === 'All of them' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
       items.sort(function (a, b) {
         var ka = a.hasAttribute(attr) ? +a.getAttribute(attr) : 1e6 + (+a.getAttribute('data-rank'));
@@ -213,8 +235,9 @@ ${rows}    </div>
   (function () {
     var sx = document.getElementById('sheetx'), paper = document.getElementById('sheetpaper');
     var src = document.querySelectorAll('.filters .ix');
+    var nLists = document.querySelectorAll('.filters .lists .ix').length;
     src.forEach(function (r, i) {
-      if (i === 1) { var g = document.createElement('div'); g.className = 'gap'; paper.appendChild(g); }
+      if (i === nLists) { var g = document.createElement('div'); g.className = 'gap'; paper.appendChild(g); }
       var c = r.cloneNode(true);
       c.addEventListener('click', function (e) {
         e.preventDefault();
