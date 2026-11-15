@@ -6,7 +6,7 @@
    bottom opens the same list as a typed sheet. Each book also lists its own
    subjects; the current one is [x].
 
-   The page opens on "Ones I give away" (firstOrder = Kelly's order). Other
+   The page opens on "Books I give away" (firstOrder = Kelly's order). Other
    filters show by highlight count (file order), except Leadership, which keeps
    Kelly's shelf order (shelfOrder) with the rest appended by count.
 
@@ -21,7 +21,7 @@ import { bar, FOOT } from './chrome.mjs';
 
 const books = JSON.parse(await readFile('data/books.json', 'utf8'));
 const letters = JSON.parse(await readFile('data/favorite-letters.json', 'utf8'));
-const GIVE = 'Ones I give away';
+const GIVE = 'Books I give away';
 const MINE = 'Posts you might like';
 const TOPICS = [...new Set(books.flatMap((b) => b.tags))].filter((t) => t !== GIVE)
   .sort((a, b) => books.filter((x) => x.tags.includes(b)).length - books.filter((x) => x.tags.includes(a)).length);
@@ -214,7 +214,7 @@ ${rows}    </div>
       });
       var list = document.querySelector('.list');
       var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
-      var attr = f === 'Ones I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'Posts you might like' ? 'data-letter' : 'data-rank';
+      var attr = f === 'Books I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'Posts you might like' ? 'data-letter' : 'data-rank';
       items.forEach(function (b) {
         /* letters show only under their own list, never under "All of them" */
         b.hidden = !(f === 'All of them' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
