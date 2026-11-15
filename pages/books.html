@@ -111,7 +111,7 @@
 
     <div class="filters">
     <div class="lists"><a href="#" class="ix ix--on" data-f="Books I give away"><span class="ix__box">[x]</span> Books I give away</a><a href="#" class="ix" data-f="My favorite BTTY posts"><span class="ix__box">[&nbsp;]</span> My favorite BTTY posts</a></div>
-    <div class="topics"><a href="#" class="ix" data-f="All of them"><span class="ix__box">[&nbsp;]</span> All of them</a><a href="#" class="ix" data-f="Leadership"><span class="ix__box">[&nbsp;]</span> Leadership</a><a href="#" class="ix" data-f="Business"><span class="ix__box">[&nbsp;]</span> Business</a><a href="#" class="ix" data-f="Living"><span class="ix__box">[&nbsp;]</span> Living</a><a href="#" class="ix" data-f="Stoicism"><span class="ix__box">[&nbsp;]</span> Stoicism</a><a href="#" class="ix" data-f="Philosophy"><span class="ix__box">[&nbsp;]</span> Philosophy</a><a href="#" class="ix" data-f="Thinking"><span class="ix__box">[&nbsp;]</span> Thinking</a><a href="#" class="ix" data-f="Mind"><span class="ix__box">[&nbsp;]</span> Mind</a><a href="#" class="ix" data-f="Craft"><span class="ix__box">[&nbsp;]</span> Craft</a><a href="#" class="ix" data-f="History"><span class="ix__box">[&nbsp;]</span> History</a></div>
+    <div class="topics"><a href="#" class="ix" data-f="All books"><span class="ix__box">[&nbsp;]</span> All books</a><a href="#" class="ix" data-f="Leadership"><span class="ix__box">[&nbsp;]</span> Leadership</a><a href="#" class="ix" data-f="Business"><span class="ix__box">[&nbsp;]</span> Business</a><a href="#" class="ix" data-f="Living"><span class="ix__box">[&nbsp;]</span> Living</a><a href="#" class="ix" data-f="Stoicism"><span class="ix__box">[&nbsp;]</span> Stoicism</a><a href="#" class="ix" data-f="Philosophy"><span class="ix__box">[&nbsp;]</span> Philosophy</a><a href="#" class="ix" data-f="Thinking"><span class="ix__box">[&nbsp;]</span> Thinking</a><a href="#" class="ix" data-f="Mind"><span class="ix__box">[&nbsp;]</span> Mind</a><a href="#" class="ix" data-f="Craft"><span class="ix__box">[&nbsp;]</span> Craft</a><a href="#" class="ix" data-f="History"><span class="ix__box">[&nbsp;]</span> History</a></div>
     </div>
 
     <div class="list">
@@ -579,8 +579,8 @@
       var items = Array.prototype.slice.call(list.querySelectorAll('.tb'));
       var attr = f === 'Books I give away' ? 'data-first' : f === 'Leadership' ? 'data-shelf' : f === 'My favorite BTTY posts' ? 'data-letter' : 'data-rank';
       items.forEach(function (b) {
-        /* letters show only under their own list, never under "All of them" */
-        b.hidden = !(f === 'All of them' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
+        /* letters show only under their own list, never under "All books" */
+        b.hidden = !(f === 'All books' ? !b.hasAttribute('data-letter') : b.getAttribute('data-tags').split('|').indexOf(f) > -1);
       });
       items.sort(function (a, b) {
         var ka = a.hasAttribute(attr) ? +a.getAttribute(attr) : 1e6 + (+a.getAttribute('data-rank'));
@@ -628,12 +628,12 @@
     window.addEventListener('scroll', showPill, { passive: true }); showPill();
     function nowLabel() {
       var on = document.querySelector('.filters .ix--on').getAttribute('data-f');
-      now.hidden = on === 'All of them';
+      now.hidden = on === 'All books';
       now.innerHTML = '<span class="ix__box">[x]</span>' + on;
     }
     now.addEventListener('click', function (e) {
       e.preventDefault();
-      document.querySelector('.filters .ix[data-f="All of them"]').dispatchEvent(new Event('click'));
+      document.querySelector('.filters .ix[data-f="All books"]').dispatchEvent(new Event('click'));
       var first = document.querySelector('.list .tb:not([hidden])');
       if (first) window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - 96, behavior: 'auto' });
     });
@@ -655,7 +655,7 @@
     document.querySelectorAll('.tb__subj a').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        pick(a.classList.contains('on') ? 'All of them' : a.getAttribute('data-s'));
+        pick(a.classList.contains('on') ? 'All books' : a.getAttribute('data-s'));
       });
     });
     src.forEach(function (r) { r.addEventListener('click', function () { setTimeout(mark, 0); }); });
